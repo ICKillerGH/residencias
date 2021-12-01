@@ -12,16 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    public const ADMIN_ROLE = 'admin';
+    public const STUDENT_ROLE = 'student';
+    public const TEACHER_ROLE = 'teacher';
+
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Relationships
+     */
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    /**
+     * Scopes
+     */
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', self::ADMIN_ROLE);
+    }
 }

@@ -49,12 +49,14 @@
 
             </li>
 
+            @can('index', App\Models\Admin::class)
             <li class="nav-item{{ $activePage == 'admins' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('admins.index') }}">
                 <i class="material-icons">manage_accounts</i>
                     <p>Administradores</p>
                 </a>
             </li>
+            @endcan
 
             <li class="nav-item{{ $activePage == 'students' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('students.index') }}">

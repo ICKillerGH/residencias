@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentsController;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,9 +16,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 Route::middleware('auth')->group(function() {
     Route::prefix('/admins')->name('admins.')->group(function() {
-        Route::get('', [AdminsController::class, 'index'])->name('index');
-        Route::get('/create', [AdminsController::class, 'create'])->name('create');
-        Route::post('/', [AdminsController::class, 'store'])->name('store');
+        Route::get('', [AdminsController::class, 'index'])->name('index')->can('index', Admin::class);
+        Route::get('/create', [AdminsController::class, 'create'])->name('create')->can('create', Admin::class);
+        Route::post('/', [AdminsController::class, 'store'])->name('store')->can('create', Admin::class);
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

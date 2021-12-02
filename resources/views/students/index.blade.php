@@ -23,6 +23,7 @@
                         <thead class="text-primary">
                             <tr>
                                 <th>ID</th>
+                                <th>Email</th>
                                 <th>Nombres</th>
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
@@ -36,6 +37,7 @@
                             @foreach ($students as $student)
                                 <tr>
                                     <td>{{ $student->id }}</td>
+                                    <td>{{ $student->email }}</td>
                                     <td>{{ $student->student->first_name }}</td>
                                     <td>{{ $student->student->fathers_last_name }}</td>
                                     <td>{{ $student->student->mothers_last_name }}</td>

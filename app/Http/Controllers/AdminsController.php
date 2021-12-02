@@ -14,7 +14,7 @@ class AdminsController extends Controller
     {
         $admins = User::query()
             ->with(['admin'])
-            ->admin()
+            ->isAdmin()
             ->paginate();
 
         return view('admins.index', [
@@ -39,7 +39,11 @@ class AdminsController extends Controller
             DB::commit();
         } catch(Throwable $t) {
             DB::rollBack();
-            return back()->withErrors(['email' => 'Ha ocurrido un error']);
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde.',
+            ]);
         }
 
         return redirect()->route('admins.index')->with('alert', [

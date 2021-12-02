@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="content">
+        @if($alert = session('alert'))
+            <div class="alert alert-{{ $alert['type'] }}" role="alert">
+                {{ $alert['message'] }}
+            </div>
+        @endif
+
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title">Añadir administrador</h4>
@@ -11,71 +17,25 @@
                 <form action="{{ route('admins.store') }}" method="POST">
                     @csrf
                     {{-- EMAIL --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="email" class="d-block">Email</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-group input-group-dynamic">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Ingrese el email"
-                                    value="{{ old('email') }}"
-                                    autofocus
-                                >
-                            </div>
-                            @error('email')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
+                    <x-inputs.text-field-row
+                        name="email"
+                        label="Correo electrónico"
+                        placeholder="Ingrese el correo electrónico"
+                    />
 
                     {{-- FIRST NAME --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="first_name" class="d-block">Nombres</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-group input-group-dynamic">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="first_name"
-                                    id="first_name"
-                                    placeholder="Ingrese los nombres"
-                                    value="{{ old('first_name') }}"
-                                >
-                            </div>
-                            @error('first_name')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
+                    <x-inputs.text-field-row
+                        name="first_name"
+                        label="Nombres"
+                        placeholder="Ingrese los nombres"
+                    />
 
                     {{-- LAST NAME --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="last_name" class="d-block">Apellidos</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-group input-group-dynamic">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="last_name"
-                                    id="last_name"
-                                    placeholder="Ingrese los apellidos"
-                                    value="{{ old('last_name') }}"
-                                >
-                            </div>
-                            @error('last_name')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
+                    <x-inputs.text-field-row
+                        name="last_name"
+                        label="Apellidos"
+                        placeholder="Ingrese los apellidos"
+                    />
 
                     {{-- PASSWORD --}}
                     <div class="row mb-3">

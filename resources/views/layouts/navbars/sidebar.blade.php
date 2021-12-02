@@ -48,10 +48,18 @@
                 --}}
 
             </li>
+
             <li class="nav-item{{ $activePage == 'admins' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('admins.index') }}">
-                <i class="material-icons">content_paste</i>
+                <i class="material-icons">manage_accounts</i>
                     <p>Administradores</p>
+                </a>
+            </li>
+
+            <li class="nav-item{{ $activePage == 'students' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('students.index') }}">
+                <i class="material-icons">people</i>
+                    <p>Estudiantes</p>
                 </a>
             </li>
         </ul>

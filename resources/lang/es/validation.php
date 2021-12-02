@@ -151,6 +151,16 @@ return [
         'first_name' => 'nombres',
         'last_name' => 'apellidos',
         'password' => 'contraseña',
+        'fathers_last_name' => 'apellido paterno',
+        'mothers_last_name' => 'apellido materno',
+        'career_id' => 'carrera',
+        'account_number' => 'número de cuenta',
+        'gender' => 'sexo',
+        'career_percentage' => 'porcentaje de la carrera',
+        'phone_number' => 'número telefónico',
+        'state_id' => 'estado',
+        'municipality_id' => 'municipio',
+        'locality_id' => 'localidad',
     ],
 
 ];

@@ -45,11 +45,21 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
     /**
      * Scopes
      */
-    public function scopeAdmin($query)
+    public function scopeIsAdmin($query)
     {
         return $query->where('role', self::ADMIN_ROLE);
+    }
+
+    public function scopeIsStudent($query)
+    {
+        return $query->where('role', self::STUDENT_ROLE);
     }
 }

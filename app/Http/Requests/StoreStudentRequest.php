@@ -45,7 +45,11 @@ class StoreStudentRequest extends FormRequest
 
     public function userData()
     {
-        return array_merge(Arr::only($this->validated(), ['email', 'password']), ['role' => User::STUDENT_ROLE]);
+        return [
+            'email' => $this->email,
+            'password' => bcrypt($this->password),
+            'role' => User::STUDENT_ROLE,
+        ];
     }
 
     public function studentData()

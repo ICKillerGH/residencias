@@ -36,7 +36,11 @@ class StoreAdminRequest extends FormRequest
 
     public function userData()
     {
-        return array_merge(Arr::only($this->validated(), ['email', 'password']), ['role' => User::ADMIN_ROLE]);
+        return [
+            'email' => $this->email,
+            'password' => bcrypt($this->password),
+            'role' => User::ADMIN_ROLE,
+        ];
     }
 
     public function adminData()

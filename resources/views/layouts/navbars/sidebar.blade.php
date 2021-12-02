@@ -58,12 +58,14 @@
             </li>
             @endcan
 
+            @can('index', App\Models\Student::class)
             <li class="nav-item{{ $activePage == 'students' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('students.index') }}">
                 <i class="material-icons">people</i>
                     <p>Estudiantes</p>
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 </div>

@@ -30,5 +30,9 @@ Route::middleware('auth')->group(function() {
         Route::put('/personal-info', [StudentsController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
         Route::get('/company-info',[StudentsController::class,'companyInfo'])->name('companyInfo');
         Route::put('/company-info',[StudentsController::class,'updateCompanyInfo'])->name('updateCompanyInfo');
+        Route::get('/project-info',[StudentsController::class,'projectInfo'])->name('projectInfo');
+        Route::put('/project-info', [StudentsController::class, 'updateProjectInfo'])->name('updateProjectInfo');
+
+
     });
 });

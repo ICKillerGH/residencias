@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentCompanyInfoRequest;
 use App\Http\Requests\UpdateStudentPersonalInfo;
+use App\Http\Requests\UpdateStudentProjectInfoRequest;
 use App\Models\Career;
 use App\Models\Company;
 use App\Models\Location;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class StudentsController extends Controller
@@ -42,7 +45,7 @@ class StudentsController extends Controller
             $user->student()->create($request->studentData());
 
             DB::commit();
-        } catch(Throwable $t) {
+        } catch (Throwable $t) {
             DB::rollBack();
 
             return back()->with('alert', [
@@ -87,9 +90,9 @@ class StudentsController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        
+
         $company = $user->company ?? new Company();
-        
+
         return view('students.company-info', [
             'company' => $company,
         ]);
@@ -98,16 +101,55 @@ class StudentsController extends Controller
     public function updateCompanyInfo(UpdateStudentCompanyInfoRequest $request)
     {
         $userData = ['user_id' => Auth::id()];
-        
+
         $company = Company::firstWhere($userData) ?? new Company($userData);
 
         $company->fill($request->validated());
 
         $company->save();
-        
+
         return redirect()->route('students.companyInfo')->with('alert', [
             'type' => 'success',
             'message' => 'La información se actualizo correctamente',
         ]);;
     }
+
+    public function projectInfo()
+    {
+        $user= Auth::user();
+
+        $project = $user->project ?? new Project();
+
+        return view('students.project-info',[
+            'project'=>$project,
+        ] );
+    }
+    public function updateProjectInfo(UpdateStudentProjectInfoRequest $request)
+    {
+        $userData = ['user_id' => Auth::id()];
+
+        $project = Project::firstWhere($userData) ?? new Project($userData);
+
+        $data = $request->validated();
+        
+        if (!$project->exists() && !$request->activity_schedule_image) {
+            throw ValidationException::withMessages([
+                'activity_schedule_image' => 'La imagen del cronograma es requerida',
+            ]);
+        }
+
+        $path = $request->file('activity_schedule_image')->store('public/project');
+
+        $data['activity_schedule_image'] = $path;
+        
+        $project->fill($data);
+
+        $project->save();
+
+        return redirect()->route('students.projectInfo')->with('alert', [
+            'type' => 'success',
+            'message' => 'La información se actualizo correctamente',
+        ]);
+    }
 }
+;

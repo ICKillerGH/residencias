@@ -47,6 +47,15 @@
                                 <span class="sidebar-normal">Información de la empresa</span>
                             </a>
                         </li>
+                        <li class="nav-item{{ $activePage == 'project-info' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('students.projectInfo')}}">
+                                <i class="material-icons">dashboard</i>
+                                <span class="sidebar-mini">
+                                </span>
+                                <span class="sidebar-normal">Información del proyecto</span>
+                            </a>
+                        </li>
+
                         <li class="nav-item{{ $activePage == 'company-info' ? ' active' : '' }}">
                             <a class="nav-link" href="#">
                                 <i class="material-icons">dashboard</i>

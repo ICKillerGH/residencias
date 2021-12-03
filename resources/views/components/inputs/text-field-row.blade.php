@@ -9,7 +9,7 @@
                 class="form-control"
                 name="{{ $name }}"
                 id="{{ $name }}"
-                value="{{ old($name) }}"
+                value="{{ old($name, $defaultValue) }}"
                 {{ $attributes }}
             >
         </div>

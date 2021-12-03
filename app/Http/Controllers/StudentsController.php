@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentCompanyInfoRequest;
 use App\Http\Requests\UpdateStudentPersonalInfo;
 use App\Models\Career;
+use App\Models\Company;
 use App\Models\Location;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -79,5 +81,33 @@ class StudentsController extends Controller
             'type' => 'success',
             'message' => 'La información se actualizo correctamente',
         ]);
+    }
+
+    public function companyInfo()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        
+        $company = $user->company ?? new Company();
+        
+        return view('students.company-info', [
+            'company' => $company,
+        ]);
+    }
+
+    public function updateCompanyInfo(UpdateStudentCompanyInfoRequest $request)
+    {
+        $userData = ['user_id' => Auth::id()];
+        
+        $company = Company::firstWhere($userData) ?? new Company($userData);
+
+        $company->fill($request->validated());
+
+        $company->save();
+        
+        return redirect()->route('students.companyInfo')->with('alert', [
+            'type' => 'success',
+            'message' => 'La información se actualizo correctamente',
+        ]);;
     }
 }

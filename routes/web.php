@@ -17,7 +17,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 Route::middleware('auth')->group(function() {
     Route::prefix('/admins')->name('admins.')->group(function() {
-        Route::get('', [AdminsController::class, 'index'])->name('index')->can('index', Admin::class);
+        Route::get('/', [AdminsController::class, 'index'])->name('index')->can('index', Admin::class);
         Route::get('/create', [AdminsController::class, 'create'])->name('create')->can('create', Admin::class);
         Route::post('/', [AdminsController::class, 'store'])->name('store')->can('create', Admin::class);
     });
@@ -28,5 +28,7 @@ Route::middleware('auth')->group(function() {
         Route::post('/', [StudentsController::class, 'store'])->name('store')->can('create', Student::class);
         Route::get('/personal-info', [StudentsController::class, 'personalInfo'])->name('personalInfo');
         Route::put('/personal-info', [StudentsController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
+        Route::get('/company-info',[StudentsController::class,'companyInfo'])->name('companyInfo');
+        Route::put('/company-info',[StudentsController::class,'updateCompanyInfo'])->name('updateCompanyInfo');
     });
 });

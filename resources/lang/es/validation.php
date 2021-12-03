@@ -161,6 +161,15 @@ return [
         'state_id' => 'estado',
         'municipality_id' => 'municipio',
         'locality_id' => 'localidad',
+        'business_name' => 'razon social',
+        'address_name' => 'direccion',
+        'person_in_charge' => 'persona encargada',
+        'person_in_charge_position' => 'cargo',
+        'office_phone_number' => 'telefono de oficina',
+        'personal_phone_number' => 'telefono personal',
+        'commercial_business' => 'giro comercial',
+        'zip_code' => 'codigo postal',
+
     ],
 
 ];

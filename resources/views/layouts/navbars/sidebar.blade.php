@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li class="nav-item{{ $activePage == 'company-info' ? ' active' : '' }}">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('students.companyInfo')}}">
                                 <i class="material-icons">dashboard</i>
                                 <span class="sidebar-mini">
                                 </span>

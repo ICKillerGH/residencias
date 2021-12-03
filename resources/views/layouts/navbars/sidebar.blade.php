@@ -20,34 +20,45 @@
 
 
 
-            {{-- Menu despegable
-            <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
-                <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
-                <i><img style="width:25px" src="{{ asset('img/laravel.svg') }}"></i>
-                <p>{{ __('Laravel Examples') }}
-                    <b class="caret"></b>
-                </p>
+            {{-- Menu despegable --}}
+            <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'company-info') ? ' active' : '' }}">
+                <a class="nav-link" data-toggle="collapse" href="#profile-menu-item" aria-expanded="true">
+                    <p>
+                        <i class="material-icons">account_circle</i>
+                        Perfil<b class="caret"></b>
+                    </p>
                 </a>
 
-                <div class="collapse show" id="laravelExample">
-                <ul class="nav">
-                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                    <a class="nav-link" href="#">
-                        <span class="sidebar-mini"> UP </span>
-                        <span class="sidebar-normal">{{ __('User profile') }} </span>
-                    </a>
-                    </li>
-                    <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                    <a class="nav-link" href="#">
-                        <span class="sidebar-mini"> UM </span>
-                        <span class="sidebar-normal"> {{ __('User Management') }} </span>
-                    </a>
-                    </li>
-                </ul>
+                <div class="collapse" id="profile-menu-item">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('students.personalInfo') }}">
+                                <span class="sidebar-mini">
+                                    <i class="material-icons">dashboard</i>
+                                </span>
+                                <span class="sidebar-normal">Información personal</span>
+                            </a>
+                        </li>
+                        <li class="nav-item{{ $activePage == 'company-info' ? ' active' : '' }}">
+                            <a class="nav-link" href="#">
+                                <i class="material-icons">dashboard</i>
+                                <span class="sidebar-mini">
+                                </span>
+                                <span class="sidebar-normal">Información de la empresa</span>
+                            </a>
+                        </li>
+                        <li class="nav-item{{ $activePage == 'company-info' ? ' active' : '' }}">
+                            <a class="nav-link" href="#">
+                                <i class="material-icons">dashboard</i>
+                                <span class="sidebar-mini">
+                                </span>
+                                <span class="sidebar-normal">Proceso de residencia</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                --}}
-
             </li>
+
 
             @can('index', App\Models\Admin::class)
             <li class="nav-item{{ $activePage == 'admins' ? ' active' : '' }}">

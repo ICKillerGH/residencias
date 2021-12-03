@@ -21,6 +21,21 @@ class Student extends Model
         return $this->belongsTo(Career::class);
     }
 
+    public function state()
+    {
+        return $this->belongsTo(Location::class, 'state_id');
+    }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Location::class, 'municipality_id');
+    }
+
+    public function locality()
+    {
+        return $this->belongsTo(Location::class, 'locality_id');
+    }
+
     /**
      * Accessors
      */

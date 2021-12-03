@@ -6,6 +6,7 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Models\Career;
 use App\Models\Location;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -50,6 +51,19 @@ class StudentsController extends Controller
         return redirect()->route('students.index')->with('alert', [
             'type' => 'success',
             'message' => 'El estudiante se agrego correctamente',
+        ]);
+    }
+
+    public function personalInfo()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $user->load(['student.career', 'student.state']);
+
+        return view('students.personal-info', [
+            'user' => $user,
+            'states' => Location::with(['locations.locations'])->state()->get()
         ]);
     }
 }

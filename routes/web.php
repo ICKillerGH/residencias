@@ -27,5 +27,6 @@ Route::middleware('auth')->group(function() {
         Route::get('/create', [StudentsController::class, 'create'])->name('create')->can('create', Student::class);
         Route::post('/', [StudentsController::class, 'store'])->name('store')->can('create', Student::class);
         Route::get('/personal-info', [StudentsController::class, 'personalInfo'])->name('personalInfo');
+        Route::put('/personal-info', [StudentsController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
     });
 });

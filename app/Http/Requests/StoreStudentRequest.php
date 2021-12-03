@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStudentRequest extends FormRequest
 {
@@ -36,9 +37,18 @@ class StoreStudentRequest extends FormRequest
             'curp' => 'required|max:18|unique:students,curp',
             'career_percentage' => 'required|numeric|min:0|max:100',
             'phone_number' => 'required|numeric|digits:10',
-            'state_id' => 'required|exists:locations,id',
-            'municipality_id' => 'required|exists:locations,id',
-            'locality_id' => 'required|exists:locations,id',
+            'state_id' => [
+                'required',
+                Rule::exists('locations', 'id')->whereNull('parent_id'),
+            ],
+            'municipality_id' => [
+                'required',
+                Rule::exists('locations', 'id')->where('parent_id', $this->state_id),
+            ],
+            'locality_id' => [
+                'required',
+                Rule::exists('locations', 'id')->where('parent_id', $this->municipality_id),
+            ],
             'password' => 'required|min:6|confirmed',
         ];
     }

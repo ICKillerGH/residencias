@@ -2,126 +2,142 @@
 
 @section('content')
     <div class="content">
+        @if($alert = session('alert'))
+            <div class="alert alert-{{ $alert['type'] }}" role="alert">
+                {{ $alert['message'] }}
+            </div>
+        @endif
+
         <div class="card">
             <div class="card-header card-header-primary">
                 <h3 class="card-title">Información personal</h3>
             </div>
 
             <div class="card-body">
-                <div class="row mb-3">
-                    {{-- CURP --}}
-                    <div class="col-md-12">
-                        <p class="mb-0"><b>CURP:</b></p>
-                        {{ $user->student->curp }}
+                <form action="{{ route('students.updatePersonalInfo') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="row mb-3">
+                        {{-- CURP --}}
+                        <div class="col-md-12">
+                            <p class="mb-0"><b>CURP:</b></p>
+                            {{ $user->student->curp }}
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mb-3">
-                    {{-- NAMES --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Nombre(s):</b></p>
-                        {{ $user->student->first_name }}
+                    <div class="row mb-3">
+                        {{-- NAMES --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Nombre(s):</b></p>
+                            {{ $user->student->first_name }}
+                        </div>
+                        {{-- FATHER'S LAST NAME --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Apellido paterno:</b></p>
+                            {{ $user->student->fathers_last_name }}
+                        </div>
+                        {{-- MOTHERS'S LAST NAME --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Nombre(s):</b></p>
+                            {{ $user->student->mothers_last_name }}
+                        </div>
                     </div>
-                    {{-- FATHER'S LAST NAME --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Apellido paterno:</b></p>
-                        {{ $user->student->fathers_last_name }}
-                    </div>
-                    {{-- MOTHERS'S LAST NAME --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Nombre(s):</b></p>
-                        {{ $user->student->mothers_last_name }}
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                    {{-- SEX --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Sexo:</b></p>
-                        {{ $user->student->sex_text }}
+                    <div class="row mb-3">
+                        {{-- SEX --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Sexo:</b></p>
+                            {{ $user->student->sex_text }}
+                        </div>
+                        {{-- CAREER --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Carrera:</b></p>
+                            {{ $user->student->career->name }}
+                        </div>
+                        {{-- ACCOUNT NUMBER --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Número de cuenta:</b></p>
+                            {{ $user->student->account_number }}
+                        </div>
                     </div>
-                    {{-- CAREER --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Carrera:</b></p>
-                        {{ $user->student->career->name }}
-                    </div>
-                    {{-- ACCOUNT NUMBER --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Número de cuenta:</b></p>
-                        {{ $user->student->account_number }}
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                    {{-- IS ENROLLED --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Inscrito:</b></p>
-                        {{ $user->student->is_enrolled  ? 'Si' : 'No' }}
+                    <div class="row mb-3">
+                        {{-- IS ENROLLED --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Inscrito:</b></p>
+                            {{ $user->student->is_enrolled  ? 'Si' : 'No' }}
+                        </div>
+                        {{-- IS SOCIAL SERVICE CONCLUDED --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Servicio social concluido:</b></p>
+                            {{ $user->student->is_social_service_concluded  ? 'Si' : 'No' }}
+                        </div>
+                        {{-- CAREER PERCENTAGE --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Porcentaje de la carrera:</b></p>
+                            {{ $user->student->career_percentage }}%
+                        </div>
                     </div>
-                    {{-- IS SOCIAL SERVICE CONCLUDED --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Servicio social concluido:</b></p>
-                        {{ $user->student->is_social_service_concluded  ? 'Si' : 'No' }}
-                    </div>
-                    {{-- CAREER PERCENTAGE --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Porcentaje de la carrera:</b></p>
-                        {{ $user->student->career_percentage }}%
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                    {{-- STATE --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Estado:</b></p>
-                        <select
-                            class="form-control"
-                            name="state_id"
-                            id="state_id"
-                        >
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            @foreach ($states as $state)
-                                <option value="{{ $state->id }}" @if ($state->id == old('state_id', $user->student->state->id)) selected @endif>{{ $state->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('state_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="row mb-3">
+                        {{-- STATE --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Estado:</b></p>
+                            <select
+                                class="form-control"
+                                name="state_id"
+                                id="state_id"
+                            >
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                @foreach ($states as $state)
+                                    <option value="{{ $state->id }}" @if ($state->id == old('state_id', $user->student->state->id)) selected @endif>{{ $state->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('state_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        {{-- MUNICIPALITY --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Municipio:</b></p>
+                            <select
+                                class="form-control"
+                                name="municipality_id"
+                                id="municipality_id"
+                            >
+                                <option value="" selected disabled>Seleccione una opción</option>
+                            </select>
+                            @error('municipality_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        {{-- LOCALITY --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Localidad:</b></p>
+                            <select
+                                class="form-control"
+                                name="locality_id"
+                                id="locality_id"
+                            >
+                                <option value="" selected disabled>Seleccione una opción</option>
+                            </select>
+                        </div>
                     </div>
-                    {{-- MUNICIPALITY --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Municipio:</b></p>
-                        <select
-                            class="form-control"
-                            name="municipality_id"
-                            id="municipality_id"
-                        >
-                            <option value="" selected disabled>Seleccione una opción</option>
-                        </select>
-                        @error('municipality_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    {{-- LOCALITY --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Localidad:</b></p>
-                        <select
-                            class="form-control"
-                            name="locality_id"
-                            id="locality_id"
-                        >
-                            <option value="" selected disabled>Seleccione una opción</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                    {{-- PHONE NUMBER --}}
-                    <div class="col-md-4">
-                        <p class="mb-0"><b>Teléfono:</b></p>
-                        <input type="text" class="form-control" name="phone_number" value="{{ $user->student->phone_number }}">
+                    <div class="row mb-3">
+                        {{-- PHONE NUMBER --}}
+                        <div class="col-md-4">
+                            <p class="mb-0"><b>Teléfono:</b></p>
+                            <input type="text" class="form-control" name="phone_number" value="{{ $user->student->phone_number }}">
+                        </div>
                     </div>
-                </div>
+
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-success">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

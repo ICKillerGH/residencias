@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentPersonalInfo;
 use App\Models\Career;
 use App\Models\Location;
 use App\Models\User;
@@ -64,6 +65,19 @@ class StudentsController extends Controller
         return view('students.personal-info', [
             'user' => $user,
             'states' => Location::with(['locations.locations'])->state()->get()
+        ]);
+    }
+
+    public function updatePersonalInfo(UpdateStudentPersonalInfo $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $user->student->update($request->validated());
+
+        return redirect()->route('students.personalInfo')->with('alert', [
+            'type' => 'success',
+            'message' => 'La información se actualizo correctamente',
         ]);
     }
 }

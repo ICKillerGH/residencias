@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'students', 'title' => __(''), 'titlePage' => 'Informacion de la empresa'])
+@extends('layouts.main', ['activePage' => 'company-info', 'title' => __(''), 'titlePage' => 'Informacion de la empresa'])
 
 @section('content')
     <div class="content">
@@ -16,7 +16,7 @@
                 <form action="{{ route('students.updateCompanyInfo') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    
+
                     {{-- BUSINESS NAME --}}
                     <x-inputs.text-field-row name="business_name" label="Razon social" placeholder="Ingrese la razon social" :default-value="$company->business_name" />
 
@@ -43,7 +43,7 @@
 
                     {{-- ZIP CODE --}}
                     <x-inputs.text-field-row name="zip_code" label="Código postal" placeholder="Ingrese el código postal"  :default-value="$company->zip_code" />
-                    
+
                     <div class="text-right">
                         <button class="btn btn-sm btn-success">
                             Guardar

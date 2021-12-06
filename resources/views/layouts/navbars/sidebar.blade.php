@@ -18,18 +18,28 @@
                 </a>
             </li>
 
-
-
-            {{-- Menu despegable --}}
-            <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'company-info') ? ' active' : '' }}">
-                <a class="nav-link" data-toggle="collapse" href="#profile-menu-item" aria-expanded="true">
+            {{-- PERFIL --}}
+            <li class="nav-item">
+                <a
+                    class="
+                        nav-link
+                        @if ($profileMenuActive = ($activePage == 'profile' || $activePage == 'company-info' || $activePage == 'project-info' || $activePage == 'residency-process'))
+                            active
+                        @else
+                            collapsed
+                        @endif
+                    "
+                    data-toggle="collapse"
+                    href="#profile-menu-item"
+                    aria-expanded="{{ $profileMenuActive ? 'true' : 'false' }}"
+                >
                     <p>
                         <i class="material-icons">account_circle</i>
                         Perfil<b class="caret"></b>
                     </p>
                 </a>
 
-                <div class="collapse" id="profile-menu-item">
+                <div class="collapse show" id="profile-menu-item">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('students.personalInfo') }}">
@@ -56,7 +66,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item{{ $activePage == 'company-info' ? ' active' : '' }}">
+                        <li class="nav-item{{ $activePage == 'residency-process' ? ' active' : '' }}">
                             <a class="nav-link" href="#">
                                 <i class="material-icons">dashboard</i>
                                 <span class="sidebar-mini">

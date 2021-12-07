@@ -43,7 +43,7 @@ class ResidencyProcessController extends Controller
             ]);
         }
 
-        $pdf = PDF::loadView('residency-process/residency-request', [
+        $pdf = PDF::loadView('residency-process.residency-request', [
             'user' => $user,
             'externalCompany' => $user->company,
             'project' => $user->project,

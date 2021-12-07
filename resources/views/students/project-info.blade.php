@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="content">
+        @if($alert = session('alert'))
+            <div class="alert alert-{{ $alert['type'] }}" role="alert">
+                {{ $alert['message'] }}
+            </div>
+        @endif
+
         <div class="card">
             <div class="card-header card-header-primary">
                 <h3 class="card-title">Información del proyecto</h3>

@@ -16,7 +16,8 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="">
+                        <form action="{{ route('students.residencyRequest') }}" method="POST">
+                            @csrf
                             <button class="btn btn-block btn-warning">
                                 Solicitud de residencias
                             </button>

@@ -36,6 +36,11 @@ class Student extends Model
         return $this->belongsTo(Location::class, 'locality_id');
     }
 
+    public function residencyRequest()
+    {
+        return $this->hasOne(ResidencyRequest::class, 'user_id');
+    }
+
     /**
      * Accessors
      */

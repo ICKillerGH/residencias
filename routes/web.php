@@ -34,5 +34,6 @@ Route::middleware('auth')->group(function() {
         Route::get('/project-info',[StudentsController::class,'projectInfo'])->name('projectInfo');
         Route::put('/project-info', [StudentsController::class, 'updateProjectInfo'])->name('updateProjectInfo');
         Route::get('/residency-process',[ResidencyProcessController::class, 'residencyProcess'])->name('residencyProcess');
+        Route::post('/residency-process/residency-request',[ResidencyProcessController::class, 'residencyRequest'])->name('residencyRequest');
     });
 });

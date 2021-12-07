@@ -17,7 +17,7 @@
 
                     {{-- START DATE --}}
                     <x-inputs.text-field-row name="start_date" label="Fecha de inicio"
-                        placeholder="Ingresa la fecha de inicio" type="date" :default-value="$project->star_date" />
+                        placeholder="Ingresa la fecha de inicio" type="date" :default-value="$project->start_date" />
 
                     {{-- END DATE --}}
                     <x-inputs.text-field-row name="end_date" label="Fecha de termino"

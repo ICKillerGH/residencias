@@ -67,7 +67,7 @@
                         </li>
 
                         <li class="nav-item{{ $activePage == 'residency-process' ? ' active' : '' }}">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('students.residencyProcess') }}">
                                 <i class="material-icons">dashboard</i>
                                 <span class="sidebar-mini">
                                 </span>

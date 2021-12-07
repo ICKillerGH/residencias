@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\StudentsController;
 use App\Models\Admin;
 use App\Models\Student;
@@ -32,7 +33,6 @@ Route::middleware('auth')->group(function() {
         Route::put('/company-info',[StudentsController::class,'updateCompanyInfo'])->name('updateCompanyInfo');
         Route::get('/project-info',[StudentsController::class,'projectInfo'])->name('projectInfo');
         Route::put('/project-info', [StudentsController::class, 'updateProjectInfo'])->name('updateProjectInfo');
-
-
+        Route::get('/residency-process',[ResidencyProcessController::class, 'residencyProcess'])->name('residencyProcess');
     });
 });

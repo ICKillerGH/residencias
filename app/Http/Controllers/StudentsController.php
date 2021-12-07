@@ -124,6 +124,7 @@ class StudentsController extends Controller
             'project'=>$project,
         ] );
     }
+    
     public function updateProjectInfo(UpdateStudentProjectInfoRequest $request)
     {
         $userData = ['user_id' => Auth::id()];
@@ -152,4 +153,3 @@ class StudentsController extends Controller
         ]);
     }
 }
-;

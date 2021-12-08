@@ -48,6 +48,6 @@ class ResidencyProcessController extends Controller
             'residencyRequest' => $residencyRequest,
         ]);
 
-        return $pdf->stream('residency-request.pdf');
+        return $pdf->download('residency-request.pdf');
     }
 }

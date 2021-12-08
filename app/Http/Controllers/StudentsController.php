@@ -88,10 +88,7 @@ class StudentsController extends Controller
 
     public function companyInfo()
     {
-        /** @var User $user */
-        $user = Auth::user();
-
-        $company = $user->company ?? new Company();
+        $company = Company::firstWhere('user_id', Auth::id()) ?? new Company();
 
         return view('students.company-info', [
             'company' => $company,
@@ -116,15 +113,13 @@ class StudentsController extends Controller
 
     public function projectInfo()
     {
-        $user= Auth::user();
-
-        $project = $user->project ?? new Project();
+        $project = Project::firstWhere('user_id', Auth::id()) ?? new Project();
 
         return view('students.project-info',[
-            'project'=>$project,
+            'project'=> $project,
         ] );
     }
-    
+
     public function updateProjectInfo(UpdateStudentProjectInfoRequest $request)
     {
         $userData = ['user_id' => Auth::id()];
@@ -132,17 +127,17 @@ class StudentsController extends Controller
         $project = Project::firstWhere($userData) ?? new Project($userData);
 
         $data = $request->validated();
-        
+
         if (!$project->exists() && !$request->activity_schedule_image) {
             throw ValidationException::withMessages([
                 'activity_schedule_image' => 'La imagen del cronograma es requerida',
             ]);
         }
 
-        $path = $request->file('activity_schedule_image')->store('public/project');
+        $path = $request->activity_schedule_image->store('public/project');
 
         $data['activity_schedule_image'] = $path;
-        
+
         $project->fill($data);
 
         $project->save();

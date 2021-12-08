@@ -41,6 +41,27 @@ class Student extends Model
         return $this->hasOne(ResidencyRequest::class, 'user_id');
     }
 
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'user_id');
+    }
+
+    public function project()
+    {
+        return $this->hasOne(Project::class, 'user_id');
+    }
+
+    /**
+     * Scopes
+     */
+    public function scopeWithEmail($query)
+    {
+        return $query
+            ->join('users', 'students.user_id', '=', 'users.id')
+            ->select('students.*')
+            ->addSelect('users.email');
+    }
+
     /**
      * Accessors
      */

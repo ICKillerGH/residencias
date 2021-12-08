@@ -22,9 +22,9 @@ class CreateProjectsTable extends Migration
             $table->string('general_objective');
             $table->text('justification');
             $table->string('activity_schedule_image');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('user_id')->references('user_id')->on('students')->onDelete('CASCADE');
         });
     }
 

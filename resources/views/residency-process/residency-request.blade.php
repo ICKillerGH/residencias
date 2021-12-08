@@ -90,13 +90,13 @@
         <tbody>
             <tr>
                 <td width="12%">Nombre:</td>
-                <td colspan="3">{{ $user->student->first_name }} {{ $user->student->fathers_last_name }} {{ $user->student->mothers_last_name }}</td>
+                <td colspan="3">{{ $student->first_name }} {{ $student->fathers_last_name }} {{ $student->mothers_last_name }}</td>
             </tr>
             <tr>
                 <td>Carrera:</td>
-                <td>{{ $user->student->career->name }}</td>
+                <td>{{ $student->career->name }}</td>
                 <td width="13%">No. Cuenta</td>
-                <td width="15%">{{ $user->student->account_number }}</td>
+                <td width="15%">{{ $student->account_number }}</td>
             </tr>
         </tbody>
     </table>
@@ -155,7 +155,7 @@
     </p>
 
     <div class="footer">
-        <p class="student-signature">{{ $user->student->first_name }} {{ $user->student->fathers_last_name }} {{ $user->student->mothers_last_name }}</p>
+        <p class="student-signature">{{ $student->first_name }} {{ $student->fathers_last_name }} {{ $student->mothers_last_name }}</p>
         <p class="person-in-charge-signature">
             LCDA. Brenda González Pacheco
             <br>

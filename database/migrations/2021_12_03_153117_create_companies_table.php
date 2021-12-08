@@ -14,7 +14,7 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->primary();
+            $table->id();
             $table->string('business_name');
             $table->string('address_name');
             $table->string('person_in_charge');
@@ -24,8 +24,10 @@ class CreateCompaniesTable extends Migration
             $table->string('personal_phone_number', 10);
             $table->string('commercial_business');
             $table->string('zip_code', 10);
+            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+
+            $table->foreign('user_id')->references('user_id')->on('students')->onDelete('CASCADE');
 
         });
     }

@@ -23,7 +23,7 @@ class CreateResidencyRequestsTable extends Migration
 
             $table->foreign('user_id')->references('user_id')->on('students')->onDelete('CASCADE');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('CASCADE');
-            $table->foreign('company_id')->references('user_id')->on('companies')->onDelete('CASCADE');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('CASCADE');
         });
     }
 

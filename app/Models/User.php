@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasOne(Student::class);
     }
 
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
     /**
      * Scopes
      */

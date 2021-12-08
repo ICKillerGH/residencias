@@ -169,7 +169,7 @@ return [
         'personal_phone_number' => 'telefono personal',
         'commercial_business' => 'giro comercial',
         'zip_code' => 'codigo postal',
-
+        'teacher_id' => 'asesor interno',
     ],
 
 ];

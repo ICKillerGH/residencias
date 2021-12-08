@@ -73,6 +73,33 @@
                         </div>
                     </div>
 
+                    {{-- TEACHER --}}
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="teacher_id" class="d-block">Asesor interno</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-dynamic">
+                                <select
+                                    class="form-control"
+                                    name="teacher_id"
+                                    id="teacher_id"
+                                >
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    @foreach ($teachers as $teacher)
+                                        <option
+                                            value="{{ $teacher->user_id }}"
+                                            @if (old('teacher_id') == $teacher->user_id) selected @endif
+                                        >{{ $teacher->first_name }} {{ $teacher->fathers_last_name }} {{ $teacher->mothers_last_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('teacher_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
                     {{-- ACCOUNT NUMBER --}}
                     <x-inputs.text-field-row
                         name="account_number"

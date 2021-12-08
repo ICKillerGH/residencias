@@ -10,6 +10,7 @@ use App\Models\Career;
 use App\Models\Company;
 use App\Models\Location;
 use App\Models\Project;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,7 @@ class StudentsController extends Controller
     {
         return view('students.create', [
             'careers' => Career::get(),
+            'teachers' => Teacher::get(),
             'states' => Location::with(['locations.locations'])->state()->get(),
         ]);
     }

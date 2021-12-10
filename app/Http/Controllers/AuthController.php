@@ -11,7 +11,7 @@ class AuthController extends Controller
     protected const REDIRECTS = [
         User::ADMIN_ROLE => '/admins',
         User::STUDENT_ROLE => '/students/personal-info',
-        User::TEACHER_ROLE => '/',
+        User::TEACHER_ROLE => '/students',
     ];
 
     public function loginForm()

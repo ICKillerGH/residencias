@@ -10,6 +10,7 @@ use App\Models\Career;
 use App\Models\Company;
 use App\Models\Location;
 use App\Models\Project;
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,13 @@ class StudentsController extends Controller
 {
     public function index()
     {
-        $students = User::with(['student.career'])->isStudent()->paginate();
+        $user = Auth::user();
+
+        $students = Student::query()
+            ->withEmail()
+            ->with('career')
+            ->when($user->role === User::TEACHER_ROLE, fn($query) => $query->where('teacher_id', $user->id))
+            ->paginate();
 
         return view('students.index', [
             'students' => $students,
@@ -34,6 +41,13 @@ class StudentsController extends Controller
             'careers' => Career::get(),
             'teachers' => Teacher::get(),
             'states' => Location::with(['locations.locations'])->state()->get(),
+        ]);
+    }
+
+    public function show(Student $student)
+    {
+        return view('students.show', [
+            'student' => $student,
         ]);
     }
 

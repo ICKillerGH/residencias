@@ -36,15 +36,19 @@
                         <tbody>
                             @foreach ($students as $student)
                                 <tr>
-                                    <td>{{ $student->id }}</td>
+                                    <td>{{ $student->user_id }}</td>
                                     <td>{{ $student->email }}</td>
-                                    <td>{{ $student->student->first_name }}</td>
-                                    <td>{{ $student->student->fathers_last_name }}</td>
-                                    <td>{{ $student->student->mothers_last_name }}</td>
-                                    <td>{{ $student->student->sex_text }}</td>
-                                    <td>{{ $student->student->curp }}</td>
-                                    <td>{{ $student->student->career->name }}</td>
-                                    <td></td>
+                                    <td>{{ $student->first_name }}</td>
+                                    <td>{{ $student->fathers_last_name }}</td>
+                                    <td>{{ $student->mothers_last_name }}</td>
+                                    <td>{{ $student->sex_text }}</td>
+                                    <td>{{ $student->curp }}</td>
+                                    <td>{{ $student->career->name }}</td>
+                                    <td>
+                                        <a href="{{ route('students.show', $student) }}" class="btn btn-sm btn-info" title="Ver detalles">
+                                            <i class="material-icons">details</i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

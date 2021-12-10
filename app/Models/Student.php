@@ -41,6 +41,11 @@ class Student extends Model
         return $this->hasOne(ResidencyRequest::class, 'user_id');
     }
 
+    public function inProcessResidencyRequest()
+    {
+        return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', ResidencyRequest::STATUS_PROCESSING);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');
@@ -71,5 +76,10 @@ class Student extends Model
             'm' => 'Masculino',
             'f' => 'Femenino',
         ][$this->sex];
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->fathers_last_name} {$this->mothers_last_name}";
     }
 }

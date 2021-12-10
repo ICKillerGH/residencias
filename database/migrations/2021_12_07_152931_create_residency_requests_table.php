@@ -16,7 +16,7 @@ class CreateResidencyRequestsTable extends Migration
         Schema::create('residency_requests', function (Blueprint $table) {
             $table->id();
             $table->dateTime('request_date');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('company_id');
             $table->timestamps();

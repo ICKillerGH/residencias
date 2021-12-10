@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ResidencyRequest;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ResidencyProcessController extends Controller
 {
     public function residencyProcess()
     {
-        return view('students.residency-process');
+        return view('students.residency-process', [
+            'student' => Student::where('user_id', Auth::id())->firstOrFail(),
+        ]);
     }
 
     public function residencyRequest()
@@ -49,5 +55,89 @@ class ResidencyProcessController extends Controller
         ]);
 
         return $pdf->download('residency-request.pdf');
+    }
+
+    public function residencyRequestCorrections(Request $request, Student $student)
+    {
+        $residencyRequest = $student->inProcessResidencyRequest;
+
+        if (!$residencyRequest) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La petición de residencia debe estar en proceso para porder ser revisada',
+            ]);
+        }
+
+        $data = $request->validate([
+            'corrections' => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $residencyRequest->update([
+                'status' => ResidencyRequest::STATUS_NEEDS_CORRECTIONS,
+            ]);
+
+            $residencyRequest->corrections()->create(['content' => $data['corrections']]);
+
+            DB::commit();
+        } catch (Throwable $t) {
+            DB::rollBack();
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde',
+            ]);
+        }
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Las correciones fueron envias correctamente',
+        ]);
+    }
+
+    public function residencyRequestMarkCorrectionsAsSolved()
+    {
+        $residencyRequest = ResidencyRequest::query()
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        if (!$residencyRequest->needsCorrections()) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La petición de residencia no necesita correciones',
+            ]);
+        }
+
+        $residencyRequest->status = ResidencyRequest::STATUS_PROCESSING;
+
+        $residencyRequest->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Las correciones fueron verificadas',
+        ]);
+    }
+
+    public function residencyRequestMarkAsApproved(Student $student)
+    {
+        $residencyRequest = $student->inProcessResidencyRequest;
+
+        if (!$residencyRequest) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La petición de residencia debe estar en proceso para porder ser revisada',
+            ]);
+        }
+
+        $residencyRequest->status = ResidencyRequest::STATUS_APPROVED;
+
+        $residencyRequest->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'La petición de residencia ha sido aprovada',
+        ]);
     }
 }

@@ -46,6 +46,11 @@ class Student extends Model
         return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', ResidencyRequest::STATUS_PROCESSING);
     }
 
+    public function approvedResidencyRequest()
+    {
+        return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', ResidencyRequest::STATUS_APPROVED);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

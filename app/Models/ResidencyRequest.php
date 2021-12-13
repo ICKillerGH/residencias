@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class ResidencyRequest extends Model
 {
@@ -40,6 +41,16 @@ class ResidencyRequest extends Model
             self::STATUS_APPROVED => 'success',
             self::STATUS_NEEDS_CORRECTIONS => 'danger',
         ][$this->status];
+    }
+
+    /**
+     * Mutators
+     */
+    public function setSignedDocumentAttribute($value)
+    {
+        $this->attributes['signed_document'] = $value instanceof UploadedFile
+            ? $value->store('public/residency-request')
+            : $value;
     }
 
     /**

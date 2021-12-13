@@ -8,6 +8,14 @@
             </div>
         @endif
 
+        @if ($errors->isNotEmpty())
+            <div class="alert alert-danger" role="alert">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+            </div>
+        @endif
+
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title">Proceso de residencia profesional</h4>
@@ -25,14 +33,19 @@
                         </form>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-block btn-info">
+                        <button class="btn btn-block btn-info" data-target="#residencyRequestUploadDocModal" data-toggle="modal">
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-block btn-success">
+                        <a
+                            @if ($student->residencyRequest->signed_document)
+                                href="{{ route('students.residencyRequestDownloadSignedDoc', $student) }}"
+                            @endif
+                            class="btn btn-block btn-success @if (!$student->residencyRequest->signed_document) disabled @endif"
+                        >
                             Ver documento
-                        </button>
+                        </a>
                     </div>
                     <div class="col-md-2">
                         <button
@@ -99,6 +112,7 @@
 
 
 @push('modals')
+    {{-- CORRECTIONS MODAL --}}
     @if ($student->residencyRequest->corrections->isNotEmpty())
         <div class="modal" tabindex="-1" id="residencyRequestCorrectionsModal">
             <div class="modal-dialog">
@@ -128,4 +142,33 @@
             </div>
         </div>
     @endif
+
+    {{-- UPLOAD DOC MODAL --}}
+    <div class="modal" tabindex="-1" id="residencyRequestUploadDocModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.residencyRequestUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cargar documento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="signed_document">Documento</label>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document" accept="application/pdf" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endpush

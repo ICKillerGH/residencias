@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResidencyRequestUploadSignedDocRequest;
 use App\Models\ResidencyRequest;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class ResidencyProcessController extends Controller
@@ -139,5 +141,45 @@ class ResidencyProcessController extends Controller
             'type' => 'success',
             'message' => 'La petición de residencia ha sido aprovada',
         ]);
+    }
+
+    public function residencyRequestUploadSignedDoc(ResidencyRequestUploadSignedDocRequest $request, Student $student)
+    {
+        $residencyRequest = $student->approvedResidencyRequest;
+
+        if (!$residencyRequest) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La petición de residencia debe aprovada',
+            ]);
+        }
+
+        $residencyRequest->update($request->validated());
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'El documento se subió con exitosamente',
+        ]);
+    }
+
+    public function residencyRequestDownloadSignedDoc(Student $student)
+    {
+        $residencyRequest = $student->approvedResidencyRequest;
+
+        if (!$residencyRequest) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La petición de residencia debe aprovada',
+            ]);
+        }
+
+        if (!$residencyRequest->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento no ha sido cagado aún',
+            ]);
+        }
+
+        return Storage::download($residencyRequest->signed_document);
     }
 }

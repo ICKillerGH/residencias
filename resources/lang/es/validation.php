@@ -171,6 +171,7 @@ return [
         'zip_code' => 'codigo postal',
         'teacher_id' => 'asesor interno',
         'corrections' => 'correcciones',
+        'signed_document' => 'documento firmado',
     ],
 
 ];

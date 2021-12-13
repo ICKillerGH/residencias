@@ -39,5 +39,7 @@ Route::middleware('auth')->group(function() {
         Route::put('/residency-process/residency-request/corrections/mark-as-solved', [ResidencyProcessController::class, 'residencyRequestMarkCorrectionsAsSolved'])->name('residencyRequestMarkCorrectionsAsSolved');
         Route::post('/{student}/residency-request/corrections', [ResidencyProcessController::class, 'residencyRequestCorrections'])->name('residencyRequestCorrections');
         Route::put('/{student}/residency-request/mark-as-approved', [ResidencyProcessController::class, 'residencyRequestMarkAsApproved'])->name('residencyRequestMarkAsApproved');
+        Route::put('/{student}/residency-request/signed-document', [ResidencyProcessController::class, 'residencyRequestUploadSignedDoc'])->name('residencyRequestUploadSignedDoc');
+        Route::get('/{student}/residency-request/signed-document', [ResidencyProcessController::class, 'residencyRequestDownloadSignedDoc'])->name('residencyRequestDownloadSignedDoc');
     });
 });

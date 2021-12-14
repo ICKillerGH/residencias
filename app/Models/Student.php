@@ -38,7 +38,7 @@ class Student extends Model
 
     public function residencyRequest()
     {
-        return $this->hasOne(ResidencyRequest::class, 'user_id');
+        return $this->hasOne(ResidencyRequest::class, 'user_id')->withDefault();
     }
 
     public function inProcessResidencyRequest()

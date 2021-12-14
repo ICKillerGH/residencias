@@ -40,7 +40,7 @@ class ResidencyRequest extends Model
             self::STATUS_PROCESSING => 'warning',
             self::STATUS_APPROVED => 'success',
             self::STATUS_NEEDS_CORRECTIONS => 'danger',
-        ][$this->status];
+        ][$this->status] ?? '';
     }
 
     /**

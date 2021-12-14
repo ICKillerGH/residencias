@@ -125,7 +125,7 @@
                     <div class="col-md-6">
                         <form action="{{ route('students.residencyRequest') }}" method="POST">
                             @csrf
-                            <button class="btn btn-block btn-{{ $student->residencyRequest->btn_color }}">
+                            <button class="btn btn-block btn-{{ $student->residencyRequest->btn_color ?? '' }}">
                                 Solicitud de residencias
                             </button>
                         </form>
@@ -144,7 +144,7 @@
                             class="btn btn-block btn-danger"
                             data-toggle="modal"
                             data-target="#correctionsModal"
-                            @if (!$student->residencyRequest->needsCorrections()) disabled @endif
+                            @if (!$student->residencyRequest || ($student->residencyRequest && !$student->residencyRequest->needsCorrections())) disabled @endif
                         >
                             Enviar correcciones
                         </button>

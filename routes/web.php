@@ -43,6 +43,10 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/residency-request/signed-document', [ResidencyProcessController::class, 'residencyRequestUploadSignedDoc'])->name('residencyRequestUploadSignedDoc');
         Route::get('/{student}/residency-request/signed-document', [ResidencyProcessController::class, 'residencyRequestDownloadSignedDoc'])->name('residencyRequestDownloadSignedDoc');
         Route::post('/residency-process/presentation-letter', [PresentationLetterController::class, 'presentationLetter'])->name('presentationLetter');
+        Route::post('/{student}/presentation-letter/corrections', [PresentationLetterController::class, 'presentatioLetterCorrections'])->name('presentatioLetterCorrections');
+        Route::put('/residency-process/presentation-letter/corrections/mark-as-solved', [PresentationLetterController::class, 'presentationLetterMarkCorrectionsAsSolved'])->name('presentationLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/presentation-letter/mark-as-approved', [PresentationLetterController::class, 'presentationLetterMarkAsApproved'])->name('presentationLetterMarkAsApproved');
 
+        
     });
 });

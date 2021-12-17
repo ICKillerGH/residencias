@@ -17,14 +17,6 @@ class ResidencyRequest extends Model
     protected $dates = ['request_date'];
 
     /**
-     * Relationships
-     */
-    public function corrections()
-    {
-        return $this->morphMany(Correction::class, 'correctionable');
-    }
-
-    /**
      * Mutators
      */
     public function setSignedDocumentAttribute($value)
@@ -32,13 +24,5 @@ class ResidencyRequest extends Model
         $this->attributes['signed_document'] = $value instanceof UploadedFile
             ? $value->store('public/residency-request')
             : $value;
-    }
-
-    /**
-     * Methods
-     */
-    public function needsCorrections()
-    {
-        return $this->status === DocumentStatus::STATUS_NEEDS_CORRECTIONS;
     }
 }

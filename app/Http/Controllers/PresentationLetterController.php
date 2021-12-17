@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Throwable;
 use App\Models\Student;
-use Barryvdh\DomPDF\Facade as PDF;
+use App\Enum\DocumentStatus;
+use App\Models\PresentationLetter;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PresentationLetterController extends Controller
 {
 
-    public function presentationLetter()
+    public function presentationLetter(Request $request)
     {
+        $userId = $request->user()->isStudent() ? Auth::id() : $request->user_id;
+        
         $student = Student::query()
             ->withEmail()
-            ->where('user_id', Auth::id())
-            ->first();
+            ->where('user_id', $userId)
+            ->firstOrFail();
+
         if (!$student->approvedResidencyRequest){
             return redirect()->route('students.residencyProcess')->with('alert', [
                 'type' => 'danger',
                 'message' => 'Debe estar aprobado la peticion de residencia',
             ]);
         }
+
         $presentationLetter = $student->presentationLetter->exists()
             ? $student->presentationLetter
             : $student->presentationLetter()->create([
@@ -31,8 +39,92 @@ class PresentationLetterController extends Controller
         $pdf = PDF::loadView('residency-process.presentation-letter',[
             'student'=>$student,
             'presentationLetter'=>$presentationLetter,
-            
         ]);
+        
         return $pdf->stream('presentation-letter');
+    }
+
+    public function presentatioLetterCorrections(Request $request, Student $student)
+    {
+        $presentationLetter = $student->inProcessPresentationLetter;
+
+        if (!$presentationLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de presentación debe estar en proceso para poder ser revisada',
+            ]);
+        }
+
+        $data = $request->validate([
+            'corrections' => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $presentationLetter->update([
+                'status' => DocumentStatus::STATUS_NEEDS_CORRECTIONS,
+            ]);
+
+            $presentationLetter->corrections()->create(['content' => $data['corrections']]);
+
+            DB::commit();
+        } catch (Throwable $t) {
+            DB::rollBack();
+            
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde',
+            ]);
+        }
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Las correciones fueron envias correctamente',
+        ]);
+    }
+
+    public function presentationLetterMarkCorrectionsAsSolved()
+    {
+        $presentationLetter = PresentationLetter::query()
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+        
+        if (!$presentationLetter->needsCorrections()) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de presentación no necesita correciones',
+            ]);
+        }
+
+        $presentationLetter->status = DocumentStatus::STATUS_PROCESSING;
+
+        $presentationLetter->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Las correciones fueron verificadas',
+        ]); 
+    }
+
+    public function presentationLetterMarkAsApproved(Student $student)
+    {
+        $presentationLetter = $student->inProcessPresentationLetter;
+
+        if (!$presentationLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de presentación debe estar en proceso para porder ser revisada',
+            ]);
+        }
+
+        $presentationLetter->status = DocumentStatus::STATUS_APPROVED;
+
+        $presentationLetter->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'La carta de presentación ha sido aprovada',
+        ]);
     }
 }

@@ -25,12 +25,7 @@
                 {{-- Solicitud de residencias --}}
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="{{ route('students.residencyRequest') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-block btn-{{ $student->residencyRequest->btn_color }}">
-                                Solicitud de residencias
-                            </button>
-                        </form>
+                        @include('residency-process.partials.residency-request-btn')
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-block btn-info" data-target="#residencyRequestUploadDocModal" data-toggle="modal">
@@ -50,7 +45,6 @@
                     <div class="col-md-2">
                         <button
                             class="btn btn-block btn-warning"
-                            @if ($student->residencyRequest->corrections->isEmpty()) disabled @endif
                             data-toggle="modal"
                             data-target="#residencyRequestCorrectionsModal"
                         >
@@ -63,12 +57,7 @@
                 {{-- Carta de presentación --}}
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="{{ route('students.presentationLetter') }}" method="POST">
-                        @csrf
-                            <button class="btn btn-block btn-{{ $student->presentationLetter->btn_color }}">
-                                Carta de presentación
-                            </button>
-                        </form>
+                        @include('residency-process.partials.presentation-letter-btn')
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-block btn-info" data-target="" data-toggle="modal">
@@ -87,7 +76,7 @@
                         <button
                             class="btn btn-block btn-warning"
                             data-toggle="modal"
-                            data-target=""
+                            data-target="#presentationLetterCorrectionsModal"
                         >
                             Ver correcciones
                         </button>
@@ -202,4 +191,35 @@
             </div>
         </div>
     </div>
+
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->presentationLetter->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="presentationLetterCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.presentationLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->presentationLetter->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->presentationLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @endpush

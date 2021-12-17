@@ -22,13 +22,15 @@ class ResidencyProcessController extends Controller
         ]);
     }
 
-    public function residencyRequest()
+    public function residencyRequest(Request $request)
     {
+        $userId = $request->user()->isStudent() ? Auth::id() : $request->user_id;
+        
         $student = Student::query()
             ->withEmail()
             ->with(['residencyRequest', 'project', 'company'])
-            ->where('user_id', Auth::id())
-            ->first();
+            ->where('user_id', $userId)
+            ->firstOrFail();
 
         if (!$student->project) {
             return redirect()->route('students.projectInfo')->with('alert', [
@@ -59,7 +61,7 @@ class ResidencyProcessController extends Controller
             'residencyRequest' => $residencyRequest,
         ]);
 
-        return $pdf->download('residency-request.pdf');
+        return $pdf->stream('residency-request.pdf');
     }
 
     public function residencyRequestCorrections(Request $request, Student $student)
@@ -69,7 +71,7 @@ class ResidencyProcessController extends Controller
         if (!$residencyRequest) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'La petición de residencia debe estar en proceso para porder ser revisada',
+                'message' => 'La petición de residencia debe estar en proceso para poder ser revisada',
             ]);
         }
 

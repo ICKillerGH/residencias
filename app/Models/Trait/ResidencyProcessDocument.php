@@ -3,9 +3,18 @@
 namespace App\Models\Trait;
 
 use App\Enum\DocumentStatus;
+use App\Models\Correction;
 
 trait ResidencyProcessDocument
-{    
+{ 
+    /**
+     * Relationships
+     */
+    public function corrections()
+    {
+        return $this->morphMany(Correction::class, 'correctionable');
+    }
+
     /**
      * Accessors
      */
@@ -21,5 +30,13 @@ trait ResidencyProcessDocument
             DocumentStatus::STATUS_APPROVED => 'success',
             DocumentStatus::STATUS_NEEDS_CORRECTIONS => 'danger',
         ][$this->status] ?? '';
+    }
+
+    /**
+     * Methods
+     */
+    public function needsCorrections()
+    {
+        return $this->status === DocumentStatus::STATUS_NEEDS_CORRECTIONS;
     }
 }

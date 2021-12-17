@@ -67,4 +67,12 @@ class User extends Authenticatable
     {
         return $query->where('role', self::STUDENT_ROLE);
     }
+
+    /**
+     * Methods
+     */
+    public function isStudent()
+    {
+        return $this->role === self::STUDENT_ROLE;
+    }
 }

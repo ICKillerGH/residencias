@@ -123,12 +123,7 @@
                 {{-- Solicitud de residencias --}}
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="{{ route('students.residencyRequest') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-block btn-{{ $student->residencyRequest->btn_color ?? '' }}">
-                                Solicitud de residencias
-                            </button>
-                        </form>
+                        @include('residency-process.partials.residency-request-btn')
                     </div>
                     <div class="col-md-3">
                         <form action="{{ route('students.residencyRequestMarkAsApproved', $student) }}" method="POST">
@@ -143,7 +138,7 @@
                         <button
                             class="btn btn-block btn-danger"
                             data-toggle="modal"
-                            data-target="#correctionsModal"
+                            data-target="#residencyRequestCorrectionsModal"
                             @if (!$student->residencyRequest || ($student->residencyRequest && !$student->residencyRequest->needsCorrections())) disabled @endif
                         >
                             Enviar correcciones
@@ -152,11 +147,33 @@
                 </div>
                 {{-- Solicitud de residencias end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Carta de presentación
-                    </button>
-                </form>
+                {{-- Carta de presentación --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.presentation-letter-btn')
+                    </div>
+                    <div class="col-md-3">
+                        <form action="{{ route('students.presentationLetterMarkAsApproved', $student) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button class="btn btn-block btn-success" @if (!$student->inProcessPresentationLetter) disabled @endif>
+                                Aprobar documento
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <button
+                            class="btn btn-block btn-danger"
+                            data-toggle="modal"
+                            data-target="#presentatioLetterCorrectionsModal"
+                            @if (!$student->presentationletter || !$student->presentationletter->needsCorrections()) disabled @endif
+                        >
+                            Enviar correcciones
+                        </button>
+                    </div>
+                </div> 
+                {{-- Carta de presentación end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Carta de compromiso
@@ -203,10 +220,40 @@
 @endsection
 
 @push('modals')
-    <div class="modal" tabindex="-1" id="correctionsModal">
+    {{-- RESIDENCY REQUEST CORRECTIONS MODAL --}}
+    <div class="modal" tabindex="-1" id="residencyRequestCorrectionsModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('students.residencyRequestCorrections', $student) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enviar correcciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="corrections">Correciones</label>
+                            <textarea name="corrections" id="corrections" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- RESIDENCY REQUEST CORRECTIONS MODAL END --}}
+
+
+    {{-- PRESENTATION LETTER CORRECTIONS MODAL END --}}
+    <div class="modal" tabindex="-1" id="presentatioLetterCorrectionsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.presentatioLetterCorrections', $student) }}" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title">Enviar correcciones</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

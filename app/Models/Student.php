@@ -41,10 +41,6 @@ class Student extends Model
     {
         return $this->hasOne(ResidencyRequest::class, 'user_id')->withDefault();
     }
-    public function presentationLetter()
-    {
-        return $this->hasOne(PresentationLetter::class,'user_id')->withDefault();
-    }
 
     public function inProcessResidencyRequest()
     {
@@ -54,6 +50,16 @@ class Student extends Model
     public function approvedResidencyRequest()
     {
         return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
+    
+    public function presentationLetter()
+    {
+        return $this->hasOne(PresentationLetter::class,'user_id')->withDefault();
+    }
+    
+    public function inProcessPresentationLetter()
+    {
+        return $this->hasOne(PresentationLetter::class,'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
     }
 
     public function company()

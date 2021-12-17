@@ -65,7 +65,7 @@
                     <div class="col-md-6">
                         <form action="{{ route('students.presentationLetter') }}" method="POST">
                         @csrf
-                            <button class="btn btn-block btn-warning">
+                            <button class="btn btn-block btn-{{ $student->presentationLetter->btn_color }}">
                                 Carta de presentación
                             </button>
                         </form>

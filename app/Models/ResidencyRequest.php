@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
+use App\Enum\DocumentStatus;
+use App\Models\Trait\ResidencyProcessDocument;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
 class ResidencyRequest extends Model
 {
-    use HasFactory;
-
-    public const STATUS_PROCESSING = 'processing';
-    public const STATUS_APPROVED = 'approved';
-    public const STATUS_NEEDS_CORRECTIONS = 'needs_corrections';
+    use HasFactory, ResidencyProcessDocument;
 
     protected $guarded = [];
 
@@ -24,23 +22,6 @@ class ResidencyRequest extends Model
     public function corrections()
     {
         return $this->morphMany(Correction::class, 'correctionable');
-    }
-
-    /**
-     * Accessors
-     */
-    public function getRequestDateFormattedAttribute()
-    {
-        return "{$this->request_date->day} de {$this->request_date->monthName} de {$this->request_date->year}";
-    }
-
-    public function getBtnColorAttribute()
-    {
-        return [
-            self::STATUS_PROCESSING => 'warning',
-            self::STATUS_APPROVED => 'success',
-            self::STATUS_NEEDS_CORRECTIONS => 'danger',
-        ][$this->status] ?? '';
     }
 
     /**
@@ -58,6 +39,6 @@ class ResidencyRequest extends Model
      */
     public function needsCorrections()
     {
-        return $this->status === self::STATUS_NEEDS_CORRECTIONS;
+        return $this->status === DocumentStatus::STATUS_NEEDS_CORRECTIONS;
     }
 }

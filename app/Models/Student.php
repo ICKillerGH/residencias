@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\DocumentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,12 +48,12 @@ class Student extends Model
 
     public function inProcessResidencyRequest()
     {
-        return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', ResidencyRequest::STATUS_PROCESSING);
+        return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
     }
 
     public function approvedResidencyRequest()
     {
-        return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', ResidencyRequest::STATUS_APPROVED);
+        return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
 
     public function company()

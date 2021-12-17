@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\DocumentStatus;
 use App\Http\Requests\ResidencyRequestUploadSignedDocRequest;
 use App\Models\ResidencyRequest;
 use App\Models\Student;
@@ -80,7 +81,7 @@ class ResidencyProcessController extends Controller
 
         try {
             $residencyRequest->update([
-                'status' => ResidencyRequest::STATUS_NEEDS_CORRECTIONS,
+                'status' => DocumentStatus::STATUS_NEEDS_CORRECTIONS,
             ]);
 
             $residencyRequest->corrections()->create(['content' => $data['corrections']]);
@@ -114,7 +115,7 @@ class ResidencyProcessController extends Controller
             ]);
         }
 
-        $residencyRequest->status = ResidencyRequest::STATUS_PROCESSING;
+        $residencyRequest->status = DocumentStatus::STATUS_PROCESSING;
 
         $residencyRequest->save();
 
@@ -135,7 +136,7 @@ class ResidencyProcessController extends Controller
             ]);
         }
 
-        $residencyRequest->status = ResidencyRequest::STATUS_APPROVED;
+        $residencyRequest->status = DocumentStatus::STATUS_APPROVED;
 
         $residencyRequest->save();
 

@@ -1,22 +1,24 @@
 <?php
 
 use App\Enum\DocumentStatus;
-use App\Models\ResidencyRequest;
+use App\Models\PresentationLetter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusColumnToResidencyRequestsTable extends Migration
+class AddStatusFieldToPresentationLettersTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
+
     public function up()
     {
-        Schema::table('residency_requests', function (Blueprint $table) {
-            $table->string('status')->default(DocumentStatus::STATUS_PROCESSING)->after('company_id');
+        Schema::table('presentation_letters', function (Blueprint $table) {
+            $table->string('status')->default(DocumentStatus::STATUS_PROCESSING)->after('user_id');
         });
     }
 
@@ -27,8 +29,8 @@ class AddStatusColumnToResidencyRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::table('residency_requests', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('presentation_letters', function (Blueprint $table) {
+           $table->dropColumn('status');
         });
     }
 }

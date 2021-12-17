@@ -70,17 +70,7 @@
     </style>
 </head>
 <body>
-    <div>
-        <img src="{{ asset('img/escudo-mexico.jpg') }}" alt="" style="height: 80px;">
-        <img src="{{ asset('img/umb-logo.jpg') }}" alt="" style="height: 50px; float:right;">
-    </div>
-
-    <h1 class="title">UNIVERSIDAD MEXIQUENSE DEL BICENTENARIO</h1>
-    <h2 class="subtitle">DIRECCIÓN ACADÉMICA</h2>
-
-    <p class="internal-company-name">Unidad de Estudios Superiores Villa Victoria</p>
-
-    <div class="document-name">SOLICITUD DE RESIDENCIAS PROFESIONALES</div>
+    @include('residency-process.partials.header', ['title' => 'SOLICITUD DE RESIDENCIAS PROFESIONALES'])
 
     <p class="request-date"><b>Fecha de solicitud:</b> {{ $residencyRequest->request_date_formatted }}</p>
 

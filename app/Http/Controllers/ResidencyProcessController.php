@@ -43,11 +43,13 @@ class ResidencyProcessController extends Controller
             ]);
         }
 
-        $residencyRequest = $student->residencyRequest ?? $student->residencyRequest()->create([
-            'request_date' => now(),
-            'project_id' => $student->project->id,
-            'company_id' => $student->company->id,
-        ]);
+        $residencyRequest = $student->residencyRequest->exists()
+            ? $student->residencyRequest
+            : $student->residencyRequest()->create([
+                'request_date' => now(),
+                'project_id' => $student->project->id,
+                'company_id' => $student->company->id,
+            ]);
 
         $pdf = PDF::loadView('residency-process.residency-request', [
             'student' => $student,

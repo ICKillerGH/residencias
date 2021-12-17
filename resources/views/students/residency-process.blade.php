@@ -60,11 +60,42 @@
                 </div>
                 {{-- Solicitud de residencias end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Carta de presentación
-                    </button>
-                </form>
+                {{-- Carta de presentación --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="{{ route('students.presentationLetter') }}" method="POST">
+                        @csrf
+                            <button class="btn btn-block btn-warning">
+                                Carta de presentación
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-block btn-info" data-target="" data-toggle="modal">
+                            Cargar documento
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a
+                            href="#"
+                            class="btn btn-block btn-success"
+                        >
+                            Ver documento
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-warning"
+                            data-toggle="modal"
+                            data-target=""
+                        >
+                            Ver correcciones
+                        </button>
+                    </div>
+
+                </div>
+                {{-- Carta de presentación end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Carta de compromiso

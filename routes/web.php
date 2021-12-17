@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PresentationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\StudentsController;
 use App\Models\Admin;
@@ -41,5 +42,7 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/residency-request/mark-as-approved', [ResidencyProcessController::class, 'residencyRequestMarkAsApproved'])->name('residencyRequestMarkAsApproved');
         Route::put('/{student}/residency-request/signed-document', [ResidencyProcessController::class, 'residencyRequestUploadSignedDoc'])->name('residencyRequestUploadSignedDoc');
         Route::get('/{student}/residency-request/signed-document', [ResidencyProcessController::class, 'residencyRequestDownloadSignedDoc'])->name('residencyRequestDownloadSignedDoc');
+        Route::post('/residency-process/presentation-letter', [PresentationLetterController::class, 'presentationLetter'])->name('presentationLetter');
+
     });
 });

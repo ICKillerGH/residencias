@@ -14,7 +14,14 @@ class CareerSeeder extends Seeder
      */
     public function run()
     {
-        Career::create(['name' => 'Licenciatura en informática']);
-        Career::create(['name' => 'Licenciatura en derecho']);
+        Career::create([
+            'name' => 'Licenciatura en informática',
+            'abreviation'=>'LI',
+        ]);
+        Career::create([
+            'name' => 'Licenciatura en derecho',
+            'abreviation'=>'LD',
+        ]);
+        
     }
 }

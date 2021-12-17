@@ -40,6 +40,10 @@ class Student extends Model
     {
         return $this->hasOne(ResidencyRequest::class, 'user_id')->withDefault();
     }
+    public function presentationLetter()
+    {
+        return $this->hasOne(PresentationLetter::class,'user_id')->withDefault();
+    }
 
     public function inProcessResidencyRequest()
     {
@@ -87,4 +91,5 @@ class Student extends Model
     {
         return "{$this->first_name} {$this->fathers_last_name} {$this->mothers_last_name}";
     }
+    
 }

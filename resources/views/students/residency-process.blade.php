@@ -66,7 +66,7 @@
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
+                    <a
                         @if ($student->presentationLetter->signed_document)
                             href="{{ route('students.presentationLetterDownloadSignedDoc', $student) }}"
                         @endif
@@ -95,17 +95,20 @@
                         @include('residency-process.partials.commitment-letter-btn')  
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-block btn-info" data-target="" data-toggle="modal">
+                        <button class="btn btn-block btn-info" data-target="#commitmentLetterUploadDocModal" data-toggle="modal">
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
                         <a
-                            href="#"
-                            class="btn btn-block btn-success"
-                        >
-                            Ver documento
-                        </a>
+                        @if ($student->commitmentLetter->signed_document)
+                            href="{{ route('students.commitmentLetterDownloadSignedDoc', $student) }}"
+                        @endif
+                        class="btn btn-block btn-success @if (!$student->commitmentLetter->signed_document) disabled @endif"
+                        target="_blank"
+                         >
+                        Ver documento
+                         </a>
                     </div>
                     <div class="col-md-2">
                         <button
@@ -239,6 +242,34 @@
                         <div class="form-group">
                             <label for="signed_document_pl">Documento</label>
                             <input type="file" class="form-control" name="signed_document" id="signed_document_pl" accept="application/pdf" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- UPLOAD DOC COMMITMENT LETTER MODAL --}}
+    <div class="modal" tabindex="-1" id="commitmentLetterUploadDocModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.commitmentLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cargar documento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="signed_document_cl">Documento</label>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_cl" accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">

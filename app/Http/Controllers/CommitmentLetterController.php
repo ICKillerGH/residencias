@@ -120,4 +120,46 @@ class CommitmentLetterController extends Controller
             'message' => 'La carta de compromiso ha sido aprovada',
         ]);
     }
+    public function commitmentLetterUploadSignedDoc(Request $request, Student $student)
+    {
+        $data = $request->validate([
+            'signed_document' => 'required|file|mimes:pdf',
+        ]);
+        
+        $commitmentLetter = $student->approvedCommitmentLetter;
+
+        if (!$commitmentLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta compromiso debe ser aprovada',
+            ]);
+        }
+
+        $commitmentLetter->update($data);
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'El documento se subió con exitosamente',
+        ]);
+    }
+    public function commitmentLetterDownloadSignedDoc(Student $student)
+    {
+        $commitmentLetter = $student->approvedCommitmentLetter;
+
+        if (!$commitmentLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta compromiso debe ser aprovada',
+            ]);
+        }
+
+        if (!$commitmentLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento no ha sido cargado aún',
+            ]);
+        }
+        
+        return response()->file(storage_path("app/{$commitmentLetter->signed_document}"));
+    }
 }

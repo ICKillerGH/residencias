@@ -56,6 +56,10 @@ class Student extends Model
     {
         return $this->hasOne(PresentationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
+    public function approvedCommitmentLetter()
+    {
+        return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
     
     public function presentationLetter()
     {

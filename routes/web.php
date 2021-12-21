@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/commitment-letter/mark-as-approved', [CommitmentLetterController::class, 'commitmentLetterMarkAsApproved'])->name('commitmentLetterMarkAsApproved');
         Route::put('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterUploadSignedDoc'])->name('presentationLetterUploadSignedDoc');
         Route::get('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterDownloadSignedDoc'])->name('presentationLetterDownloadSignedDoc');
+        Route::put('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterUploadSignedDoc'])->name('commitmentLetterUploadSignedDoc');
+        Route::get('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterDownloadSignedDoc'])->name('commitmentLetterDownloadSignedDoc');
+
 
     });
 });

@@ -17,6 +17,7 @@ class CreateCommitmentLettersTable extends Migration
         Schema::create('commitment_letters', function (Blueprint $table) {
             $table->id();
             $table->dateTime('request_date');
+            $table->string('signed_document')->nullable();
             $table->unsignedBigInteger('user_id')->unique();
             $table->unsignedBigInteger('company_id');
             $table->string('status')->default(DocumentStatus::STATUS_PROCESSING);

@@ -90,6 +90,28 @@
                     <div class="col-md-6">
                         @include('residency-process.partials.commitment-letter-btn')  
                     </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-block btn-info" data-target="" data-toggle="modal">
+                            Cargar documento
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a
+                            href="#"
+                            class="btn btn-block btn-success"
+                        >
+                            Ver documento
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-warning"
+                            data-toggle="modal"
+                            data-target="#commitmentLetterCorrectionsModal"
+                        >
+                            Ver correcciones
+                        </button>
+                    </div>
                 </div>
                 {{-- Carta de compromiso end --}}
                 
@@ -225,4 +247,35 @@
             </div>
         </div>
     @endif
+
+     {{-- CORRECTIONS MODAL --}}
+     @if ($student->commitmentLetter->corrections->isNotEmpty())
+     <div class="modal" tabindex="-1" id="commitmentLetterCorrectionsModal">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <form action="{{ route('students.commitmentLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                     <div class="modal-header">
+                         <h5 class="modal-title">Enviar correcciones</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         @csrf
+                         @method('PUT')
+                         <ul>
+                             @foreach ($student->commitmentLetter->corrections as $correction)
+                                 <li>{{ $correction->content }}</li>
+                             @endforeach
+                         </ul>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                         <button class="btn btn-primary" @if (!$student->commitmentLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ @endif
 @endpush

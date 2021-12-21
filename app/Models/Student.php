@@ -67,6 +67,11 @@ class Student extends Model
         return $this->hasOne(CommitmentLetter::class, 'user_id')->withDefault();
     }
 
+    public function inProcessCommitmentLetter()
+    {
+        return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

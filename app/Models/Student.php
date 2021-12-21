@@ -54,12 +54,17 @@ class Student extends Model
     
     public function presentationLetter()
     {
-        return $this->hasOne(PresentationLetter::class,'user_id')->withDefault();
+        return $this->hasOne(PresentationLetter::class, 'user_id')->withDefault();
     }
     
     public function inProcessPresentationLetter()
     {
-        return $this->hasOne(PresentationLetter::class,'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+        return $this->hasOne(PresentationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+
+    public function commitmentLetter()
+    {
+        return $this->hasOne(CommitmentLetter::class, 'user_id')->withDefault();
     }
 
     public function company()

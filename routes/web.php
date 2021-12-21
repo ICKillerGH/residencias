@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommitmentLetterController;
 use App\Http\Controllers\PresentationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\StudentsController;
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function() {
         Route::post('/{student}/presentation-letter/corrections', [PresentationLetterController::class, 'presentatioLetterCorrections'])->name('presentatioLetterCorrections');
         Route::put('/residency-process/presentation-letter/corrections/mark-as-solved', [PresentationLetterController::class, 'presentationLetterMarkCorrectionsAsSolved'])->name('presentationLetterMarkCorrectionsAsSolved');
         Route::put('/{student}/presentation-letter/mark-as-approved', [PresentationLetterController::class, 'presentationLetterMarkAsApproved'])->name('presentationLetterMarkAsApproved');
+        Route::post('/residency-process/commitment letter', [CommitmentLetterController::class, 'commitmentLetter'])->name('commitmentLetter');
 
         
     });

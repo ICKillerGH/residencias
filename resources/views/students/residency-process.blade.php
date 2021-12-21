@@ -85,11 +85,14 @@
                 </div>
                 {{-- Carta de presentación end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Carta de compromiso
-                    </button>
-                </form>
+                {{-- Carta de compromiso --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.commitment-letter-btn')  
+                    </div>
+                </div>
+                {{-- Carta de compromiso end --}}
+                
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Carta de aceptación

@@ -16,6 +16,7 @@ class CreatePresentationLettersTable extends Migration
         Schema::create('presentation_letters', function (Blueprint $table) {
             $table->id();
             $table->dateTime('request_date');
+            $table->string('signed_document')->nullable();
             $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
             

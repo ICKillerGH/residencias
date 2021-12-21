@@ -127,4 +127,46 @@ class PresentationLetterController extends Controller
             'message' => 'La carta de presentación ha sido aprovada',
         ]);
     }
+    public function presentationLetterUploadSignedDoc(Request $request, Student $student)
+    {
+        $data = $request->validate([
+            'signed_document' => 'required|file|mimes:pdf',
+        ]);
+        
+        $presentationLetter = $student->approvedPresentationLetter;
+
+        if (!$presentationLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de presentación debe ser aprovada',
+            ]);
+        }
+
+        $presentationLetter->update($data);
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'El documento se subió con exitosamente',
+        ]);
+    }
+    public function presentationLetterDownloadSignedDoc(Student $student)
+    {
+        $presentationLetter = $student->approvedPresentationLetter;
+
+        if (!$presentationLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de presentacion debe ser aprovada',
+            ]);
+        }
+
+        if (!$presentationLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento no ha sido cargado aún',
+            ]);
+        }
+        
+        return response()->file(storage_path("app/{$presentationLetter->signed_document}"));
+    }
 }

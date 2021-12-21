@@ -7,6 +7,7 @@ use App\Http\Controllers\PresentationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\StudentsController;
 use App\Models\Admin;
+use App\Models\PresentationLetter;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
@@ -51,5 +52,8 @@ Route::middleware('auth')->group(function() {
         Route::post('/{student}/commitment-letter/corrections', [CommitmentLetterController::class, 'commitmentLetterCorrections'])->name('commitmentLetterCorrections');
         Route::put('/residency-process/commitment-letter/corrections/mark-as-solved', [CommitmentLetterController::class, 'commitmentLetterMarkCorrectionsAsSolved'])->name('commitmentLetterMarkCorrectionsAsSolved');
         Route::put('/{student}/commitment-letter/mark-as-approved', [CommitmentLetterController::class, 'commitmentLetterMarkAsApproved'])->name('commitmentLetterMarkAsApproved');
+        Route::put('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterUploadSignedDoc'])->name('presentationLetterUploadSignedDoc');
+        Route::get('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterDownloadSignedDoc'])->name('presentationLetterDownloadSignedDoc');
+
     });
 });

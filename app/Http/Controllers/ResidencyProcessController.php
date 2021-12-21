@@ -10,7 +10,6 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class ResidencyProcessController extends Controller
@@ -181,10 +180,10 @@ class ResidencyProcessController extends Controller
         if (!$residencyRequest->signed_document) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'El documento no ha sido cagado aún',
+                'message' => 'El documento no ha sido cargado aún',
             ]);
         }
 
-        return Storage::download($residencyRequest->signed_document);
+        return response()->file(storage_path("app/{$residencyRequest->signed_document}"));
     }
 }

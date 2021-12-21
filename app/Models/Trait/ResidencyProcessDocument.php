@@ -4,6 +4,7 @@ namespace App\Models\Trait;
 
 use App\Enum\DocumentStatus;
 use App\Models\Correction;
+use Illuminate\Http\UploadedFile;
 
 trait ResidencyProcessDocument
 { 
@@ -30,6 +31,16 @@ trait ResidencyProcessDocument
             DocumentStatus::STATUS_APPROVED => 'success',
             DocumentStatus::STATUS_NEEDS_CORRECTIONS => 'danger',
         ][$this->status] ?? '';
+    }
+
+    /**
+     * Mutators
+     */
+    public function setSignedDocumentAttribute($value)
+    {
+        $this->attributes['signed_document'] = $value instanceof UploadedFile
+            ? $value->store('public/documents')
+            : $value;
     }
 
     /**

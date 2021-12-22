@@ -1,20 +1,14 @@
-@extends('layouts.main', ['activePage' => 'students', 'title' => __(''), 'titlePage' => 'Estudiantes'])
+@extends('layouts.main', ['activePage' => 'teachers', 'title' => __(''), 'titlePage' => 'Profesores'])
 
 @section('content')
     <div class="content">
-        @if($alert = session('alert'))
-            <div class="alert alert-{{ $alert['type'] }}" role="alert">
-                {{ $alert['message'] }}
-            </div>
-        @endif
-
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Añadir estudiante</h4>
+                <h4 class="card-title">Añadir profesor</h4>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('students.store') }}" method="POST">
+                <form action="{{ route('teachers.store') }}" method="POST">
                     @csrf
 
                     {{-- EMAIL --}}
@@ -46,67 +40,6 @@
                         placeholder="Ingrese el apellido materno"
                     />
 
-                    {{-- CARREER --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="career_id" class="d-block">Carrera</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-group input-group-dynamic">
-                                <select
-                                    class="form-control"
-                                    name="career_id"
-                                    id="career_id"
-                                >
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach ($careers as $career)
-                                        <option
-                                            value="{{ $career->id }}"
-                                            @if (old('career_id') == $career->id) selected @endif
-                                        >{{ $career->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('career_id')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-
-                    {{-- TEACHER --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="teacher_id" class="d-block">Asesor interno</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-group input-group-dynamic">
-                                <select
-                                    class="form-control"
-                                    name="teacher_id"
-                                    id="teacher_id"
-                                >
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    @foreach ($teachers as $teacher)
-                                        <option
-                                            value="{{ $teacher->user_id }}"
-                                            @if (old('teacher_id') == $teacher->user_id) selected @endif
-                                        >{{ $teacher->first_name }} {{ $teacher->fathers_last_name }} {{ $teacher->mothers_last_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('teacher_id')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-
-                    {{-- ACCOUNT NUMBER --}}
-                    <x-inputs.text-field-row
-                        name="account_number"
-                        label="Número de cuenta"
-                        placeholder="Ingrese número de cuenta"
-                    />
-
                     {{-- SEX --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
@@ -136,46 +69,6 @@
                         label="CURP"
                         placeholder="Ingrese el curp"
                     />
-
-                    {{-- CAREER PERCENTAGE --}}
-                    <x-inputs.text-field-row
-                        name="career_percentage"
-                        label="Porcentaje de la carrera"
-                        placeholder="Ingrese porcentaje"
-                        min="1"
-                        max="100"
-                        step="0.1"
-                    />
-
-                    {{-- ENROLLED --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="is_enrolled" class="d-block">Inscrito</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input
-                                type="checkbox"
-                                id="is_enrolled"
-                                name="is_enrolled"
-                                @if (old('is_enrolled')) checked @endif
-                            >
-                        </div>
-                    </div>
-
-                    {{-- SOCIAL SERVICE CONCLUDED --}}
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label for="is_social_service_concluded" class="d-block">Servicio social concluido</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input
-                                type="checkbox"
-                                id="is_social_service_concluded"
-                                name="is_social_service_concluded"
-                                @if (old('is_social_service_concluded')) checked @endif
-                            >
-                        </div>
-                    </div>
 
                     {{-- PHONE NUMBER --}}
                     <x-inputs.text-field-row
@@ -270,6 +163,7 @@
                     <div class="text-right">
                         <button class="btn btn-primary">Guardar</button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -277,48 +171,48 @@
 @endsection
 
 @push('js')
-    <script>
-        const states = @json($states);
+<script>
+    const states = @json($states);
 
-        $(() => {
-            $('#state_id').change((e) => {
-                const stateId = Number(e.target.value);
-                const state = states.find((state) => state.id === stateId);
+    $(() => {
+        $('#state_id').change((e) => {
+            const stateId = Number(e.target.value);
+            const state = states.find((state) => state.id === stateId);
 
-                if (!state) return;
+            if (!state) return;
 
-                const municipalities = state
-                    .locations
-                    .map((municipality) => `<option value="${municipality.id}" ${municipality.id == @json(old('municipality_id')) ? 'selected' : ''}>${municipality.name}</option>`)
-                    .join('');
+            const municipalities = state
+                .locations
+                .map((municipality) => `<option value="${municipality.id}" ${municipality.id == @json(old('municipality_id')) ? 'selected' : ''}>${municipality.name}</option>`)
+                .join('');
 
-                $('#municipality_id').html(`
-                    <option value="" selected disabled>Seleccione una opción</option>
-                    ${municipalities}
-                `);
-            }).trigger('change');
+            $('#municipality_id').html(`
+                <option value="" selected disabled>Seleccione una opción</option>
+                ${municipalities}
+            `);
+        }).trigger('change');
 
-            $('#municipality_id').change((e) => {
-                const stateId = Number($('#state_id').val());
-                const municipalityId = Number(e.target.value);
-                const state = states.find((state) => state.id === stateId);
+        $('#municipality_id').change((e) => {
+            const stateId = Number($('#state_id').val());
+            const municipalityId = Number(e.target.value);
+            const state = states.find((state) => state.id === stateId);
 
-                if (!state) return;
+            if (!state) return;
 
-                const municipality = state.locations.find((municipality) => municipality.id === municipalityId);
+            const municipality = state.locations.find((municipality) => municipality.id === municipalityId);
 
-                if (!municipality) return;
+            if (!municipality) return;
 
-                const localities = municipality
-                    .locations
-                    .map((locality) => `<option value="${locality.id}" ${locality.id == @json(old('locality_id')) ? 'selected' : ''}>${locality.name}</option>`)
-                    .join('');
+            const localities = municipality
+                .locations
+                .map((locality) => `<option value="${locality.id}" ${locality.id == @json(old('locality_id')) ? 'selected' : ''}>${locality.name}</option>`)
+                .join('');
 
-                $('#locality_id').html(`
-                    <option value="" selected disabled>Seleccione una opción</option>
-                    ${localities}
-                `);
-            }).trigger('change');
-        });
-    </script>
+            $('#locality_id').html(`
+                <option value="" selected disabled>Seleccione una opción</option>
+                ${localities}
+            `);
+        }).trigger('change');
+    });
+</script>
 @endpush

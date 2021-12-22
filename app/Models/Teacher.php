@@ -12,4 +12,26 @@ class Teacher extends Model
     protected $guarded = [];
 
     protected $primaryKey = 'user_id';
+
+    /**
+     * Scopes
+     */
+    public function scopeWithEmail($query)
+    {
+        return $query
+            ->join('users', 'teachers.user_id', '=', 'users.id')
+            ->select('teachers.*')
+            ->addSelect('users.email');
+    }
+    
+    /**
+     * Accessors
+     */
+    public function getSexTextAttribute()
+    {
+        return [
+            'm' => 'Masculino',
+            'f' => 'Femenino',
+        ][$this->sex];
+    }
 }

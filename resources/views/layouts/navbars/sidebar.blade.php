@@ -96,6 +96,13 @@
                 </a>
             </li>
             @endcan
+
+            <li class="nav-item{{ $activePage == 'techers' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('teachers.index') }}">
+                <i class="material-icons">people</i>
+                    <p>Profesores</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

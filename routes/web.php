@@ -6,6 +6,7 @@ use App\Http\Controllers\CommitmentLetterController;
 use App\Http\Controllers\PresentationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeachersController;
 use App\Models\Admin;
 use App\Models\PresentationLetter;
 use App\Models\Student;
@@ -24,6 +25,12 @@ Route::middleware('auth')->group(function() {
         Route::get('/', [AdminsController::class, 'index'])->name('index')->can('index', Admin::class);
         Route::get('/create', [AdminsController::class, 'create'])->name('create')->can('create', Admin::class);
         Route::post('/', [AdminsController::class, 'store'])->name('store')->can('create', Admin::class);
+    });
+
+    Route::prefix('/teachers')->name('teachers.')->group(function() {
+        Route::get('/', [TeachersController::class, 'index'])->name('index');
+        Route::get('/create', [TeachersController::class, 'create'])->name('create');
+        Route::post('/', [TeachersController::class, 'store'])->name('store');
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

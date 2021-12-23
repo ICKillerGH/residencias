@@ -163,4 +163,14 @@ class StudentsController extends Controller
             'message' => 'La información se actualizo correctamente',
         ]);
     }
+    
+    public function destroy(Student $student)
+    {
+        User::destroy($student->user_id);
+
+        return redirect()->route('students.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'El alumno ha sido eliminado',
+        ]);
+    }
 }

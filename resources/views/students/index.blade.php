@@ -44,10 +44,22 @@
                                     <td>{{ $student->sex_text }}</td>
                                     <td>{{ $student->curp }}</td>
                                     <td>{{ $student->career->name }}</td>
-                                    <td>
+                                    <td class="text-nowrap">
                                         <a href="{{ route('students.show', $student) }}" class="btn btn-sm btn-info" title="Ver detalles">
                                             <i class="material-icons">details</i>
                                         </a>
+
+                                        <form
+                                            action="{{ route('students.destroy', $student) }}"
+                                            method="POST"
+                                            class="d-inline-block delete-student-form"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -61,3 +73,27 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>        
+        const deleteStudentForms = document.querySelectorAll('.delete-student-form');
+        
+        deleteStudentForms.forEach(form => form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: "Esta acción es irreversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminarlo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        }))
+    </script>
+@endpush

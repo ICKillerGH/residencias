@@ -16,7 +16,7 @@ class Student extends Model
 
     /**
      * Relationships
-     */
+     */    
     public function career()
     {
         return $this->belongsTo(Career::class);

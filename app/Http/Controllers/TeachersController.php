@@ -57,7 +57,7 @@ class TeachersController extends Controller
 
     public function destroy(Teacher $teacher)
     {
-        $teacher->delete();
+        User::destroy($teacher->user_id);
 
         return redirect()->route('teachers.index')->with('alert', [
             'type' => 'success',

@@ -51,4 +51,13 @@ class AdminsController extends Controller
             'message' => 'El administrador se agrego correctamente',
         ]);
     }
+    public function destroy(Admin $admin)
+    {
+        User::destroy($admin->user_id);
+
+        return redirect()->route('admins.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'El administrador ha sido eliminado',
+        ]);
+    }
 }

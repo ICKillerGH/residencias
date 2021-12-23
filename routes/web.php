@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/', [AdminsController::class, 'index'])->name('index')->can('index', Admin::class);
         Route::get('/create', [AdminsController::class, 'create'])->name('create')->can('create', Admin::class);
         Route::post('/', [AdminsController::class, 'store'])->name('store')->can('create', Admin::class);
+        Route::delete('/{admin}', [AdminsController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('/teachers')->name('teachers.')->group(function() {
@@ -64,7 +65,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterDownloadSignedDoc'])->name('presentationLetterDownloadSignedDoc');
         Route::put('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterUploadSignedDoc'])->name('commitmentLetterUploadSignedDoc');
         Route::get('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterDownloadSignedDoc'])->name('commitmentLetterDownloadSignedDoc');
-
+        Route::delete('/{student}', [StudentsController::class, 'destroy'])->name('destroy');
 
     });
 });

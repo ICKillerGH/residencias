@@ -46,6 +46,17 @@
                                         <a href="" class="btn btn-sm btn-info" title="Ver detalles">
                                             <i class="material-icons">details</i>
                                         </a>
+                                        <form
+                                            action="{{ route('teachers.destroy', $teacher) }}"
+                                            method="POST"
+                                            class="d-inline-block delete-teacher-form"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,3 +70,27 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>        
+        const deleteTeacherForms = document.querySelectorAll('.delete-teacher-form');
+        
+        deleteTeacherForms.forEach(form => form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: "Esta acción es irreversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminarlo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        }))
+    </script>
+@endpush

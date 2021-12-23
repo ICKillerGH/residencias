@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/', [TeachersController::class, 'index'])->name('index');
         Route::get('/create', [TeachersController::class, 'create'])->name('create');
         Route::post('/', [TeachersController::class, 'store'])->name('store');
+        Route::delete('/{teacher}', [TeachersController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

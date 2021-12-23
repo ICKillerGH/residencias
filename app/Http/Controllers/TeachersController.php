@@ -54,4 +54,14 @@ class TeachersController extends Controller
             'message' => 'El profesor se agrego correctamente',
         ]);
     }
+
+    public function destroy(Teacher $teacher)
+    {
+        $teacher->delete();
+
+        return redirect()->route('teachers.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'El profesor ha sido eliminado',
+        ]);
+    }
 }

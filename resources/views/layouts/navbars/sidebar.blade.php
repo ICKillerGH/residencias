@@ -41,6 +41,7 @@
 
                 <div class="collapse show" id="profile-menu-item">
                     <ul class="nav">
+                        @can('view-personal-info')
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('students.personalInfo') }}">
                                 <span class="sidebar-mini">
@@ -49,6 +50,8 @@
                                 <span class="sidebar-normal">Información personal</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('view-company-info')
                         <li class="nav-item{{ $activePage == 'company-info' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('students.companyInfo')}}">
                                 <i class="material-icons">dashboard</i>
@@ -57,6 +60,8 @@
                                 <span class="sidebar-normal">Información de la empresa</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('view-project-info')
                         <li class="nav-item{{ $activePage == 'project-info' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('students.projectInfo')}}">
                                 <i class="material-icons">dashboard</i>
@@ -65,7 +70,8 @@
                                 <span class="sidebar-normal">Información del proyecto</span>
                             </a>
                         </li>
-
+                        @endcan
+                        @can('view-residency-info')
                         <li class="nav-item{{ $activePage == 'residency-process' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('students.residencyProcess') }}">
                                 <i class="material-icons">dashboard</i>
@@ -74,6 +80,7 @@
                                 <span class="sidebar-normal">Proceso de residencia</span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>

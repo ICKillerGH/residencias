@@ -40,13 +40,13 @@ Route::middleware('auth')->group(function() {
         Route::get('/create', [StudentsController::class, 'create'])->name('create')->can('create', Student::class);
         Route::post('/', [StudentsController::class, 'store'])->name('store')->can('create', Student::class);
         Route::get('/{student}', [StudentsController::class, 'show'])->name('show')->where('student', '[0-9]+')->can('show', 'student');
-        Route::get('/personal-info', [StudentsController::class, 'personalInfo'])->name('personalInfo');
+        Route::get('/personal-info', [StudentsController::class, 'personalInfo'])->name('personalInfo')->can('view-personal-info');
         Route::put('/personal-info', [StudentsController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
-        Route::get('/company-info', [StudentsController::class,'companyInfo'])->name('companyInfo');
+        Route::get('/company-info', [StudentsController::class,'companyInfo'])->name('companyInfo')->can('view-company-info');
         Route::put('/company-info', [StudentsController::class,'updateCompanyInfo'])->name('updateCompanyInfo');
-        Route::get('/project-info', [StudentsController::class,'projectInfo'])->name('projectInfo');
+        Route::get('/project-info', [StudentsController::class,'projectInfo'])->name('projectInfo')->can('view-project-info');
         Route::put('/project-info', [StudentsController::class, 'updateProjectInfo'])->name('updateProjectInfo');
-        Route::get('/residency-process', [ResidencyProcessController::class, 'residencyProcess'])->name('residencyProcess');
+        Route::get('/residency-process', [ResidencyProcessController::class, 'residencyProcess'])->name('residencyProcess')->can('view-residency-info');
         Route::post('/residency-process/residency-request', [ResidencyProcessController::class, 'residencyRequest'])->name('residencyRequest');
         Route::put('/residency-process/residency-request/corrections/mark-as-solved', [ResidencyProcessController::class, 'residencyRequestMarkCorrectionsAsSolved'])->name('residencyRequestMarkCorrectionsAsSolved');
         Route::post('/{student}/residency-request/corrections', [ResidencyProcessController::class, 'residencyRequestCorrections'])->name('residencyRequestCorrections');

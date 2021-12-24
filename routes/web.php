@@ -8,7 +8,6 @@ use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
 use App\Models\Admin;
-use App\Models\PresentationLetter;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +24,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/', [AdminsController::class, 'index'])->name('index')->can('index', Admin::class);
         Route::get('/create', [AdminsController::class, 'create'])->name('create')->can('create', Admin::class);
         Route::post('/', [AdminsController::class, 'store'])->name('store')->can('create', Admin::class);
-        Route::delete('/{admin}', [AdminsController::class, 'destroy'])->name('destroy');
+        Route::delete('/{admin}', [AdminsController::class, 'destroy'])->name('destroy')->can('destroy', 'admin');
     });
 
     Route::prefix('/teachers')->name('teachers.')->group(function() {

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Admin;
+use App\Models\Teacher;
 use App\Policies\AdminPolicy;
+use App\Policies\TeacherPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Admin::class => AdminPolicy::class,
         Student::class => StudentPolicy::class,
+        Teacher::class => TeacherPolicy::class,
     ];
 
     /**

@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
 use App\Models\Admin;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,10 +29,10 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::prefix('/teachers')->name('teachers.')->group(function() {
-        Route::get('/', [TeachersController::class, 'index'])->name('index');
-        Route::get('/create', [TeachersController::class, 'create'])->name('create');
-        Route::post('/', [TeachersController::class, 'store'])->name('store');
-        Route::delete('/{teacher}', [TeachersController::class, 'destroy'])->name('destroy');
+        Route::get('/', [TeachersController::class, 'index'])->name('index')->can('index', Teacher::class);
+        Route::get('/create', [TeachersController::class, 'create'])->name('create')->can('create', Teacher::class);
+        Route::post('/', [TeachersController::class, 'store'])->name('store')->can('create', Teacher::class);
+        Route::delete('/{teacher}', [TeachersController::class, 'destroy'])->name('destroy')->can('destroy', 'teacher');
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

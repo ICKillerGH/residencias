@@ -6,6 +6,7 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentCompanyInfoRequest;
 use App\Http\Requests\UpdateStudentPersonalInfo;
 use App\Http\Requests\UpdateStudentProjectInfoRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Career;
 use App\Models\Company;
 use App\Models\Location;
@@ -171,6 +172,41 @@ class StudentsController extends Controller
         return redirect()->route('students.index')->with('alert', [
             'type' => 'success',
             'message' => 'El alumno ha sido eliminado',
+        ]);
+    }
+    
+    public function update(UpdateStudentRequest $request, Student $student)
+    {
+        DB::beginTransaction();
+        
+        try {
+            $student->update($request->studentData());
+
+            $student->user->update($request->userData());
+
+            DB::commit();
+        } catch(Throwable $t) {            
+            DB::rollBack();
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde.',
+            ]);
+        }
+
+        return redirect()->route('students.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'El estudiante ha sido actualizado',
+        ]);
+    }
+    
+    public function edit(Student $student)
+    {
+        return view('students.edit', [
+            'student' => $student,
+            'careers' => Career::get(),
+            'teachers' => Teacher::get(),
+            'states' => Location::with(['locations.locations'])->state()->get(),
         ]);
     }
 }

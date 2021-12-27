@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +52,7 @@ class AdminsController extends Controller
             'message' => 'El administrador se agrego correctamente',
         ]);
     }
+    
     public function destroy(Admin $admin)
     {
         User::destroy($admin->user_id);
@@ -59,5 +61,42 @@ class AdminsController extends Controller
             'type' => 'success',
             'message' => 'El administrador ha sido eliminado',
         ]);
+    }
+    
+    public function edit(Admin $admin)
+    {
+        return view('admins.edit', [
+            'admin' => $admin,
+        ]);
+    }
+
+    public function update(UpdateAdminRequest $request, Admin $admin)
+    {
+        DB::beginTransaction();
+        
+        try {
+            $admin->update($request->adminData());
+
+            $admin->user->update($request->userData());
+
+            DB::commit();
+        } catch(Throwable $t) {            
+            DB::rollBack();
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde.',
+            ]);
+        }
+
+        return redirect()->route('admins.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'El administrador ha sido actualizado',
+        ]);
+    }
+
+    public function updatePassword()
+    {
+        //
     }
 }

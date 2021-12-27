@@ -90,6 +90,11 @@ class Student extends Model
     {
         return $this->hasOne(Project::class, 'user_id');
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Scopes

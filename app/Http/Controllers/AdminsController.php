@@ -6,7 +6,9 @@ use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class AdminsController extends Controller
@@ -95,8 +97,17 @@ class AdminsController extends Controller
         ]);
     }
 
-    public function updatePassword()
+    public function updatePassword(Request $request, Admin $admin)
     {
-        //
+        $request->validate(['password' => 'required|min:6|confirmed']);
+
+        $admin->user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('teachers.index')->with('alert',[
+            'type' => 'success',
+            'message' =>'la contraseña ha sido actualizada',
+        ]);
     }
 }

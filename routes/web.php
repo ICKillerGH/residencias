@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function() {
         Route::delete('/{admin}', [AdminsController::class, 'destroy'])->name('destroy')->can('destroy', 'admin');
         Route::get('/{admin}/edit', [AdminsController::class, 'edit'])->name('edit');
         Route::put('/{admin}', [AdminsController::class, 'update'])->name('update');
+        Route::put('/{admin}/password', [AdminsController::class, 'updatePassword'])->name('updatePassword');
     });
 
     Route::prefix('/teachers')->name('teachers.')->group(function() {

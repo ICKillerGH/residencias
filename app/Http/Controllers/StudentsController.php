@@ -14,8 +14,10 @@ use App\Models\Project;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -207,6 +209,19 @@ class StudentsController extends Controller
             'careers' => Career::get(),
             'teachers' => Teacher::get(),
             'states' => Location::with(['locations.locations'])->state()->get(),
+        ]);
+    }
+    public function updatePassword(Request $request, Student $student)
+    {
+        $request->validate(['password' => 'required|min:6|confirmed']);
+
+        $student->user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('students.index')->with('alert',[
+            'type' => 'success',
+            'message' =>'la contraseña ha sido actualizada',
         ]);
     }
 }

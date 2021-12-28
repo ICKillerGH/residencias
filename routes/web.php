@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function() {
         Route::delete('/{student}', [StudentsController::class, 'destroy'])->name('destroy');
         Route::get('/{student}/edit', [StudentsController::class, 'edit'])->name('edit');
         Route::put('/{student}', [StudentsController::class, 'update'])->name('update');
+        Route::put('/{student}/password', [StudentsController::class, 'updatePassword'])->name('updatePassword');
 
     });
 });

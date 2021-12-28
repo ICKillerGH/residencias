@@ -273,6 +273,35 @@
                 </form>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Cambiar contraseña</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('students.updatePassword', $student) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    {{-- PASSWORD --}}
+                    <x-inputs.text-field-row
+                        name="password"
+                        label="contraseña nueva"
+                        placeholder="Ingrese la contraseña nueva"
+                        type="password"
+                    />
+                    {{-- CONFIRM PASSWORD --}}
+                    <x-inputs.text-field-row
+                        name="password_confirmation"
+                        label="confirmar contraseña"
+                        placeholder="confirme la contraseña nueva"
+                        type="password"
+                    />
+                    <div class="text-right">
+                            <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
 

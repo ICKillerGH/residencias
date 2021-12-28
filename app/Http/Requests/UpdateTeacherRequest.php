@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
-class StoreTeacherRequest extends FormRequest
+class UpdateTeacherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +26,12 @@ class StoreTeacherRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users,email',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->teacher->user_id)],
             'first_name' => 'required|max:255',
             'fathers_last_name' => 'required|max:255',
             'mothers_last_name' => 'required|max:255',
             'sex' => 'required|in:m,f',
-            'curp' => 'required|max:18|unique:teachers,curp',
+            'curp' => ['required', 'max:18', Rule::unique('teachers', 'curp')->ignore($this->teacher->user_id, 'user_id')],
             'phone_number' => 'required|numeric|digits:10',
             'state_id' => [
                 'required',
@@ -46,21 +45,15 @@ class StoreTeacherRequest extends FormRequest
                 'required',
                 Rule::exists('locations', 'id')->where('parent_id', $this->municipality_id),
             ],
-            'password' => 'required|min:6|confirmed',
         ];
     }
-
     public function userData()
     {
-        return [
-            'email' => $this->email,
-            'password' => bcrypt($this->password),
-            'role' => User::TEACHER_ROLE,
-        ];
+        return ['email' => $this->email];
     }
 
     public function teacherData()
     {
-        return Arr::except($this->validated(), ['email', 'password']);
+        return Arr::except($this->validated(), ['email']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeacherRequest;
+use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Location;
 use App\Models\Teacher;
 use App\Models\User;
@@ -64,4 +65,38 @@ class TeachersController extends Controller
             'message' => 'El profesor ha sido eliminado',
         ]);
     }
+
+    public function edit(Teacher $teacher)
+    {
+        return view('teachers.edit', [
+            'teacher' => $teacher,
+            'states' => Location::with(['locations.locations'])->state()->get(),
+        ]);
+    }
+
+    public function update(UpdateTeacherRequest $request, Teacher $teacher)
+    {
+          DB::beginTransaction();
+        
+        try {
+            $teacher->update($request->teacherData());
+
+            $teacher->user->update($request->userData());
+
+            DB::commit();
+        } catch(Throwable $t) {            
+            DB::rollBack();
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde.',
+            ]);
+        }
+
+        return redirect()->route('teachers.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'El profesor ha sido actualizado',
+        ]);
+    }
+
 }

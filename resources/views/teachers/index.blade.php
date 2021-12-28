@@ -46,6 +46,9 @@
                                         <a href="" class="btn btn-sm btn-info" title="Ver detalles">
                                             <i class="material-icons">details</i>
                                         </a>
+                                        <a href="{{ route('teachers.edit', $teacher) }}" class="btn btn-sm btn-info" title="Editar" >
+                                            <i class="material-icons">edit</i>
+                                        </a>
                                         <form
                                             action="{{ route('teachers.destroy', $teacher) }}"
                                             method="POST"

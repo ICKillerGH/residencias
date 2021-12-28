@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Location;
 use App\Models\Teacher;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class TeachersController extends Controller
@@ -96,6 +98,20 @@ class TeachersController extends Controller
         return redirect()->route('teachers.index')->with('alert', [
             'type' => 'success',
             'message' => 'El profesor ha sido actualizado',
+        ]);
+    }
+
+    public function updatePassword(Request $request, Teacher $teacher)
+    {
+        $request->validate(['password' => 'required|min:6|confirmed']);
+
+        $teacher->user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('teachers.index')->with('alert',[
+            'type' => 'success',
+            'message' =>'la contraseña ha sido actualizada',
         ]);
     }
 

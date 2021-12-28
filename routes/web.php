@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function() {
         Route::delete('/{teacher}', [TeachersController::class, 'destroy'])->name('destroy')->can('destroy', 'teacher');
         Route::get('/{teacher}/edit', [TeachersController::class, 'edit'])->name('edit');
         Route::put('/{teacher}', [TeachersController::class, 'update'])->name('update');
+        Route::put('/{teacher}/password', [TeachersController::class, 'updatePassword'])->name('updatePassword');
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

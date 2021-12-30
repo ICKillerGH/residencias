@@ -52,15 +52,6 @@ class Student extends Model
         return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
     
-    public function approvedPresentationLetter()
-    {
-        return $this->hasOne(PresentationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
-    }
-    public function approvedCommitmentLetter()
-    {
-        return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
-    }
-    
     public function presentationLetter()
     {
         return $this->hasOne(PresentationLetter::class, 'user_id')->withDefault();
@@ -71,6 +62,11 @@ class Student extends Model
         return $this->hasOne(PresentationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
     }
 
+    public function approvedPresentationLetter()
+    {
+        return $this->hasOne(PresentationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
+
     public function commitmentLetter()
     {
         return $this->hasOne(CommitmentLetter::class, 'user_id')->withDefault();
@@ -79,6 +75,11 @@ class Student extends Model
     public function inProcessCommitmentLetter()
     {
         return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+    
+    public function approvedCommitmentLetter()
+    {
+        return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
 
     public function company()

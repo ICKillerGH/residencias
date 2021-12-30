@@ -21,6 +21,13 @@ class CommitmentLetterController extends Controller
             ->withEmail()
             ->where('user_id', $userId)
             ->firstOrFail();
+
+        if (!$student->approvedPresentationletter){
+            return redirect()->route('students.residencyProcess')->with('alert', [
+                'type' => 'danger',
+                'message' => 'Debe estar aprobada la carta de presentacion',
+            ]);
+        }
             
         $commitmentLetter = $student->commitmentLetter->exists()
             ? $student->commitmentLetter
@@ -28,11 +35,13 @@ class CommitmentLetterController extends Controller
                 'request_date' => now(),
                 'company_id' => $student->company->id,
             ]);        
+
         $pdf = PDF::loadView('residency-process.commitment-letter',[
             'student'=>$student,
             'externalCompany' => $student->company,
             'commitmentLetter'=>$commitmentLetter,
         ]);
+
         return $pdf->stream('commitment-letter');
     }
 
@@ -120,6 +129,7 @@ class CommitmentLetterController extends Controller
             'message' => 'La carta de compromiso ha sido aprovada',
         ]);
     }
+
     public function commitmentLetterUploadSignedDoc(Request $request, Student $student)
     {
         $data = $request->validate([
@@ -142,6 +152,7 @@ class CommitmentLetterController extends Controller
             'message' => 'El documento se subió con exitosamente',
         ]);
     }
+
     public function commitmentLetterDownloadSignedDoc(Student $student)
     {
         $commitmentLetter = $student->approvedCommitmentLetter;

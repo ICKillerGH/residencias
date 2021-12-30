@@ -139,7 +139,7 @@
                             class="btn btn-block btn-danger"
                             data-toggle="modal"
                             data-target="#residencyRequestCorrectionsModal"
-                            @if (!$student->residencyRequest || ($student->residencyRequest && !$student->residencyRequest->needsCorrections())) disabled @endif
+                            @if (!$student->inProcessResidencyRequest) disabled @endif
                         >
                             Enviar correcciones
                         </button>
@@ -166,14 +166,14 @@
                             class="btn btn-block btn-danger"
                             data-toggle="modal"
                             data-target="#presentatioLetterCorrectionsModal"
-                            @if (!$student->presentationletter || !$student->presentationletter->needsCorrections()) disabled @endif
+                            @if (!$student->inProcessPresentationletter) disabled @endif
                         >
                             Enviar correcciones
                         </button>
                     </div>
-                </div> 
+                </div>
                 {{-- Carta de presentación end --}}
-            
+
                 {{-- Carta de compromiso --}}
                 <div class="row">
                     <div class="col-md-6">
@@ -193,7 +193,7 @@
                             class="btn btn-block btn-danger"
                             data-toggle="modal"
                             data-target="#commitmentLetterCorrectionsModal"
-                            @if (!$student->commitmentLetter || !$student->commitmentLetter->needsCorrections()) disabled @endif
+                            @if (!$student->inProcessCommitmentLetter) disabled @endif
                         >
                             Enviar correcciones
                         </button>

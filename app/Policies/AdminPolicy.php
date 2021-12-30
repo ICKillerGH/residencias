@@ -28,4 +28,9 @@ class AdminPolicy
 
         return $user->role === User::ADMIN_ROLE;
     }
+
+    public function update(User $user, Admin $admin)
+    {
+        return $user->role === User::ADMIN_ROLE;   
+    }
 }

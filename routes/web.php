@@ -27,9 +27,9 @@ Route::middleware('auth')->group(function() {
         Route::get('/create', [AdminsController::class, 'create'])->name('create')->can('create', Admin::class);
         Route::post('/', [AdminsController::class, 'store'])->name('store')->can('create', Admin::class);
         Route::delete('/{admin}', [AdminsController::class, 'destroy'])->name('destroy')->can('destroy', 'admin');
-        Route::get('/{admin}/edit', [AdminsController::class, 'edit'])->name('edit');
-        Route::put('/{admin}', [AdminsController::class, 'update'])->name('update');
-        Route::put('/{admin}/password', [AdminsController::class, 'updatePassword'])->name('updatePassword');
+        Route::get('/{admin}/edit', [AdminsController::class, 'edit'])->name('edit')->can('update', 'admin');
+        Route::put('/{admin}', [AdminsController::class, 'update'])->name('update')->can('update', 'admin');
+        Route::put('/{admin}/password', [AdminsController::class, 'updatePassword'])->name('updatePassword')->can('update', 'admin');
     });
 
     Route::prefix('/teachers')->name('teachers.')->group(function() {

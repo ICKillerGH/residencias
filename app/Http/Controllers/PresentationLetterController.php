@@ -17,11 +17,18 @@ class PresentationLetterController extends Controller
     public function presentationLetter(Request $request)
     {
         $userId = $request->user()->isStudent() ? Auth::id() : $request->user_id;
-        
+
         $student = Student::query()
             ->withEmail()
             ->where('user_id', $userId)
             ->firstOrFail();
+
+        if (!$student->presentationLetter->exists() && Auth::id() !== $student->user_id) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Solo el estudiante puede generar sus documento por primera vez',
+            ]);
+        }
 
         if (!$student->approvedResidencyRequest){
             return redirect()->route('students.residencyProcess')->with('alert', [
@@ -40,7 +47,7 @@ class PresentationLetterController extends Controller
             'student'=>$student,
             'presentationLetter'=>$presentationLetter,
         ]);
-        
+
         return $pdf->stream('presentation-letter');
     }
 
@@ -71,7 +78,7 @@ class PresentationLetterController extends Controller
             DB::commit();
         } catch (Throwable $t) {
             DB::rollBack();
-            
+
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Ha ocurrido un error, intente más tarde',
@@ -89,7 +96,7 @@ class PresentationLetterController extends Controller
         $presentationLetter = PresentationLetter::query()
             ->where('user_id', Auth::id())
             ->firstOrFail();
-        
+
         if (!$presentationLetter->needsCorrections()) {
             return back()->with('alert', [
                 'type' => 'danger',
@@ -104,7 +111,7 @@ class PresentationLetterController extends Controller
         return back()->with('alert', [
             'type' => 'success',
             'message' => 'Las correciones fueron verificadas',
-        ]); 
+        ]);
     }
 
     public function presentationLetterMarkAsApproved(Student $student)
@@ -132,7 +139,7 @@ class PresentationLetterController extends Controller
         $data = $request->validate([
             'signed_document' => 'required|file|mimes:pdf',
         ]);
-        
+
         $presentationLetter = $student->approvedPresentationLetter;
 
         if (!$presentationLetter) {
@@ -166,7 +173,7 @@ class PresentationLetterController extends Controller
                 'message' => 'El documento no ha sido cargado aún',
             ]);
         }
-        
+
         return response()->file(storage_path("app/{$presentationLetter->signed_document}"));
     }
 }

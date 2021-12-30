@@ -22,19 +22,26 @@ class CommitmentLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
+        if (!$student->commitmentLetter->exists() && Auth::id() !== $student->user_id) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Solo el estudiante puede generar sus documento por primera vez',
+            ]);
+        }
+
         if (!$student->approvedPresentationletter){
             return redirect()->route('students.residencyProcess')->with('alert', [
                 'type' => 'danger',
                 'message' => 'Debe estar aprobada la carta de presentacion',
             ]);
         }
-            
+
         $commitmentLetter = $student->commitmentLetter->exists()
             ? $student->commitmentLetter
             : $student->commitmentLetter()->create([
                 'request_date' => now(),
                 'company_id' => $student->company->id,
-            ]);        
+            ]);
 
         $pdf = PDF::loadView('residency-process.commitment-letter',[
             'student'=>$student,
@@ -72,7 +79,7 @@ class CommitmentLetterController extends Controller
             DB::commit();
         } catch(Throwable $t) {
             DB::rollBack();
-            
+
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Ha ocurrido un error, intente más tarde',
@@ -90,7 +97,7 @@ class CommitmentLetterController extends Controller
         $commitmentLetter = CommitmentLetter::query()
             ->where('user_id', Auth::id())
             ->firstOrFail();
-    
+
         if (!$commitmentLetter->needsCorrections()) {
             return back()->with('alert', [
                 'type' => 'danger',
@@ -106,7 +113,7 @@ class CommitmentLetterController extends Controller
         return back()->with('alert', [
             'type' => 'success',
             'message' => 'Las correciones fueron verificadas',
-        ]); 
+        ]);
     }
 
     public function commitmentLetterMarkAsApproved(Student $student)
@@ -135,7 +142,7 @@ class CommitmentLetterController extends Controller
         $data = $request->validate([
             'signed_document' => 'required|file|mimes:pdf',
         ]);
-        
+
         $commitmentLetter = $student->approvedCommitmentLetter;
 
         if (!$commitmentLetter) {
@@ -170,7 +177,7 @@ class CommitmentLetterController extends Controller
                 'message' => 'El documento no ha sido cargado aún',
             ]);
         }
-        
+
         return response()->file(storage_path("app/{$commitmentLetter->signed_document}"));
     }
 }

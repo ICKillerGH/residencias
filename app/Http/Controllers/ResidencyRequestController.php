@@ -24,6 +24,13 @@ class ResidencyRequestController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
+        if (!$student->residencyRequest->exists() && Auth::id() !== $student->user_id) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Solo el estudiante puede generar sus documento por primera vez',
+            ]);
+        }
+
         if (!$student->project) {
             return redirect()->route('students.projectInfo')->with('alert', [
                 'type' => 'danger',

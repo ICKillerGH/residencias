@@ -22,4 +22,9 @@ class TeacherPolicy
     {
         return  $user->role === User::ADMIN_ROLE;
     }
+
+    public function update(User $user, Teacher $teacher)
+    {
+        return $user->role === User::ADMIN_ROLE;
+    }
 }

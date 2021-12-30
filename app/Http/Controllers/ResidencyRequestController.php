@@ -158,6 +158,13 @@ class ResidencyRequestController extends Controller
             ]);
         }
 
+        if ($residencyRequest->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento ya ha sido cargado.',
+            ]);
+        }
+
         $residencyRequest->update($request->validated());
 
         return back()->with('alert', [

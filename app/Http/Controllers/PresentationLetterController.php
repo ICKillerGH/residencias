@@ -149,6 +149,13 @@ class PresentationLetterController extends Controller
             ]);
         }
 
+        if ($presentationLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento ya ha sido cargado.',
+            ]);
+        }
+
         $presentationLetter->update($data);
 
         return back()->with('alert', [

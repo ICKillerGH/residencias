@@ -28,7 +28,12 @@
                         @include('residency-process.partials.residency-request-btn')
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-block btn-info" data-target="#residencyRequestUploadDocModal" data-toggle="modal">
+                        <button
+                            class="btn btn-block btn-info"
+                            data-target="#residencyRequestUploadDocModal"
+                            data-toggle="modal"
+                            @if ($student->residencyRequest->signed_document) disabled @endif
+                        >
                             Cargar documento
                         </button>
                     </div>
@@ -61,7 +66,12 @@
                         @include('residency-process.partials.presentation-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-block btn-info" data-target="#presentationLetterUploadDocModal" data-toggle="modal">
+                        <button
+                            class="btn btn-block btn-info"
+                            data-target="#presentationLetterUploadDocModal"
+                            data-toggle="modal"
+                            @if ($student->presentationLetter->signed_document) disabled @endif
+                        >
                             Cargar documento
                         </button>
                     </div>
@@ -92,10 +102,15 @@
                 {{-- Carta de compromiso --}}
                 <div class="row">
                     <div class="col-md-6">
-                        @include('residency-process.partials.commitment-letter-btn')  
+                        @include('residency-process.partials.commitment-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-block btn-info" data-target="#commitmentLetterUploadDocModal" data-toggle="modal">
+                        <button
+                            class="btn btn-block btn-info"
+                            data-target="#commitmentLetterUploadDocModal"
+                            data-toggle="modal"
+                            @if ($student->commitmentLetter->signed_document) disabled @endif
+                        >
                             Cargar documento
                         </button>
                     </div>
@@ -121,7 +136,7 @@
                     </div>
                 </div>
                 {{-- Carta de compromiso end --}}
-                
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Carta de aceptación

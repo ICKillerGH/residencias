@@ -27,4 +27,9 @@ class StudentPolicy
             $user->role === User::TEACHER_ROLE ||
             $user->id === $student->user_id;
     }
+
+    public function update(User $user, Student $student)
+    {
+        return $user->role === User::ADMIN_ROLE;
+    }
 }

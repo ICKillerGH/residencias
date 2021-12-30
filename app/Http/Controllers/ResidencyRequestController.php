@@ -24,6 +24,27 @@ class ResidencyRequestController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
+        if (!$student->is_enrolled) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El estudiante debe estar inscrito',
+            ]);
+        }
+
+        if (!$student->is_social_service_concluded) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El estudiante debe terminar el servicio social',
+            ]);
+        }
+
+        if ($student->career_percentage < 85) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El estudiante debe tener al menos el 85% de la carrera aprovada.',
+            ]);
+        }
+
         if (!$student->residencyRequest->exists() && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',

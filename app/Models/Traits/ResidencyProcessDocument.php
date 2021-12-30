@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Trait;
+namespace App\Models\Traits;
 
 use App\Enum\DocumentStatus;
 use App\Models\Correction;
 use Illuminate\Http\UploadedFile;
 
 trait ResidencyProcessDocument
-{ 
+{
     /**
      * Relationships
      */

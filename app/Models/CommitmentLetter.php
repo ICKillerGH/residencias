@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Trait\ResidencyProcessDocument;
+use App\Models\Traits\ResidencyProcessDocument;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class CommitmentLetter extends Model
     use HasFactory, ResidencyProcessDocument;
 
     protected $guarded = [];
-    
+
     protected $dates = ['request_date'];
 }

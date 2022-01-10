@@ -32,4 +32,10 @@ class StudentPolicy
     {
         return $user->role === User::ADMIN_ROLE;
     }
+    
+    public function destroy(User $user, Student $student)
+    {
+        return $user->role === User::ADMIN_ROLE;
+    }
+
 }

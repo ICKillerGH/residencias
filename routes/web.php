@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterDownloadSignedDoc'])->name('presentationLetterDownloadSignedDoc');
         Route::put('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterUploadSignedDoc'])->name('commitmentLetterUploadSignedDoc');
         Route::get('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterDownloadSignedDoc'])->name('commitmentLetterDownloadSignedDoc');
-        Route::delete('/{student}', [StudentsController::class, 'destroy'])->name('destroy');
+        Route::delete('/{student}', [StudentsController::class, 'destroy'])->name('destroy')->can('destroy','student');
         Route::get('/{student}/edit', [StudentsController::class, 'edit'])->name('edit')->can('update','student');
         Route::put('/{student}', [StudentsController::class, 'update'])->name('update')->can('update','student');
         Route::put('/{student}/password', [StudentsController::class, 'updatePassword'])->name('updatePassword')->can('update','student');

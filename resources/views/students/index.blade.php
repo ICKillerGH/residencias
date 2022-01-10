@@ -16,7 +16,9 @@
 
             <div class="card-body">
                 <div class="text-right">
+                    @can('create', App\Models\Student::class)
                     <a href="{{ route('students.create') }}" class="btn btn-sm btn-success">Añadir estudiante</a>
+                    @endcan
                 </div>
                 <div class="table-responsive">
                     <table class="table">
@@ -49,9 +51,13 @@
                                             <i class="material-icons">details</i>
                                         </a>
 
+                                        @can('update', $student)
                                         <a href="{{ route('students.edit', $student) }}" class="btn btn-sm btn-info" title="Editar" >
                                             <i class="material-icons">edit</i>
                                         </a>
+                                        @endcan
+
+                                        @can('destroy', $student)
                                         <form
                                             action="{{ route('students.destroy', $student) }}"
                                             method="POST"
@@ -63,6 +69,7 @@
                                                 <i class="material-icons">delete</i>
                                             </button>
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

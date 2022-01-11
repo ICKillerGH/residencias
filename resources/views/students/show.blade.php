@@ -200,11 +200,39 @@
                     </div>
                 </div>
                 {{-- Carta de compromiso end --}}
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Carta de aceptación
-                    </button>
-                </form>
+
+                {{-- Carta de aceptación --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <a
+                            href="{{ route('students.acceptanceLetterDownloadSignedDoc', $student) }}"
+                            class="btn btn-block btn-{{ $student->acceptanceLetter->btn_color }}"
+                            target="_blank"
+                        >
+                            Carta de aceptación
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <form action="{{ route('students.acceptanceLetterMarkAsApproved', $student) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button class="btn btn-block btn-success" @if (!$student->inProcessAcceptanceLetter) disabled @endif>
+                                Aprobar documento
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <button
+                            class="btn btn-block btn-danger"
+                            data-toggle="modal"
+                            data-target="#acceptanceLetterCorrectionsModal"
+                            @if (!$student->inProcessAcceptanceLetter) disabled @endif
+                        >
+                            Enviar correcciones
+                        </button>
+                    </div>
+                </div>
+                {{-- Carta de aceptación end --}}
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Asignación de asesor interno
@@ -325,4 +353,32 @@
         </div>
     </div>
     {{-- COMMITMENT CORRECTIONS MODAL END --}}
+
+    {{-- ACCEPTANCE LETTER CORRECTIONS MODAL --}}
+    <div class="modal" tabindex="-1" id="acceptanceLetterCorrectionsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.acceptanceLetterCorrections', $student) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enviar correcciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="corrections">Correciones</label>
+                            <textarea name="corrections" id="corrections" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- ACCEPTANCE LETTER CORRECTIONS MODAL END --}}
 @endpush

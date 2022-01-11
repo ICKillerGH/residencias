@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcceptanceLetterController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
@@ -53,17 +54,24 @@ Route::middleware('auth')->group(function() {
         Route::put('/company-info', [StudentsController::class,'updateCompanyInfo'])->name('updateCompanyInfo');
         Route::get('/project-info', [StudentsController::class,'projectInfo'])->name('projectInfo')->can('view-project-info');
         Route::put('/project-info', [StudentsController::class, 'updateProjectInfo'])->name('updateProjectInfo');
+        Route::delete('/{student}', [StudentsController::class, 'destroy'])->name('destroy')->can('destroy','student');
+        Route::get('/{student}/edit', [StudentsController::class, 'edit'])->name('edit')->can('update','student');
+        Route::put('/{student}', [StudentsController::class, 'update'])->name('update')->can('update','student');
+        Route::put('/{student}/password', [StudentsController::class, 'updatePassword'])->name('updatePassword')->can('update','student');
         Route::get('/residency-process', [ResidencyProcessController::class, 'residencyProcess'])->name('residencyProcess')->can('view-residency-info');
+        // Residency request
         Route::post('/residency-process/residency-request', [ResidencyRequestController::class, 'residencyRequest'])->name('residencyRequest');
         Route::put('/residency-process/residency-request/corrections/mark-as-solved', [ResidencyRequestController::class, 'residencyRequestMarkCorrectionsAsSolved'])->name('residencyRequestMarkCorrectionsAsSolved');
         Route::post('/{student}/residency-request/corrections', [ResidencyRequestController::class, 'residencyRequestCorrections'])->name('residencyRequestCorrections');
         Route::put('/{student}/residency-request/mark-as-approved', [ResidencyRequestController::class, 'residencyRequestMarkAsApproved'])->name('residencyRequestMarkAsApproved');
         Route::put('/{student}/residency-request/signed-document', [ResidencyRequestController::class, 'residencyRequestUploadSignedDoc'])->name('residencyRequestUploadSignedDoc');
         Route::get('/{student}/residency-request/signed-document', [ResidencyRequestController::class, 'residencyRequestDownloadSignedDoc'])->name('residencyRequestDownloadSignedDoc');
+        // Presentation letter
         Route::post('/residency-process/presentation-letter', [PresentationLetterController::class, 'presentationLetter'])->name('presentationLetter');
         Route::post('/{student}/presentation-letter/corrections', [PresentationLetterController::class, 'presentatioLetterCorrections'])->name('presentatioLetterCorrections');
         Route::put('/residency-process/presentation-letter/corrections/mark-as-solved', [PresentationLetterController::class, 'presentationLetterMarkCorrectionsAsSolved'])->name('presentationLetterMarkCorrectionsAsSolved');
         Route::put('/{student}/presentation-letter/mark-as-approved', [PresentationLetterController::class, 'presentationLetterMarkAsApproved'])->name('presentationLetterMarkAsApproved');
+        // Commitment letter
         Route::post('/residency-process/commitment letter', [CommitmentLetterController::class, 'commitmentLetter'])->name('commitmentLetter');
         Route::post('/{student}/commitment-letter/corrections', [CommitmentLetterController::class, 'commitmentLetterCorrections'])->name('commitmentLetterCorrections');
         Route::put('/residency-process/commitment-letter/corrections/mark-as-solved', [CommitmentLetterController::class, 'commitmentLetterMarkCorrectionsAsSolved'])->name('commitmentLetterMarkCorrectionsAsSolved');
@@ -72,10 +80,15 @@ Route::middleware('auth')->group(function() {
         Route::get('/{student}/presentation-letter/signed-document', [PresentationLetterController::class, 'presentationLetterDownloadSignedDoc'])->name('presentationLetterDownloadSignedDoc');
         Route::put('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterUploadSignedDoc'])->name('commitmentLetterUploadSignedDoc');
         Route::get('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterDownloadSignedDoc'])->name('commitmentLetterDownloadSignedDoc');
-        Route::delete('/{student}', [StudentsController::class, 'destroy'])->name('destroy')->can('destroy','student');
-        Route::get('/{student}/edit', [StudentsController::class, 'edit'])->name('edit')->can('update','student');
-        Route::put('/{student}', [StudentsController::class, 'update'])->name('update')->can('update','student');
-        Route::put('/{student}/password', [StudentsController::class, 'updatePassword'])->name('updatePassword')->can('update','student');
+        // Acceptance Letter
+        Route::post('/residency-process/acceptance-letter', [AcceptanceLetterController::class, 'acceptanceLetter'])->name('acceptanceLetter');
+        Route::put('/{student}/acceptance-letter/signed-document', [AcceptanceLetterController::class, 'acceptanceLetterUploadSignedDoc'])->name('acceptanceLetterUploadSignedDoc');
+        Route::get('/{student}/acceptance-letter/signed-document', [AcceptanceLetterController::class, 'acceptanceLetterDownloadSignedDoc'])->name('acceptanceLetterDownloadSignedDoc');
+        Route::post('/{student}/acceptance-letter/corrections', [AcceptanceLetterController::class, 'acceptanceLetterCorrections'])->name('acceptanceLetterCorrections');
+        Route::put('/residency-process/acceptance-letter/corrections/mark-as-solved', [AcceptanceLetterController::class, 'acceptanceLetterMarkCorrectionsAsSolved'])->name('acceptanceLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/acceptance-letter/mark-as-approved', [AcceptanceLetterController::class, 'acceptanceLetterMarkAsApproved'])->name('acceptanceLetterMarkAsApproved');
+
+
 
     });
 });

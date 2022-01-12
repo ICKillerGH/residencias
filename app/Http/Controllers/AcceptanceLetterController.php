@@ -17,13 +17,20 @@ class AcceptanceLetterController extends Controller
         $data = $request->validate([
             'signed_document' => 'required|file|mimes:pdf',
         ]);
-        
+
         $acceptanceLetterExists = $student->acceptanceLetter->exists();
-        
+
         if (!$acceptanceLetterExists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
+            ]);
+        }
+
+        if (!$student->approvedCommitmentletter){
+            return redirect()->route('students.residencyProcess')->with('alert', [
+                'type' => 'danger',
+                'message' => 'Debe estar aprobada la carta de presentacion',
             ]);
         }
 
@@ -38,7 +45,7 @@ class AcceptanceLetterController extends Controller
     public function acceptanceLetterDownloadSignedDoc(Student $student)
     {
         $acceptanceLetter = $student->acceptanceLetter;
-        
+
         if (!$acceptanceLetter->exists()) {
             return back()->with('alert', [
                 'type' => 'danger',
@@ -132,7 +139,7 @@ class AcceptanceLetterController extends Controller
             'message' => 'La carta de aceptación ha sido aprovada',
         ]);
     }
-    
+
 
 
 }

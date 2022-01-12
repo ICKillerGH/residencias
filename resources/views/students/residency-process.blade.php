@@ -145,6 +145,7 @@
                                 class="btn btn-block btn-info"
                                 data-target="#acceptanceLetterUploadDocModal"
                                 data-toggle="modal"
+                                @if (!$student->approvedCommitmentletter) disabled @endif
                             >
                                 Cargar carta de aceptación
                             </button>
@@ -168,7 +169,7 @@
                             Ver correcciones
                         </button>
                     </div>
-                </div>                
+                </div>
                 {{-- Carta de aceptación end --}}
 
                 {{--Carta de asignación --}}
@@ -187,7 +188,7 @@
                     </div>
                     <div class="col-md-2">
                         <a
-                          
+
                             class="btn btn-block btn-success"
                             target="_blank"
                         >

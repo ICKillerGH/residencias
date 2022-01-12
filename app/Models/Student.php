@@ -93,6 +93,15 @@ class Student extends Model
         return $this->hasOne(AcceptanceLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
     }
 
+    public function approvedAcceptanceletter()
+    {
+        return $this->hasOne(AcceptanceLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
+
+    public function assignmentLetter()
+    {
+        return $this->hasOne(AssignmentLetter::class, 'user_id')->withDefault();
+    }
 
     public function company()
     {
@@ -107,6 +116,11 @@ class Student extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
     /**

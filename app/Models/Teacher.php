@@ -38,4 +38,10 @@ class Teacher extends Model
             'f' => 'Femenino',
         ][$this->sex];
     }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->fathers_last_name} {$this->mothers_last_name}";
+    }
+
 }

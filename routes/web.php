@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptanceLetterController;
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\AssignmentLetterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
 use App\Http\Controllers\PresentationLetterController;
@@ -72,7 +73,7 @@ Route::middleware('auth')->group(function() {
         Route::put('/residency-process/presentation-letter/corrections/mark-as-solved', [PresentationLetterController::class, 'presentationLetterMarkCorrectionsAsSolved'])->name('presentationLetterMarkCorrectionsAsSolved');
         Route::put('/{student}/presentation-letter/mark-as-approved', [PresentationLetterController::class, 'presentationLetterMarkAsApproved'])->name('presentationLetterMarkAsApproved');
         // Commitment letter
-        Route::post('/residency-process/commitment letter', [CommitmentLetterController::class, 'commitmentLetter'])->name('commitmentLetter');
+        Route::post('/residency-process/commitment-letter', [CommitmentLetterController::class, 'commitmentLetter'])->name('commitmentLetter');
         Route::post('/{student}/commitment-letter/corrections', [CommitmentLetterController::class, 'commitmentLetterCorrections'])->name('commitmentLetterCorrections');
         Route::put('/residency-process/commitment-letter/corrections/mark-as-solved', [CommitmentLetterController::class, 'commitmentLetterMarkCorrectionsAsSolved'])->name('commitmentLetterMarkCorrectionsAsSolved');
         Route::put('/{student}/commitment-letter/mark-as-approved', [CommitmentLetterController::class, 'commitmentLetterMarkAsApproved'])->name('commitmentLetterMarkAsApproved');
@@ -87,7 +88,10 @@ Route::middleware('auth')->group(function() {
         Route::post('/{student}/acceptance-letter/corrections', [AcceptanceLetterController::class, 'acceptanceLetterCorrections'])->name('acceptanceLetterCorrections');
         Route::put('/residency-process/acceptance-letter/corrections/mark-as-solved', [AcceptanceLetterController::class, 'acceptanceLetterMarkCorrectionsAsSolved'])->name('acceptanceLetterMarkCorrectionsAsSolved');
         Route::put('/{student}/acceptance-letter/mark-as-approved', [AcceptanceLetterController::class, 'acceptanceLetterMarkAsApproved'])->name('acceptanceLetterMarkAsApproved');
+        // Assignment Letter
+        Route::post('/residency-process/assignment-letter', [AssignmentLetterController::class, 'assignmentLetter'])->name('assignmentLetter');
 
+        
 
 
     });

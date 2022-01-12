@@ -171,11 +171,41 @@
                 </div>                
                 {{-- Carta de aceptación end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Asignación de asesor interno
-                    </button>
-                </form>
+                {{--Carta de asignación --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.assignment-letter-btn')
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-info"
+                            data-target=""
+                            data-toggle="modal"
+                        >
+                            Cargar documento
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a
+                          
+                            class="btn btn-block btn-success"
+                            target="_blank"
+                        >
+                            Ver documento
+                         </a>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-warning"
+                            data-toggle="modal"
+                            data-target=""
+                        >
+                            Ver correcciones
+                        </button>
+                    </div>
+                  </div>
+                {{--Carta de asignación end--}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Anteproyecto

@@ -92,5 +92,6 @@ Route::middleware('auth')->group(function() {
         Route::post('/residency-process/assignment-letter', [AssignmentLetterController::class, 'assignmentLetter'])->name('assignmentLetter');
         Route::post('/{student}/assignment-letter/corrections', [AssignmentLetterController::class, 'assignmentLetterCorrections'])->name('assignmentLetterCorrections');
         Route::put('/residency-process/assignment-letter/corrections/mark-as-solved', [AssignmentLetterController::class, 'assignmentLetterMarkCorrectionsAsSolved'])->name('assignmentLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/assignment-letter/mark-as-approved', [AssignmentLetterController::class, 'assignmentLetterMarkAsApproved'])->name('assignmentLetterMarkAsApproved');
     });
 });

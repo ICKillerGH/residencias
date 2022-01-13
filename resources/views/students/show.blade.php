@@ -238,11 +238,10 @@
                         @include('residency-process.partials.assignment-letter-btn')
                     </div>
                     <div class="col-md-3">
-                        <form action="#" method="POST">
+                        <form action="{{ route('students.assignmentLetterMarkAsApproved', $student) }}" method="POST">
                             @method('PUT')
                             @csrf
-                            {{-- <button class="btn btn-block btn-success" @if (!$student->inProcessAcceptanceLetter) disabled @endif> --}}
-                            <button class="btn btn-block btn-success">
+                            <button class="btn btn-block btn-success" @if (!$student->inProcessAssignmentLetter) disabled @endif>
                                 Aprobar documento
                             </button>
                         </form>

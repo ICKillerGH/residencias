@@ -59,7 +59,7 @@ class AssignmentLetterController extends Controller
         if (!$assignmentLetter) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'La carta de compromiso debe estar en proceso para poder ser revisada',
+                'message' => 'La carta de asignación debe estar en proceso para poder ser revisada',
             ]);
         }
 
@@ -112,6 +112,27 @@ class AssignmentLetterController extends Controller
         return back()->with('alert', [
             'type' => 'success',
             'message' => 'Las correciones fueron verificadas',
+        ]);
+    }
+
+    public function assignmentLetterMarkAsApproved(Student $student)
+    {
+        $assignmentLetter = $student->inProcessAssignmentLetter;
+
+        if (!$assignmentLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de asignación debe estar en proceso para porder ser revisada',
+            ]);
+        }
+
+        $assignmentLetter->status = DocumentStatus::STATUS_APPROVED;
+
+        $assignmentLetter->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'La carta de asignación ha sido aprovada',
         ]);
     }
 }

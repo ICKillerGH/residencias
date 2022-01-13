@@ -107,6 +107,11 @@ class Student extends Model
         return $this->hasOne(AssignmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
     }
 
+    public function approvedAssignmentLetter()
+    {
+        return $this->hasOne(AssignmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

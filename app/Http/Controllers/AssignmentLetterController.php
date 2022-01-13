@@ -135,4 +135,55 @@ class AssignmentLetterController extends Controller
             'message' => 'La carta de asignación ha sido aprovada',
         ]);
     }
+
+    public function assignmentLetterUploadSignedDoc(Request $request, Student $student)
+    {
+        $assignmentLetter = $student->approvedAssignmentLetter;
+
+        if (!$assignmentLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta asignación debe ser aprovada',
+            ]);
+        }
+
+        $data = $request->validate([
+            'signed_document' => 'required|file|mimes:pdf',
+        ]);
+
+        if ($assignmentLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento ya ha sido cargado.',
+            ]);
+        }
+
+        $assignmentLetter->update($data);
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'El documento se subió con exitosamente',
+        ]);
+    }
+
+    public function assignmentLetterDownloadSignedDoc(Student $student)
+    {
+        $assignmentLetter = $student->approvedAssignmentLetter;
+
+        if (!$assignmentLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta asignación debe ser aprovada',
+            ]);
+        }
+
+        if (!$assignmentLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento no ha sido cargado aún',
+            ]);
+        }
+
+        return response()->file(storage_path("app/{$assignmentLetter->signed_document}"));
+    }
 }

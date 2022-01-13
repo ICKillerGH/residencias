@@ -16,7 +16,7 @@ class Student extends Model
 
     /**
      * Relationships
-     */    
+     */
     public function career()
     {
         return $this->belongsTo(Career::class);
@@ -51,12 +51,12 @@ class Student extends Model
     {
         return $this->hasOne(ResidencyRequest::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
-    
+
     public function presentationLetter()
     {
         return $this->hasOne(PresentationLetter::class, 'user_id')->withDefault();
     }
-    
+
     public function inProcessPresentationLetter()
     {
         return $this->hasOne(PresentationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
@@ -77,7 +77,6 @@ class Student extends Model
         return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
     }
 
-    
     public function approvedCommitmentLetter()
     {
         return $this->hasOne(CommitmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
@@ -103,6 +102,11 @@ class Student extends Model
         return $this->hasOne(AssignmentLetter::class, 'user_id')->withDefault();
     }
 
+    public function inProcessAssignmentLetter()
+    {
+        return $this->hasOne(AssignmentLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');
@@ -112,7 +116,7 @@ class Student extends Model
     {
         return $this->hasOne(Project::class, 'user_id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -149,5 +153,5 @@ class Student extends Model
     {
         return "{$this->first_name} {$this->fathers_last_name} {$this->mothers_last_name}";
     }
-    
+
 }

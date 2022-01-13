@@ -92,7 +92,7 @@ class CommitmentLetterController extends Controller
         ]);
     }
 
-    public function commitmentLetterMarkCorrectionsAsSolved ()
+    public function commitmentLetterMarkCorrectionsAsSolved()
     {
         $commitmentLetter = CommitmentLetter::query()
             ->where('user_id', Auth::id())
@@ -104,7 +104,6 @@ class CommitmentLetterController extends Controller
                 'message' => 'La carta de compromiso no necesita correciones',
             ]);
         }
-
 
         $commitmentLetter->status = DocumentStatus::STATUS_PROCESSING;
 

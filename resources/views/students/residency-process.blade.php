@@ -199,7 +199,7 @@
                         <button
                             class="btn btn-block btn-warning"
                             data-toggle="modal"
-                            data-target=""
+                            data-target="#assignmentLetterCorrectionsModal"
                         >
                             Ver correcciones
                         </button>
@@ -355,6 +355,7 @@
             </div>
         </div>
     </div>
+
     {{-- UPLOAD DOC ACCEPTANCE LETTER MODAL --}}
     <div class="modal" tabindex="-1" id="acceptanceLetterUploadDocModal">
         <div class="modal-dialog">
@@ -415,64 +416,95 @@
         </div>
     @endif
 
-     {{-- CORRECTIONS MODAL --}}
-     @if ($student->commitmentLetter->corrections->isNotEmpty())
-     <div class="modal" tabindex="-1" id="commitmentLetterCorrectionsModal">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <form action="{{ route('students.commitmentLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
-                     <div class="modal-header">
-                         <h5 class="modal-title">Enviar correcciones</h5>
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                             <span aria-hidden="true">&times;</span>
-                         </button>
-                     </div>
-                     <div class="modal-body">
-                         @csrf
-                         @method('PUT')
-                         <ul>
-                             @foreach ($student->commitmentLetter->corrections as $correction)
-                                 <li>{{ $correction->content }}</li>
-                             @endforeach
-                         </ul>
-                     </div>
-                     <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                         <button class="btn btn-primary" @if (!$student->commitmentLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
- @endif
-     {{-- CORRECTIONS MODAL --}}
-     @if ($student->acceptanceLetter->corrections->isNotEmpty())
-     <div class="modal" tabindex="-1" id="acceptanceLetterCorrectionsModal">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <form action="{{ route('students.acceptanceLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
-                     <div class="modal-header">
-                         <h5 class="modal-title">Enviar correcciones</h5>
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                             <span aria-hidden="true">&times;</span>
-                         </button>
-                     </div>
-                     <div class="modal-body">
-                         @csrf
-                         @method('PUT')
-                         <ul>
-                             @foreach ($student->acceptanceLetter->corrections as $correction)
-                                 <li>{{ $correction->content }}</li>
-                             @endforeach
-                         </ul>
-                     </div>
-                     <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                         <button class="btn btn-primary" @if (!$student->acceptanceLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
- @endif
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->commitmentLetter->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="commitmentLetterCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.commitmentLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->commitmentLetter->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->commitmentLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->acceptanceLetter->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="acceptanceLetterCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.acceptanceLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->acceptanceLetter->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->acceptanceLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->assignmentLetter->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="assignmentLetterCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.assignmentLetterMarkCorrectionsAsSolved') }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->assignmentLetter->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->assignmentLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @endpush

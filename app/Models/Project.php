@@ -17,6 +17,6 @@ class Project extends Model
      */
     public function getActivityScheduleImageUrlAttribute()
     {
-        return Storage::url($this->activity_schedule_image);
+        return Storage::url($this->attributes['activity_schedule_image']);
     }
 }

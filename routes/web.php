@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AssignmentLetterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
+use App\Http\Controllers\PreliminaryLetterController;
 use App\Http\Controllers\PresentationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\ResidencyRequestController;
@@ -90,6 +91,10 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/acceptance-letter/mark-as-approved', [AcceptanceLetterController::class, 'acceptanceLetterMarkAsApproved'])->name('acceptanceLetterMarkAsApproved');
         // Assignment Letter
         Route::post('/residency-process/assignment-letter', [AssignmentLetterController::class, 'assignmentLetter'])->name('assignmentLetter');
+
+
+        // Preliminary Letter
+        Route::post('/residency-process/preliminary-letter', [PreliminaryLetterController::class, 'preliminaryLetter'])->name('preliminaryLetter');
 
         
 

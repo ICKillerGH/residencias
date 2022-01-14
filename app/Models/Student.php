@@ -103,6 +103,11 @@ class Student extends Model
         return $this->hasOne(AssignmentLetter::class, 'user_id')->withDefault();
     }
 
+    public function preliminaryLetter()
+    {
+        return $this->hasOne(PreliminaryLetter::class, 'user_id')->withDefault();
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

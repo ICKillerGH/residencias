@@ -111,7 +111,12 @@
     </tr>
     <tr>
         <td height="17%">Objetivos Específicos:</td>
-        <td colspan="3"></td>
+        <td colspan="3">
+            @foreach ($project->specificObjectives as $obj)
+                {{ $obj->name }}
+                <br>
+            @endforeach
+        </td>
     </tr>
     <tr>
         <td height="35%">Justificación del proyecto:</td>
@@ -155,10 +160,14 @@
         <td width="33.3333%">
             _______________________
             <br>
+            {{ $student->full_name }}
+            <br>
             Alumno
         </td>
         <td width="33.3333%">
             _______________________
+            <br>
+            {{ $student->teacher->full_name }}
             <br>
             Asesor interno
         </td>

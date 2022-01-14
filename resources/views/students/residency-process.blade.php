@@ -216,17 +216,20 @@
                     </div>
                     <div class="col-md-2">
                         <button
-                            class="btn btn-block btn-info"
-                            data-target=""
-                            data-toggle="modal"
+                        class="btn btn-block btn-info"
+                        data-target="#preliminaryLetterUploadDocModal"
+                        data-toggle="modal"
+                        @if ($student->preliminaryLetter->signed_document) disabled @endif
                         >
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
                         <a
-                          
-                            class="btn btn-block btn-success"
+                            @if ($student->preliminaryLetter->signed_document)
+                                href="{{ route('students.preliminaryLetterDownloadSignedDoc', $student) }}"
+                            @endif
+                            class="btn btn-block btn-success @if (!$student->preliminaryLetter->signed_document) disabled @endif"
                             target="_blank"
                         >
                             Ver documento
@@ -236,7 +239,7 @@
                         <button
                             class="btn btn-block btn-warning"
                             data-toggle="modal"
-                            data-target=""
+                            data-target="#preliminaryLetterCorrectionsModal"
                         >
                             Ver correcciones
                         </button>
@@ -445,6 +448,35 @@
         </div>
     </div>
 
+    {{-- UPLOAD DOC PRELIMINARY LETTER MODAL --}}
+    <div class="modal" tabindex="-1" id="preliminaryLetterUploadDocModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.preliminaryLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cargar anteproyecto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="signed_document_prl">Documento</label>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_prl" accept="application/pdf" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     {{-- CORRECTIONS MODAL --}}
     @if ($student->presentationLetter->corrections->isNotEmpty())
         <div class="modal" tabindex="-1" id="presentationLetterCorrectionsModal">
@@ -567,4 +599,36 @@
             </div>
         </div>
     @endif
+
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->preliminaryLetter->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="preliminaryLetterCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.preliminaryLetterMarkCorrectionsAsSolved') }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->preliminaryLetter->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->preliminaryLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endpush

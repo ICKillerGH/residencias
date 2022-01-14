@@ -98,6 +98,12 @@ Route::middleware('auth')->group(function() {
         Route::get('/{student}/assignment-letter/signed-document', [AssignmentLetterController::class, 'assignmentLetterDownloadSignedDoc'])->name('assignmentLetterDownloadSignedDoc');
         // Preliminary Letter
         Route::post('/residency-process/preliminary-letter', [PreliminaryLetterController::class, 'preliminaryLetter'])->name('preliminaryLetter');
+        Route::post('/{student}/preliminary-letter/corrections', [PreliminaryLetterController::class, 'preliminaryLetterCorrections'])->name('preliminaryLetterCorrections');
+        Route::put('/residency-process/preliminary-letter/corrections/mark-as-solved', [PreliminaryLetterController::class, 'preliminaryLetterMarkCorrectionsAsSolved'])->name('preliminaryLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/preliminary-letter/mark-as-approved', [PreliminaryLetterController::class, 'preliminaryLetterMarkAsApproved'])->name('preliminaryLetterMarkAsApproved');
+        Route::put('/{student}/preliminary-letter/signed-document', [PreliminaryLetterController::class, 'preliminaryLetterUploadSignedDoc'])->name('preliminaryLetterUploadSignedDoc');
+        Route::get('/{student}/preliminary-letter/signed-document', [PreliminaryLetterController::class, 'preliminaryLetterDownloadSignedDoc'])->name('preliminaryLetterDownloadSignedDoc');
+
 
         
 

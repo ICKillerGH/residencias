@@ -117,6 +117,16 @@ class Student extends Model
         return $this->hasOne(PreliminaryLetter::class, 'user_id')->withDefault();
     }
 
+    public function inProcessPreliminaryLetter()
+    {
+        return $this->hasOne(PreliminaryLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+
+    public function approvedPreliminaryLetter()
+    {
+        return $this->hasOne(PreliminaryLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

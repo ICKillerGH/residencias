@@ -30,9 +30,9 @@ class UserSeeder extends Seeder
         ]);
 
         $teacherUser->teacher()->create([
-            'first_name' => 'Oralis',
-            'fathers_last_name' => 'Valerio',
-            'mothers_last_name' => 'Vargas',
+            'first_name' => 'Pedro',
+            'fathers_last_name' => 'Perez',
+            'mothers_last_name' => 'Lopez',
             'sex' => 'f',
             'curp' => '12356456454564466',
             'phone_number' => '4261249733',

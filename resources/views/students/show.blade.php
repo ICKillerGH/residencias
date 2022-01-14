@@ -232,12 +232,33 @@
                         </button>
                     </div>
                 </div>
-                {{-- Carta de aceptación end --}}
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Asignación de asesor interno
-                    </button>
-                </form>
+                {{-- Carta de asignación --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.assignment-letter-btn')
+                    </div>
+                    <div class="col-md-3">
+                        <form action="{{ route('students.assignmentLetterMarkAsApproved', $student) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button class="btn btn-block btn-success" @if (!$student->inProcessAssignmentLetter) disabled @endif>
+                                Aprobar documento
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <button
+                            class="btn btn-block btn-danger"
+                            data-toggle="modal"
+                            data-target="#assignmentLetterCorrectionsModal"
+                            @if (!$student->inProcessAssignmentLetter) disabled @endif
+                        >
+                            Enviar correcciones
+                        </button>
+                    </div>
+                </div>
+                {{-- Carta de asignación end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Anteproyecto
@@ -381,4 +402,32 @@
         </div>
     </div>
     {{-- ACCEPTANCE LETTER CORRECTIONS MODAL END --}}
+
+    {{-- ASSIGNMENT LETTER CORRECTIONS MODAL --}}
+    <div class="modal" tabindex="-1" id="assignmentLetterCorrectionsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.assignmentLetterCorrections', $student) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enviar correcciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="corrections">Correciones</label>
+                            <textarea name="corrections" id="corrections" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- ASSIGNMENT LETTER CORRECTIONS MODAL END --}}
 @endpush

@@ -91,13 +91,17 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/acceptance-letter/mark-as-approved', [AcceptanceLetterController::class, 'acceptanceLetterMarkAsApproved'])->name('acceptanceLetterMarkAsApproved');
         // Assignment Letter
         Route::post('/residency-process/assignment-letter', [AssignmentLetterController::class, 'assignmentLetter'])->name('assignmentLetter');
-
-
+        Route::post('/{student}/assignment-letter/corrections', [AssignmentLetterController::class, 'assignmentLetterCorrections'])->name('assignmentLetterCorrections');
+        Route::put('/residency-process/assignment-letter/corrections/mark-as-solved', [AssignmentLetterController::class, 'assignmentLetterMarkCorrectionsAsSolved'])->name('assignmentLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/assignment-letter/mark-as-approved', [AssignmentLetterController::class, 'assignmentLetterMarkAsApproved'])->name('assignmentLetterMarkAsApproved');
+        Route::put('/{student}/assignment-letter/signed-document', [AssignmentLetterController::class, 'assignmentLetterUploadSignedDoc'])->name('assignmentLetterUploadSignedDoc');
+        Route::get('/{student}/assignment-letter/signed-document', [AssignmentLetterController::class, 'assignmentLetterDownloadSignedDoc'])->name('assignmentLetterDownloadSignedDoc');
         // Preliminary Letter
         Route::post('/residency-process/preliminary-letter', [PreliminaryLetterController::class, 'preliminaryLetter'])->name('preliminaryLetter');
 
         
 
 
+        
     });
 });

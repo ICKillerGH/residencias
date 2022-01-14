@@ -37,6 +37,60 @@
                     <x-inputs.text-field-row name="general_objective" label="Objetivo general"
                         placeholder="Ingresa el objetivo general" :default-value="$project->general_objective" />
 
+                    {{-- SPECIFIC OBJECTIVES --}}
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="">Objetivos Especificos</label>
+                        </div>
+                        <div class="col-md-9" id="specific-obj-container">
+                            @if ($project->specificObjectives->isNotEmpty())
+                                @foreach ($project->specificObjectives as $obj)
+                                    <div class="d-flex">
+                                        <div class="input-group input-group-dynamic">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                name="specific_objectives[]"
+                                                placeholder="Ingrese el objetivo"
+                                                value="{{ $obj->name }}"
+                                            >
+                                        </div>
+                                        <button type="button" class="btn btn-danger btn-sm btn-remove-obj">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="d-flex">
+                                    <div class="input-group input-group-dynamic">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="specific_objectives[]"
+                                            placeholder="Ingrese el objetivo"
+                                        >
+                                    </div>
+                                    <button type="button" class="btn btn-danger btn-sm btn-remove-obj">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            @endif
+
+                            <button type="button" class="btn btn-success btn-sm" id="btn-add-specific-obj">
+                                <i class="fa fa-plus"></i>
+                                <span class="d-inline-block ml-2">Agregar Objetivo especifico</span>
+                            </button>
+                            <div>
+                                @error('specific_objectives')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                @error('specific_objectives.*')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- JUSTIFICATION --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
@@ -73,3 +127,30 @@
     </div>
 
 @endsection
+
+
+@push('js')
+    <script>
+        $('#btn-add-specific-obj').on('click', function() {
+            $(this).before(`
+                <div class="d-flex">
+                    <div class="input-group input-group-dynamic">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="specific_objectives[]"
+                            placeholder="Ingrese el objetivo"
+                        >
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm btn-remove-obj">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            `);
+        });
+
+        $('#specific-obj-container').on('click', '.btn-remove-obj', function() {
+            $(this).parent().remove();
+        });
+    </script>
+@endpush

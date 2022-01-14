@@ -15,6 +15,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -153,13 +154,35 @@ class StudentsController extends Controller
             ]);
         }
 
-        $path = $request->activity_schedule_image->store('public/project');
+        if ($request->activity_schedule_image) {
+            $path = $request->activity_schedule_image->store('public/project');
+    
+            $data['activity_schedule_image'] = $path;
+        }        
 
-        $data['activity_schedule_image'] = $path;
+        $project->fill(Arr::except($data, 'specific_objectives'));
 
-        $project->fill($data);
+        DB::beginTransaction();
 
-        $project->save();
+        try {
+            $project->specificObjectives()->delete();
+            
+            $project->save();
+            
+            $mappedObjectives = array_map(fn($obj) => ['name' => $obj], $request->specific_objectives);
+            
+            $project->specificObjectives()->createMany($mappedObjectives);
+
+            DB::commit();
+        } catch(Throwable $t) {
+            dd($t->getMessage());
+            DB::rollBack();
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde',
+            ]);
+        }        
 
         return redirect()->route('students.projectInfo')->with('alert', [
             'type' => 'success',

@@ -13,6 +13,14 @@ class Project extends Model
     protected $guarded=[];
 
     /**
+     * Relationships
+     */
+    public function specificObjectives()
+    {
+        return $this->hasMany(SpecificObjective::class);
+    }
+    
+    /**
      * Accessors
      */
     public function getActivityScheduleImageUrlAttribute()

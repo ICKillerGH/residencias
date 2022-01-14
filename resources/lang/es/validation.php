@@ -172,6 +172,8 @@ return [
         'teacher_id' => 'asesor interno',
         'corrections' => 'correcciones',
         'signed_document' => 'documento firmado',
+        'specific_objectives' => 'objetivos especificos',
+        'specific_objectives.*' => 'objetivo especifico',
     ],
 
 ];

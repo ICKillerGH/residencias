@@ -29,6 +29,8 @@ class UpdateStudentProjectInfoRequest extends FormRequest
             'end_date'=>'required|date_format:Y-m-d|after:start_date',
             'schedule'=>'required|max:255',
             'general_objective'=>'required|max:255',
+            'specific_objectives'=>'required|array|min:1',
+            'specific_objectives.*'=>'required|max:255',
             'justification'=>'required',
             'activity_schedule_image'=> 'image',
         ];

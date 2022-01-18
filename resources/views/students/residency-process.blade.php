@@ -18,7 +18,7 @@
 
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Proceso de residencia profesional</h4>
+                <h4 class="card-title">Proceso de Residencia Profesional</h4>
             </div>
 
             <div class="card-body">
@@ -246,19 +246,54 @@
                     </div>
                   </div>
                  {{-- Anteproyecto end --}}
+
+                {{-- Estructura de informe --}}
+                <div class="row">
+                    <div class="col-md-8">
+                        @if (!$student->paperStructure->exists())
+                            <button 
+                                class="btn btn-block btn-warning" 
+                                data-target="#paperStructureUploadDocModal"
+                                data-toggle="modal"
+                                @if (!$student->approvedPreliminaryletter) disabled @endif
+                            >
+                                Cargar Estructura del informe final      
+                            </button>
+                        @else
+                            <a 
+                                href="{{ route('students.paperStructureDownloadSignedDoc', $student) }}"
+                                class="btn btn-block btn-{{ $student->paperStructure->btn_color }}"
+                                target="_blank"                        
+                            >
+                                Estructura del informe final
+                            </a>
+                        @endif
+                    </div>
+                    <div class="col-md-4">
+                        <button
+                            class="btn btn-block btn-warning"
+                            data-toggle="modal"
+                            data-target="#paperStructureCorrectionsModal"
+                        >
+                            Ver correcciones
+                        </button>
+                    </div>
+                </div>
+                {{-- Estructura de informe end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
-                        Carta de término
+                        Cédula de cumplimiento de RP
                     </button>
                 </form>
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
-                        Cédula de cumplimiento
+                     Acta de calificacion
                     </button>
                 </form>
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
-                        Estructura del informe final
+                        Carta de termino
                     </button>
                 </form>
                 <form action="">
@@ -418,6 +453,34 @@
             </div>
         </div>
     </div>
+    {{-- UPLOAD DOC PAPER STRUCTURE MODAL --}}
+    <div class="modal" tabindex="-1" id="paperStructureUploadDocModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.paperStructureUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cargar estructura del informe final</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="signed_document_ps1">Documento</label>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_ps1" accept="application/pdf" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     {{-- UPLOAD DOC ASSIGNMENT LETTER MODAL --}}
     <div class="modal" tabindex="-1" id="assignmentLetterUploadDocModal">
@@ -562,6 +625,36 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button class="btn btn-primary" @if (!$student->acceptanceLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->paperStructure->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="paperStructureCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.paperStructureMarkCorrectionsAsSolved', $student) }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->paperStructure->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->paperStructure->needsCorrections()) disabled @endif >Marcar como corregida</button>
                         </div>
                     </form>
                 </div>

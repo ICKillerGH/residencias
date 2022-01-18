@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Oralis',
             'fathers_last_name' => 'Valerio',
             'mothers_last_name' => 'Vargas',
-            'account_number' => '0102032323232',
+            'account_number' => '21170146',
             'sex' => 'f',
             'curp' => '12356456454564466',
             'career_percentage' => 90,

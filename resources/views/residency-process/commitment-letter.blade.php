@@ -42,18 +42,24 @@
             padding: 0 1rem;
             margin-top: 0px;
         }
+        .presente {
+            text-align: left;
+            padding: 0 1rem;
+            margin-top: 0px;
+        }
 
     </style>
 </head>
 
 <body>
     @include('residency-process.partials.header', ['title' => 'CARTA COMPROMISO'])
-    <p class="request-date"><b>No. RPA/ {{ $student->career->abreviation }}/{{str_pad($student->user_id, 4,'0',STR_PAD_LEFT) }}/{{ date('Y') }}</b> </p>
-    <p class="request-date"><b>{{$commitmentLetter->request_date_formatted}} </b> </p>
+    <div class="request-date"><b>No. RPA/ {{ $student->career->abreviation }}/{{str_pad($student->user_id, 4,'0',STR_PAD_LEFT) }}/{{ date('Y') }}</b> </div>
+    <div class="request-date"><b>{{$commitmentLetter->request_date_formatted}} </b> </div>
 
-    <p class="person"><b>{{ $externalCompany->person_in_charge }}</b></p>
-    <p class="cargo"><b>{{ $externalCompany->person_in_charge_position }}</b></p>
-    <div class="cargo"><b>PRESENTE:</b></div>
+    <div class="person"><b>{{ $externalCompany->person_in_charge }}</b></div>
+    <div class="cargo"><b>{{ $externalCompany->person_in_charge_position }}</b></div>
+    <br>
+    <div class="presente"><b>PRESENTE:</b></div>
     <p class="note">
         Por este medio me permito saludarle atentamente y presentar a Usted al C. <b>{{$student->full_name}}</b> , con
         número de Cuenta <b>{{$student->account_number}}</b>, alumno de nuestra casa de estudios de la <b>{{$student->career->name}}</b> , quien

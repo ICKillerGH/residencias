@@ -20,8 +20,12 @@
         }
         .cuenta {
             text-align: left;
-            padding: 0 3rem;
             margin-top: 0px;
+        }
+        .presente {
+            text-align: left;
+            margin-top: 0px;
+            padding: 0 3rem;
         }
         .note {
             padding: 0 3rem;
@@ -39,14 +43,18 @@
         }
         .table {
             width: 100%;
+            padding: 0 3rem;
+        }
+        .imagen{
+            background-size: cover;
+            background-size: 10rem;
+            background-attachment: fixed;
         }
 </style>
 <body>
     <div>
-        <img src="{{ asset('img/escudo-mexico.jpg') }}" alt="" style="height: 80px;">
         <div style="float: right">
-            <img src="{{ asset('img/umb-logo.jpg') }}" alt="" style="height: 50px;">
-            <img src="{{ asset('img/edomex.jpg') }}" alt="" style="height: 50px;">
+            <img src="{{ asset('img/encabezado3.jpg') }}" align="top" alt="" style="height: 65px;">
         </div>
     </div>
     
@@ -68,7 +76,8 @@
             </tr>
         </tbody>
     </table>
-    <div class="cuenta"><b>PRESENTE: </b></div>
+    <br>
+    <div class="presente"><b>PRESENTE: </b></div>
 
     <p class="note">
         Por medio del presente le informo que el Profesor <b>{{$student->teacher->full_name}} </b> 
@@ -99,10 +108,12 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
     <div class="c"> C.c.p. <b>{{$student->teacher->full_name}} </b> .- Para su conocimiento. </div>
     <div class="c"> Expediente/Minutario</b> </div>
+    <div>
+        <div style="float: center">
+            <img src="{{ asset('img/abajo.jpg') }}" style="height: 120px;" width="705">
+        </div>
+    </div>
 </body>
 </html>

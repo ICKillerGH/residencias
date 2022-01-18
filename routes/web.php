@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AssignmentLetterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
+use App\Http\Controllers\PaperStructureController;
 use App\Http\Controllers\PreliminaryLetterController;
 use App\Http\Controllers\PresentationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
@@ -83,7 +84,6 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterUploadSignedDoc'])->name('commitmentLetterUploadSignedDoc');
         Route::get('/{student}/commitment-letter/signed-document', [CommitmentLetterController::class, 'commitmentLetterDownloadSignedDoc'])->name('commitmentLetterDownloadSignedDoc');
         // Acceptance Letter
-        Route::post('/residency-process/acceptance-letter', [AcceptanceLetterController::class, 'acceptanceLetter'])->name('acceptanceLetter');
         Route::put('/{student}/acceptance-letter/signed-document', [AcceptanceLetterController::class, 'acceptanceLetterUploadSignedDoc'])->name('acceptanceLetterUploadSignedDoc');
         Route::get('/{student}/acceptance-letter/signed-document', [AcceptanceLetterController::class, 'acceptanceLetterDownloadSignedDoc'])->name('acceptanceLetterDownloadSignedDoc');
         Route::post('/{student}/acceptance-letter/corrections', [AcceptanceLetterController::class, 'acceptanceLetterCorrections'])->name('acceptanceLetterCorrections');
@@ -103,6 +103,16 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/preliminary-letter/mark-as-approved', [PreliminaryLetterController::class, 'preliminaryLetterMarkAsApproved'])->name('preliminaryLetterMarkAsApproved');
         Route::put('/{student}/preliminary-letter/signed-document', [PreliminaryLetterController::class, 'preliminaryLetterUploadSignedDoc'])->name('preliminaryLetterUploadSignedDoc');
         Route::get('/{student}/preliminary-letter/signed-document', [PreliminaryLetterController::class, 'preliminaryLetterDownloadSignedDoc'])->name('preliminaryLetterDownloadSignedDoc');
+        //Paper structure
+        Route::put('/{student}/paper-structure/signed-document', [PaperStructureController::class, 'paperStructureUploadSignedDoc'])->name('paperStructureUploadSignedDoc');
+        Route::get('/{student}/paper-structure/signed-document', [PaperStructureController::class, 'paperStructureDownloadSignedDoc'])->name('paperStructureDownloadSignedDoc');
+        Route::post('/{student}/paper-structure/corrections', [PaperStructureController::class, 'paperStructureCorrections'])->name('paperStructureCorrections');
+        Route::put('/residency-process/paper-structure/corrections/mark-as-solved', [PaperStructureController::class, 'paperStructureMarkCorrectionsAsSolved'])->name('paperStructureMarkCorrectionsAsSolved');
+        Route::put('/{student}/paper-structure/mark-as-approved', [PaperStructureController::class, 'paperStructureMarkAsApproved'])->name('paperStructureMarkAsApproved');
+
+
+
+
 
 
         

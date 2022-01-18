@@ -45,6 +45,7 @@ class PresentationLetterController extends Controller
 
         $pdf = PDF::loadView('residency-process.presentation-letter',[
             'student'=>$student,
+            'externalCompany' => $student->company,
             'presentationLetter'=>$presentationLetter,
         ]);
 

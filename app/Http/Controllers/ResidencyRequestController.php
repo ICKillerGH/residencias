@@ -44,8 +44,8 @@ class ResidencyRequestController extends Controller
                 'message' => 'El estudiante debe tener al menos el 85% de la carrera aprovada.',
             ]);
         }
-
-        if (!$student->residencyRequest->exists() && Auth::id() !== $student->user_id) {
+        
+        if (!$student->residencyRequest->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
@@ -66,7 +66,7 @@ class ResidencyRequestController extends Controller
             ]);
         }
 
-        $residencyRequest = $student->residencyRequest->exists()
+        $residencyRequest = $student->residencyRequest->exists
             ? $student->residencyRequest
             : $student->residencyRequest()->create([
                 'request_date' => now(),

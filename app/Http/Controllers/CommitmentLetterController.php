@@ -22,7 +22,7 @@ class CommitmentLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-        if (!$student->commitmentLetter->exists() && Auth::id() !== $student->user_id) {
+        if (!$student->commitmentLetter->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
@@ -36,7 +36,7 @@ class CommitmentLetterController extends Controller
             ]);
         }
 
-        $commitmentLetter = $student->commitmentLetter->exists()
+        $commitmentLetter = $student->commitmentLetter->exists
             ? $student->commitmentLetter
             : $student->commitmentLetter()->create([
                 'request_date' => now(),

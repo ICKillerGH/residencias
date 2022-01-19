@@ -23,7 +23,7 @@ class PresentationLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-        if (!$student->presentationLetter->exists() && Auth::id() !== $student->user_id) {
+        if (!$student->presentationLetter->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
@@ -37,7 +37,7 @@ class PresentationLetterController extends Controller
             ]);
         }
 
-        $presentationLetter = $student->presentationLetter->exists()
+        $presentationLetter = $student->presentationLetter->exists
             ? $student->presentationLetter
             : $student->presentationLetter()->create([
                 'request_date' => now(),

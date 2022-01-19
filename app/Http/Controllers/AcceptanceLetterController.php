@@ -18,7 +18,7 @@ class AcceptanceLetterController extends Controller
             'signed_document' => 'required|file|mimes:pdf',
         ]);
 
-        $acceptanceLetterExists = $student->acceptanceLetter->exists();
+        $acceptanceLetterExists = $student->acceptanceLetter->exists;
 
         if (!$acceptanceLetterExists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
@@ -46,7 +46,7 @@ class AcceptanceLetterController extends Controller
     {
         $acceptanceLetter = $student->acceptanceLetter;
 
-        if (!$acceptanceLetter->exists()) {
+        if (!$acceptanceLetter->exists) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'La carta aceptación no ha sido cargada',

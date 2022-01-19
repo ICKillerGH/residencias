@@ -140,7 +140,7 @@
                 {{-- Carta de aceptación --}}
                 <div class="row">
                     <div class="col-md-8">
-                        @if (!$student->acceptanceLetter->exists())
+                        @if (!$student->acceptanceLetter->exists)
                             <button
                                 class="btn btn-block btn-info"
                                 data-target="#acceptanceLetterUploadDocModal"
@@ -250,7 +250,7 @@
                 {{-- Estructura de informe --}}
                 <div class="row">
                     <div class="col-md-8">
-                        @if (!$student->paperStructure->exists())
+                        @if (!$student->paperStructure->exists)
                             <button 
                                 class="btn btn-block btn-warning" 
                                 data-target="#paperStructureUploadDocModal"

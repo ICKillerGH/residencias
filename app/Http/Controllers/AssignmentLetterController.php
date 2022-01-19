@@ -22,7 +22,7 @@ class AssignmentLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-        if (!$student->assignmentLetter->exists() && Auth::id() !== $student->user_id) {
+        if (!$student->assignmentLetter->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
@@ -36,7 +36,7 @@ class AssignmentLetterController extends Controller
             ]);
         }
 
-        $assignmentLetter = $student->assignmentLetter->exists()
+        $assignmentLetter = $student->assignmentLetter->exists
             ? $student->assignmentLetter
             : $student->assignmentLetter()->create([
                 'request_date' => now(),

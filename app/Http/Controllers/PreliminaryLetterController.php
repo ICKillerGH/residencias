@@ -23,7 +23,7 @@ class PreliminaryLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-        if (!$student->preliminaryLetter->exists() && Auth::id() !== $student->user_id) {
+        if (!$student->preliminaryLetter->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
@@ -37,7 +37,7 @@ class PreliminaryLetterController extends Controller
             ]);
         }
      
-        $preliminaryLetter = $student->preliminaryLetter->exists()
+        $preliminaryLetter = $student->preliminaryLetter->exists
             ? $student->preliminaryLetter
             : $student->preliminaryLetter()->create([
                 'request_date' => now(),

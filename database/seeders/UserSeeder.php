@@ -41,6 +41,25 @@ class UserSeeder extends Seeder
             'locality_id' => 3,
         ]);
 
+        $externalAdvisorUser = User::factory()->create([
+            'email' => 'josefa@gmail.com',
+            'role' => User::EXTERNAL_ADVISOR_ROLE,
+        ]);
+
+        $externalAdvisorUser->externalAdvisor()->create([
+            'first_name' => 'Josefa',
+            'fathers_last_name' => 'Camejo',
+            'mothers_last_name' => 'Perez',
+            'sex' => 'f',
+            'curp' => '12356456454564462',
+            'phone_number' => '4261249733',
+            'charge' => 'el cargo',
+            'career' => 'la carrera',
+            'state_id' => 1,
+            'municipality_id' => 2,
+            'locality_id' => 3,
+        ]);
+
         $studentUser = User::factory()->create([
             'email' => 'oralis@gmail.com',
             'role' => User::STUDENT_ROLE,
@@ -59,6 +78,7 @@ class UserSeeder extends Seeder
             'is_social_service_concluded' => true,
             'career_id' => 1,
             'teacher_id' => $teacherUser->id,
+            'external_advisor_id' => $externalAdvisorUser->id,
             'state_id' => 1,
             'municipality_id' => 2,
             'locality_id' => 3,

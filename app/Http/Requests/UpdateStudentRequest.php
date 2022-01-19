@@ -37,6 +37,7 @@ class UpdateStudentRequest extends FormRequest
             'phone_number' => 'required|numeric|digits:10',
             'career_id' => 'required|exists:careers,id',
             'teacher_id' => 'required|exists:teachers,user_id',
+            'external_advisor_id' => 'required|exists:external_advisors,user_id',
             'state_id' => [
                 'required',
                 Rule::exists('locations', 'id')->whereNull('parent_id'),

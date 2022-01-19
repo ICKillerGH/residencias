@@ -27,6 +27,7 @@ class CreateStudentsTable extends Migration
             $table->boolean('is_social_service_concluded');
             $table->unsignedBigInteger('career_id');
             $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('external_advisor_id');
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('municipality_id');
             $table->unsignedBigInteger('locality_id');
@@ -35,6 +36,7 @@ class CreateStudentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('career_id')->references('id')->on('careers')->onDelete('CASCADE');
             $table->foreign('teacher_id')->references('user_id')->on('teachers')->onDelete('CASCADE');
+            $table->foreign('external_advisor_id')->references('user_id')->on('external_advisors')->onDelete('CASCADE');
             $table->foreign('state_id')->references('id')->on('locations')->onDelete('CASCADE');
             $table->foreign('municipality_id')->references('id')->on('locations')->onDelete('CASCADE');
             $table->foreign('locality_id')->references('id')->on('locations')->onDelete('CASCADE');

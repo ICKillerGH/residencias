@@ -55,8 +55,6 @@ Route::middleware('auth')->group(function() {
         Route::get('/{externaladvisor}/edit', [ExternalAdvisorsController::class, 'edit'])->name('edit');
         Route::put('/{externaladvisor}', [ExternalAdvisorsController::class, 'update'])->name('update');
         Route::put('/{externaladvisor}/password', [ExternalAdvisorsController::class, 'updatePassword'])->name('updatePassword');
-
-
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

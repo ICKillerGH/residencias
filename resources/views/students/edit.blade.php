@@ -106,6 +106,33 @@
                         </div>
                     </div>
 
+                    {{-- EXTERNAL ADVISOR --}}
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="external_advisor_id" class="d-block">Asesor externo</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-dynamic">
+                                <select
+                                    class="form-control"
+                                    name="external_advisor_id"
+                                    id="external_advisor_id"
+                                >
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    @foreach ($externalAdvisors as $externalAdvisor)
+                                        <option
+                                            value="{{ $externalAdvisor->user_id }}"
+                                            @if (old('external_advisor_id', $student->external_advisor_id) == $externalAdvisor->user_id) selected @endif
+                                        >{{ $externalAdvisor->full_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('external_advisor_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
                     {{-- ACCOUNT NUMBER --}}
                     <x-inputs.text-field-row
                         name="account_number"

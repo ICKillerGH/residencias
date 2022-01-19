@@ -12,6 +12,7 @@ class AuthController extends Controller
         User::ADMIN_ROLE => '/admins',
         User::STUDENT_ROLE => '/students/personal-info',
         User::TEACHER_ROLE => '/students',
+        User::EXTERNAL_ADVISOR_ROLE => '/students',
     ];
 
     public function loginForm()

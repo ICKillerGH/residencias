@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AssignmentLetterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
+use App\Http\Controllers\ExternalAdvisorsController;
 use App\Http\Controllers\PaperStructureController;
 use App\Http\Controllers\PreliminaryLetterController;
 use App\Http\Controllers\PresentationLetterController;
@@ -44,6 +45,18 @@ Route::middleware('auth')->group(function() {
         Route::get('/{teacher}/edit', [TeachersController::class, 'edit'])->name('edit')->can('update','teacher');
         Route::put('/{teacher}', [TeachersController::class, 'update'])->name('update')->can('update','teacher');
         Route::put('/{teacher}/password', [TeachersController::class, 'updatePassword'])->name('updatePassword')->can('update','teacher');
+    });
+
+    Route::prefix('/external-advisor')->name('externalAdvisor.')->group(function() {
+        Route::get('/', [ExternalAdvisorsController::class, 'index'])->name('index');
+        Route::get('/create', [ExternalAdvisorsController::class, 'create'])->name('create');
+        Route::post('/', [ExternalAdvisorsController::class, 'store'])->name('store');
+        Route::delete('/{externaladvisor}', [ExternalAdvisorsController::class, 'destroy'])->name('destroy');
+        Route::get('/{externaladvisor}/edit', [ExternalAdvisorsController::class, 'edit'])->name('edit');
+        Route::put('/{externaladvisor}', [ExternalAdvisorsController::class, 'update'])->name('update');
+        Route::put('/{externaladvisor}/password', [ExternalAdvisorsController::class, 'updatePassword'])->name('updatePassword');
+
+
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

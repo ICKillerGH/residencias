@@ -15,6 +15,7 @@ class User extends Authenticatable
     public const ADMIN_ROLE = 'admin';
     public const STUDENT_ROLE = 'student';
     public const TEACHER_ROLE = 'teacher';
+    public const EXTERNAL_ADVISOR_ROLE = 'external_advisor';
 
     protected $guarded = [];
 
@@ -53,6 +54,11 @@ class User extends Authenticatable
     public function teacher()
     {
         return $this->hasOne(Teacher::class);
+    }
+
+    public function externalAdvisor()
+    {
+        return $this->hasOne(ExternalAdvisor::class);
     }
 
     /**

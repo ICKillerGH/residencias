@@ -174,6 +174,10 @@ return [
         'signed_document' => 'documento firmado',
         'specific_objectives' => 'objetivos especificos',
         'specific_objectives.*' => 'objetivo especifico',
+        'career' => 'carrera',
+        'charge' => 'cargo',
+        'sex' => 'sexo',
+        
     ],
 
 ];

@@ -142,6 +142,11 @@ class Student extends Model
         return $this->hasOne(PaperStructure::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
 
+    public function complianceLetter()
+    {
+        return $this->hasOne(ComplianceLetter::class, 'user_id')->withDefault();
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

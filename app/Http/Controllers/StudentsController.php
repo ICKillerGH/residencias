@@ -33,6 +33,7 @@ class StudentsController extends Controller
             ->withEmail()
             ->with('career')
             ->when($user->role === User::TEACHER_ROLE, fn($query) => $query->where('teacher_id', $user->id))
+            ->when($user->role === User::EXTERNAL_ADVISOR_ROLE, fn($query) => $query->where('external_advisor_id', $user->id))
             ->paginate();
 
         return view('students.index', [

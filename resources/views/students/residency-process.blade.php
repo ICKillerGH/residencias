@@ -281,11 +281,42 @@
                 </div>
                 {{-- Estructura de informe end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Cédula de cumplimiento de RP
-                    </button>
-                </form>
+                {{-- Cédula de cumplimiento RP --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.compliance-letter-btn')
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                        class="btn btn-block btn-info"
+                        data-target="#"
+                        data-toggle="modal"
+                        
+                        >
+                            Cargar documento
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a
+                            
+                            class="btn btn-block btn-success "
+                            target="_blank"
+                        >
+                            Ver documento
+                         </a>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-warning"
+                            data-toggle="modal"
+                            data-target="#"
+                        >
+                            Ver correcciones
+                        </button>
+                    </div>
+                  </div>
+               {{-- Cédula de cumplimiento RP end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                      Acta de calificacion

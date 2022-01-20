@@ -12,7 +12,7 @@ class StudentPolicy
 
     public function index(User $user)
     {
-        return $user->role === User::ADMIN_ROLE || $user->role === User::TEACHER_ROLE;
+        return $user->role === User::ADMIN_ROLE || $user->role === User::TEACHER_ROLE || $user->role === User::EXTERNAL_ADVISOR_ROLE;
     }
 
     public function create(User $user)
@@ -25,6 +25,7 @@ class StudentPolicy
         return
             $user->role === User::ADMIN_ROLE ||
             $user->role === User::TEACHER_ROLE ||
+            $user->role === User::EXTERNAL_ADVISOR_ROLE ||
             $user->id === $student->user_id;
     }
 

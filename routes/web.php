@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AssignmentLetterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
+use App\Http\Controllers\ComplianceLetterController;
 use App\Http\Controllers\ExternalAdvisorsController;
 use App\Http\Controllers\PaperStructureController;
 use App\Http\Controllers\PreliminaryLetterController;
@@ -120,6 +121,9 @@ Route::middleware('auth')->group(function() {
         Route::post('/{student}/paper-structure/corrections', [PaperStructureController::class, 'paperStructureCorrections'])->name('paperStructureCorrections');
         Route::put('/residency-process/paper-structure/corrections/mark-as-solved', [PaperStructureController::class, 'paperStructureMarkCorrectionsAsSolved'])->name('paperStructureMarkCorrectionsAsSolved');
         Route::put('/{student}/paper-structure/mark-as-approved', [PaperStructureController::class, 'paperStructureMarkAsApproved'])->name('paperStructureMarkAsApproved');
+        //Compliance Letter
+        Route::post('/residency-process/compliance-letter', [ComplianceLetterController::class, 'complianceLetter'])->name('complianceLetter');
+
 
 
 

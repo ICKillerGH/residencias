@@ -194,4 +194,8 @@ class Student extends Model
         return "{$this->first_name} {$this->fathers_last_name} {$this->mothers_last_name}";
     }
 
+    public function getPaddedIdAttribute()
+    {
+        return str_pad($this->user_id, 4, '0', STR_PAD_LEFT);
+    }
 }

@@ -13,4 +13,17 @@ class ComplianceLetter extends Model
     protected $guarded = [];
 
     protected $dates = ['request_date'];
+
+    /**
+     * Relationships
+     */
+    public function questions()
+    {
+        return $this->hasMany(ComplianceLetterQuestion::class);
+    }
+
+    public function parentQuestions()
+    {
+        return $this->questions()->whereNull('parent_id');
+    }
 }

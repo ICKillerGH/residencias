@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'compliance_questions' => [
+    'complianceQuestions' => [
         ['I. Portada', [
             'a) Nombre del estudiante',
             'b) Número de cuenta',

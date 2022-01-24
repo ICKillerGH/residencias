@@ -16,7 +16,7 @@ class CreateComplianceLetterQuestionsTable extends Migration
         Schema::create('compliance_letter_questions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('is_fulfilled');
+            $table->boolean('is_fulfilled')->default(false);
             $table->string('observation')->nullable();
             $table->foreignId('compliance_letter_id')->constrained()->onDelete('CASCADE');
             $table->foreignId('parent_id')->nullable();

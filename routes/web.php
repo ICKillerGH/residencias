@@ -123,16 +123,5 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/paper-structure/mark-as-approved', [PaperStructureController::class, 'paperStructureMarkAsApproved'])->name('paperStructureMarkAsApproved');
         //Compliance Letter
         Route::post('/residency-process/compliance-letter', [ComplianceLetterController::class, 'complianceLetter'])->name('complianceLetter');
-
-
-
-
-
-
-
-        
-
-
-        
     });
 });

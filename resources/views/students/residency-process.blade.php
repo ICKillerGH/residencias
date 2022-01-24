@@ -251,19 +251,19 @@
                 <div class="row">
                     <div class="col-md-8">
                         @if (!$student->paperStructure->exists)
-                            <button 
-                                class="btn btn-block btn-warning" 
+                            <button
+                                class="btn btn-block btn-info"
                                 data-target="#paperStructureUploadDocModal"
                                 data-toggle="modal"
                                 @if (!$student->approvedPreliminaryletter) disabled @endif
                             >
-                                Cargar Estructura del informe final      
+                                Cargar Estructura del informe final
                             </button>
                         @else
-                            <a 
+                            <a
                                 href="{{ route('students.paperStructureDownloadSignedDoc', $student) }}"
                                 class="btn btn-block btn-{{ $student->paperStructure->btn_color }}"
-                                target="_blank"                        
+                                target="_blank"
                             >
                                 Estructura del informe final
                             </a>
@@ -291,14 +291,14 @@
                         class="btn btn-block btn-info"
                         data-target="#"
                         data-toggle="modal"
-                        
+
                         >
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
                         <a
-                            
+
                             class="btn btn-block btn-success "
                             target="_blank"
                         >

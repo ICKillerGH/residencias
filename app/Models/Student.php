@@ -166,6 +166,10 @@ class Student extends Model
     {
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
+    public function externalAdvisor()
+    {
+        return $this->belongsTo(ExternalAdvisor::class, 'external_advisor_id');
+    }
 
     /**
      * Scopes

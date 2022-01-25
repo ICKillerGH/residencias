@@ -129,16 +129,16 @@
             <h1 class="title no-m">UNIVERSIDAD MEXIQUENSE DEL BICENTENARIO</h1>
             <h2 class="subtitle">DIRECCIÓN ACADÉMICA</h2>
 
-            <div>Nombre del estudiante:</div>
-            <div>Carrera:</div>
-            <div>Unidad de Estudios Superiores de adscripción:</div>
-            <div>No. de Matricula:</div>
-            <div>Nombre del Proyecto:</div>
+            <div>Nombre del estudiante: {{ $student->full_name }}</div>
+            <div>Carrera: {{ $student->career->name }}</div>
+            <div>Unidad de Estudios Superiores de adscripción: Unidad de Estudios Superiores Villa Victoria</div>
+            <div>No. de Matricula: {{ $student->account_number }}</div>
+            <div>Nombre del Proyecto: {{ $project->title }}</div>
         </div>
         <div class="green-border no-bt padding mb">
-            <div>Unidad de Estudios Superiores receptora:</div>
-            <div>Nombre del asesor externo:</div>
-            <div>Carrera:</div>
+            <div>Unidad de Estudios Superiores receptora: {{ $externalCompany->business_name }}</div>
+            <div>Nombre del asesor externo: {{ $student->externalAdvisor->full_name }}</div>
+            <div>Carrera: {{ $student->externalAdvisor->career }}</div>
         </div>
     </div>
 
@@ -147,7 +147,7 @@
     </div>
 
     <main>
-        <table class="table">
+        <table class="table mb">
             <thead>
                 <tr>
                     <th rowspan="2" width="40%">Requisito</th>
@@ -174,7 +174,7 @@
                                 <div class="text-center">&times;</div>
                             @endif
                         </td>
-                        <td></td>
+                        <td>{{ $question->observation }}</td>
                     </tr>
                     @foreach ($question->children as $childQuestion)
                         <tr>
@@ -189,11 +189,33 @@
                                     <div class="text-center">&times;</div>
                                 @endif
                             </td>
-                            <td></td>
+                            <td>{{ $childQuestion->observation }}</td>
                         </tr>
                     @endforeach
                 @endforeach
             </tbody>
+        </table>
+
+        <table class="table" style="text-align: center;">
+            <tr>
+                <td><b>Revisó</b></td>
+                <td width="2%" style="border-top: 1px solid #fff;"></td>
+                <td colspan="2"><b>Vo. Bo.</b></td>
+            </tr>
+
+            <tr>
+                <td height="120px"></td>
+                <td width="2%" style="border-top: 1px solid #fff;"></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td><b>Nombre y firma del Asesor Externo</b></td>
+                <td width="2%" style="border-top: 1px solid #fff;border-bottom: 1px solid #fff;"></td>
+                <td><b>Nombre y firma del Coordinador de UES</b></td>
+                <td><b>Sello</b></td>
+            </tr>
         </table>
     </main>
 </body>

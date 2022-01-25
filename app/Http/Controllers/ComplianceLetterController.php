@@ -68,8 +68,6 @@ class ComplianceLetterController extends Controller
 
         $complianceLetter->load('parentQuestions.children');
 
-        // dd($complianceLetter);
-
         $pdf = PDF::loadView('residency-process.compliance-letter',[
             'student'=> $student,
             'externalCompany' => $student->company,

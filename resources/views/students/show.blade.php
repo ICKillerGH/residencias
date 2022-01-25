@@ -321,11 +321,47 @@
                 </div>
                 {{-- Estructura de informe end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Cédula de cumplimiento de RP
-                    </button>
-                </form>
+                {{-- Carta de cumplimiento --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.compliance-letter-btn')
+                    </div>
+                    @if(auth()->user()->isTeacher())
+                        <div class="col-md-3">
+                            <form action="#" method="POST">
+                                @method('PUT')
+                                @csrf
+                                {{-- <button class="btn btn-block btn-success" @if (!$student->inProcessPaperStructure) disabled @endif> --}}
+                                <button class="btn btn-block btn-success">
+                                    Aprobar documento
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+                            <button
+                                class="btn btn-block btn-danger"
+                                data-toggle="modal"
+                                data-target="#"
+                                {{-- @if (!$student->inProcessPaperStructure) disabled @endif --}}
+                            >
+                                Enviar correcciones
+                            </button>
+                        </div>
+                    @else
+                        <div class="col-md-6">
+                            <button
+                                type="button"
+                                class="btn btn-block btn-info"
+                                data-toggle="modal"
+                                data-target="#complianceLetterQuestionsModal"
+                            >
+                                Responder preguntas
+                            </button>
+                        </div>
+                    @endif
+                </div>
+                {{-- Carta de cumplimiento end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                      Acta de calificación
@@ -543,4 +579,44 @@
         </div>
     </div>
     {{-- PRELIMINARY LETTER CORRECTIONS MODAL END --}}
+
+    {{-- COMPLIANCE LETTER QUESTIONS MODAL --}}
+    <div class="modal" tabindex="-1" id="complianceLetterQuestionsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.preliminaryLetterCorrections', $student) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Preguntas de carta de cumplimiento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        @foreach ($student->complianceLetter->parentQuestions as $question)
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" value="{{ $question->id }}">
+                                    {{ $question->name }}
+                                </label>
+                            </div>
+                            @foreach ($question->children as $childQuestion)
+                                <div class="form-group pl-3">
+                                    <label>
+                                        <input type="checkbox" value="{{ $childQuestion->id }}">
+                                        {{ $childQuestion->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- COMPLIANCE LETTER QUESTIONS MODAL END --}}
 @endpush

@@ -291,10 +291,10 @@
                 {{-- Estructura de informe --}}
                 <div class="row">
                     <div class="col-md-6">
-                        <a 
+                        <a
                             href="{{ route('students.paperStructureDownloadSignedDoc', $student) }} "
                             class="btn btn-block btn-{{ $student->paperStructure->btn_color }}"
-                            target="_blank"                        
+                            target="_blank"
                         >
                             Estructura del informe final
                         </a>
@@ -328,7 +328,7 @@
                     </div>
                     @if(auth()->user()->isTeacher())
                         <div class="col-md-3">
-                            <form action="#" method="POST">
+                            <form action="" method="POST">
                                 @method('PUT')
                                 @csrf
                                 {{-- <button class="btn btn-block btn-success" @if (!$student->inProcessPaperStructure) disabled @endif> --}}
@@ -354,6 +354,7 @@
                                 class="btn btn-block btn-info"
                                 data-toggle="modal"
                                 data-target="#complianceLetterQuestionsModal"
+                                @if (!$student->complianceLetter->exists) disabled @endif
                             >
                                 Responder preguntas
                             </button>
@@ -584,7 +585,7 @@
     <div class="modal" tabindex="-1" id="complianceLetterQuestionsModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.preliminaryLetterCorrections', $student) }}" method="POST">
+                <form action="{{ route('students.complianceLetterAnswerQuestions', $student) }}" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title">Preguntas de carta de cumplimiento</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -594,18 +595,36 @@
                     <div class="modal-body">
                         @csrf
                         @foreach ($student->complianceLetter->parentQuestions as $question)
-                            <div class="form-group">
+                            <div class="form-group pb-0">
                                 <label>
-                                    <input type="checkbox" value="{{ $question->id }}">
+                                    <input type="checkbox" value="on" name="questions[{{ $question->id }}]" @if($question->is_fulfilled) checked @endif>
                                     {{ $question->name }}
                                 </label>
                             </div>
+                            <div class="form-group mb-4">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Observación"
+                                    name="observations[{{ $question->id }}]"
+                                    value="{{ $question->observation }}"
+                                />
+                            </div>
                             @foreach ($question->children as $childQuestion)
-                                <div class="form-group pl-3">
+                                <div class="form-group pl-3 pb-0">
                                     <label>
-                                        <input type="checkbox" value="{{ $childQuestion->id }}">
+                                        <input type="checkbox" value="on" name="questions[{{ $childQuestion->id }}]" @if($childQuestion->is_fulfilled) checked @endif>
                                         {{ $childQuestion->name }}
                                     </label>
+                                </div>
+                                <div class="form-group mb-4 pl-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Observación"
+                                        name="observations[{{ $childQuestion->id }}]"
+                                        value="{{ $childQuestion->observation }}"
+                                    />
                                 </div>
                             @endforeach
                         @endforeach

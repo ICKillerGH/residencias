@@ -77,4 +77,29 @@ class ComplianceLetterController extends Controller
 
         return $pdf->stream('compliance-letter');
     }
+
+    public function answerQuestions(Request $request, Student $student)
+    {
+        if (!$student->complianceLetter->exists) {
+            return back()->with('alert', [
+                'message' => 'No se generado la carta de compromiso.',
+                'type' => 'danger',
+            ]);
+        }
+
+        $questions = $request->input('questions', []);
+
+        $observations = $request->input('observations', []);
+
+        $student->complianceLetter->questions->each(function($question) use ($questions, $observations) {
+            $question->is_fulfilled = ($questions[$question->id] ?? 'off') === 'on';
+            $question->observation = $observations[$question->id];
+            $question->save();
+        });
+
+        return back()->with('alert', [
+            'message' => 'Las respuestas han sido respondidas con éxito!',
+            'type' => 'success',
+        ]);
+    }
 }

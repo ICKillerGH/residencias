@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Teacher;
+use App\Models\ExternalAdvisor;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TeacherPolicy
+class ExternalAdvisorPolicy
 {
     use HandlesAuthorization;
 
@@ -20,13 +20,14 @@ class TeacherPolicy
         return $user->role === User::ADMIN_ROLE;
     }
     
-    public function destroy(User $user, Teacher $externaladvisor)
+    public function destroy(User $user, ExternalAdvisor $teacher)
     {
         return  $user->role === User::ADMIN_ROLE;
     }
 
-    public function update(User $user, Teacher $externaladvisor)
+    public function update(User $user, ExternalAdvisor $teacher)
     {
         return $user->role === User::ADMIN_ROLE;
     }
+
 }

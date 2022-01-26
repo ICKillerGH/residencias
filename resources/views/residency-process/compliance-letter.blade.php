@@ -72,7 +72,7 @@
         }
 
         .green-border {
-            border: 1px dashed green;s
+            border: 1px dashed green;
         }
 
         .no-bt {
@@ -107,7 +107,7 @@
 
         .table th {
             background-color: #2fa100;
-            color: #fff;
+            color: #000000;
         }
 
         .table .child {
@@ -129,16 +129,16 @@
             <h1 class="title no-m">UNIVERSIDAD MEXIQUENSE DEL BICENTENARIO</h1>
             <h2 class="subtitle">DIRECCIÓN ACADÉMICA</h2>
 
-            <div>Nombre del estudiante: {{ $student->full_name }}</div>
-            <div>Carrera: {{ $student->career->name }}</div>
-            <div>Unidad de Estudios Superiores de adscripción: Unidad de Estudios Superiores Villa Victoria</div>
-            <div>No. de Matricula: {{ $student->account_number }}</div>
-            <div>Nombre del Proyecto: {{ $project->title }}</div>
+            <div><b> Nombre del estudiante: </b>{{ $student->full_name }}</div>
+            <div><b> Carrera: </b>{{ $student->career->name }}</div>
+            <div><b> Unidad de Estudios Superiores de adscripción: </b>Unidad de Estudios Superiores Villa Victoria</div>
+            <div><b> No. de Matricula: </b>{{ $student->account_number }}</div>
+            <div><b> Nombre del Proyecto: </b>{{ $project->title }}</div>
         </div>
         <div class="green-border no-bt padding mb">
-            <div>Unidad de Estudios Superiores receptora: {{ $externalCompany->business_name }}</div>
-            <div>Nombre del asesor externo: {{ $student->externalAdvisor->full_name }}</div>
-            <div>Carrera: {{ $student->externalAdvisor->career }}</div>
+            <div><b> Unidad de Estudios Superiores receptora: </b>{{ $externalCompany->business_name }}</div>
+            <div><b> Nombre del asesor externo: </b>{{ $student->externalAdvisor->full_name }}</div>
+            <div><b> Carrera: </b>{{ $student->externalAdvisor->career }}</div>
         </div>
     </div>
 
@@ -211,9 +211,9 @@
             </tr>
 
             <tr>
-                <td><b>Nombre y firma del Asesor Externo</b></td>
+                <td><b>{{ $student->externalAdvisor->full_name }}</b></td>
                 <td width="2%" style="border-top: 1px solid #fff;border-bottom: 1px solid #fff;"></td>
-                <td><b>Nombre y firma del Coordinador de UES</b></td>
+                <td><b>{{ $externalCompany->person_in_charge }}</b></td>
                 <td><b>Sello</b></td>
             </tr>
         </table>

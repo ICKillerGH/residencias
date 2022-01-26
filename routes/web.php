@@ -15,6 +15,7 @@ use App\Http\Controllers\ResidencyRequestController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
 use App\Models\Admin;
+use App\Models\ExternalAdvisor;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
@@ -49,13 +50,13 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::prefix('/external-advisor')->name('externalAdvisor.')->group(function() {
-        Route::get('/', [ExternalAdvisorsController::class, 'index'])->name('index');
-        Route::get('/create', [ExternalAdvisorsController::class, 'create'])->name('create');
-        Route::post('/', [ExternalAdvisorsController::class, 'store'])->name('store');
-        Route::delete('/{externaladvisor}', [ExternalAdvisorsController::class, 'destroy'])->name('destroy');
-        Route::get('/{externaladvisor}/edit', [ExternalAdvisorsController::class, 'edit'])->name('edit');
-        Route::put('/{externaladvisor}', [ExternalAdvisorsController::class, 'update'])->name('update');
-        Route::put('/{externaladvisor}/password', [ExternalAdvisorsController::class, 'updatePassword'])->name('updatePassword');
+        Route::get('/', [ExternalAdvisorsController::class, 'index'])->name('index')->can('index', ExternalAdvisor::class);
+        Route::get('/create', [ExternalAdvisorsController::class, 'create'])->name('create')->can('create', ExternalAdvisor::class);
+        Route::post('/', [ExternalAdvisorsController::class, 'store'])->name('store')->can('create', ExternalAdvisor::class);
+        Route::delete('/{externaladvisor}', [ExternalAdvisorsController::class, 'destroy'])->name('destroy')->can('destroy','externaladvisor');
+        Route::get('/{externaladvisor}/edit', [ExternalAdvisorsController::class, 'edit'])->name('edit')->can('update', 'externaladvisor');
+        Route::put('/{externaladvisor}', [ExternalAdvisorsController::class, 'update'])->name('update')->can('update', 'externaladvisor');
+        Route::put('/{externaladvisor}/password', [ExternalAdvisorsController::class, 'updatePassword'])->name('updatePassword')->can('update', 'externaladvisor');
     });
 
     Route::prefix('/students')->name('students.')->group(function() {

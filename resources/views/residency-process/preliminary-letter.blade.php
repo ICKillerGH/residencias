@@ -12,11 +12,18 @@
         .info{
             text-align: center;
             margin-bottom: 5px;
+            font-size: 0.9rem;
             }
 
         .table {
             width: 100%;
             margin-bottom: 30px;
+        }
+        .table div{
+            font-size: 1.5em;
+            }
+        .justify{
+            text-align: justify;
         }
 
     </style>
@@ -51,19 +58,19 @@
     <table border="1" cellspacing="2" cellpadding="0" class="table">
             <tr>
                 <td width="17%" height="4%">Razón Social:</td>
-                <td colspan="5">{{ $externalCompany->business_name }}</td>
+                <td colspan="5"> {{ $externalCompany->business_name }}</td>
             </tr>
 
             <tr>
                 <td  height="4%">Giro Comercial:</td>
-                <td colspan="5">{{ $externalCompany->commercial_business }}</td>
+                <td colspan="5"> {{ $externalCompany->commercial_business }}</td>
             </tr>
 
             <tr>
-                <td height="8%" >Domicilio:</td>
-                <td colspan="3">{{ $externalCompany->address_name }}</td>
-                <td width="10%" >C.P:</td>
-                <td>{{ $externalCompany->zip_code}}</td>
+                <td height="9%" >Domicilio:</td>
+                <td colspan="3"> {{ $externalCompany->address_name }}</td>
+                <td width="8%" >C.P:</td>
+                <td width="10%"> {{ $externalCompany->zip_code}}</td>
             </tr>
 
             <tr>
@@ -73,7 +80,7 @@
 
             <tr>
                 <td  width="17%" height="4%" colspan="2">Nombre y cargo del responsable directo del Departamento:</td>
-                <td width="60%" colspan="4">{{ $externalCompany->person_in_charge }} , {{ $externalCompany->person_in_charge_position}}</td>
+                <td width="60%" colspan="4"> {{ $externalCompany->person_in_charge }} , {{ $externalCompany->person_in_charge_position}}</td>
             </tr>
 
             <tr>
@@ -103,28 +110,32 @@
 <table border="1" cellspacing="2" cellpadding="0" class="table">
     <tr>
         <td width="20%" height="8%">Titulo del proyecto:</td>
-        <td colspan="3">{{ $project->title }}</td>
+        <td colspan="3" align="center">{{ $project->title }}</td>
     </tr>
     <tr>
         <td height="11%">Objetivo General:</td>
-        <td colspan="3">{{ $project->general_objective }}</td>
+        <td colspan="3" class="justify">{{ $project->general_objective }}</td>
     </tr>
     <tr>
-        <td height="17%">Objetivos Específicos:</td>
-        <td colspan="3">
+        <td height="35%">Objetivos Específicos:</td>
+        <td colspan="3" class="justify">
+            <ol type=”A”>
             @foreach ($project->specificObjectives as $obj)
-                {{ $obj->name }}
-                <br>
+            <li>{{ $obj->name }}</li> 
+                
             @endforeach
+            </ol>
         </td>
     </tr>
     <tr>
-        <td height="35%">Justificación del proyecto:</td>
-        <td colspan="3">{{ $project->justification }}</td>
+        <td height="80%">Justificación del proyecto:</td>
+        <td colspan="3" class="justify">{{ $project->justification }}</td>
     </tr>
-
 </table>
-
+<br>
+<br>
+<br>
+<br>
 @include('residency-process.partials.header', ['title' => ''])
 <table border="1" cellspacing="2" cellpadding="0" class="table">
     <tr>
@@ -143,13 +154,12 @@
     </tr>
     <tr>
         <td height="4%">Nombre del Asesor Externo:</td>
-        <td colspan="3"></td>
+        <td colspan="3">{{ $student->externalAdvisor->full_name }}</td>
     </tr>
     <tr>
         <td height="45%" colspan="4" align="center">
-            <div>Anexar: Cronograma de Actividades</div>
-            <br>
-            <img src="{{ asset($project->activity_schedule_image_url) }}" alt="" style="height: 450px">
+            <p>Anexar: Cronograma de Actividades
+            <img src="{{ asset($project->activity_schedule_image_url) }}" alt="" style="height: 455px"></p>
         </td>
         
     </tr>
@@ -161,20 +171,16 @@
             _______________________
             <br>
             {{ $student->full_name }}
-            <br>
-            Alumno
         </td>
         <td width="33.3333%">
             _______________________
             <br>
             {{ $student->teacher->full_name }}
-            <br>
-            Asesor interno
         </td>
         <td width="33.3333%">
             _______________________
             <br>
-            Asesor externo
+            {{ $student->externalAdvisor->full_name }}
         </td>
     </tr>
 </table>

@@ -111,13 +111,14 @@
                 </a>
             </li>
             @endcan
-
+            @can('index', App\Models\ExternalAdvisor::class)
             <li class="nav-item{{ $activePage == 'external-advisor' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('externalAdvisor.index') }}">
                 <i class="material-icons">people</i>
                     <p>Asesores Externos</p>
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 </div>

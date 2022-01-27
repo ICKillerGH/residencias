@@ -328,11 +328,10 @@
                     </div>
                     @if(auth()->user()->isTeacher())
                         <div class="col-md-3">
-                            <form action="" method="POST">
+                            <form action="{{ route('students.complianceLetterMarkAsApproved', $student) }}" method="POST">
                                 @method('PUT')
                                 @csrf
-                                {{-- <button class="btn btn-block btn-success" @if (!$student->inProcessPaperStructure) disabled @endif> --}}
-                                <button class="btn btn-block btn-success">
+                                <button class="btn btn-block btn-success" @if (!$student->inProcessComplianceLetter) disabled @endif>
                                     Aprobar documento
                                 </button>
                             </form>
@@ -341,8 +340,8 @@
                             <button
                                 class="btn btn-block btn-danger"
                                 data-toggle="modal"
-                                data-target="#"
-                                {{-- @if (!$student->inProcessPaperStructure) disabled @endif --}}
+                                data-target="#complianceLetterCorrectionsModal"
+                                @if (!$student->inProcessComplianceLetter) disabled @endif
                             >
                                 Enviar correcciones
                             </button>
@@ -354,7 +353,7 @@
                                 class="btn btn-block btn-info"
                                 data-toggle="modal"
                                 data-target="#complianceLetterQuestionsModal"
-                                @if (!$student->complianceLetter->exists) disabled @endif
+                                @if (!$student->complianceLetter->exists || $student->approvedComplianceLetter) disabled @endif
                             >
                                 Responder preguntas
                             </button>
@@ -580,6 +579,34 @@
         </div>
     </div>
     {{-- PRELIMINARY LETTER CORRECTIONS MODAL END --}}
+
+    {{-- COMPLIANCE LETTER CORRECTIONS MODAL --}}
+    <div class="modal" tabindex="-1" id="complianceLetterCorrectionsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.complianceLetterCorrections', $student) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enviar correcciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="corrections">Correciones</label>
+                            <textarea name="corrections" id="corrections" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- COMPLIANCE LETTER CORRECTIONS MODAL END --}}
 
     {{-- COMPLIANCE LETTER QUESTIONS MODAL --}}
     <div class="modal" tabindex="-1" id="complianceLetterQuestionsModal">

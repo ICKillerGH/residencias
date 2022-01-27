@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\DocumentStatus;
+use App\Models\ComplianceLetter;
 use App\Models\ComplianceLetterQuestion;
 use App\Models\Student;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ComplianceLetterController extends Controller
 {
@@ -82,7 +86,14 @@ class ComplianceLetterController extends Controller
     {
         if (!$student->complianceLetter->exists) {
             return back()->with('alert', [
-                'message' => 'No se generado la carta de compromiso.',
+                'message' => 'No se generado la cédula de cumplimiento.',
+                'type' => 'danger',
+            ]);
+        }
+        
+        if ($student->approvedComplianceLetter) {
+            return back()->with('alert', [
+                'message' => 'No se pueden modificar las respuestas, la cédula de cumplimiento ya está aprovada.',
                 'type' => 'danger',
             ]);
         }
@@ -101,5 +112,141 @@ class ComplianceLetterController extends Controller
             'message' => 'Las respuestas han sido respondidas con éxito!',
             'type' => 'success',
         ]);
+    }
+
+    public function complianceLetterCorrections(Request $request, Student $student)
+    {
+        $complianceLetter = $student->inProcessComplianceLetter;
+
+        if (!$complianceLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La carta de cumplimiento debe estar en proceso para poder ser revisada',
+            ]);
+        }
+
+        $data = $request->validate([
+            'corrections' => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $complianceLetter->update([
+                'status' => DocumentStatus::STATUS_NEEDS_CORRECTIONS,
+            ]);
+
+            $complianceLetter->corrections()->create(['content' => $data['corrections']]);
+
+            DB::commit();
+        } catch(Throwable $t) {
+            DB::rollBack();
+
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'Ha ocurrido un error, intente más tarde',
+            ]);
+        }
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Las correciones fueron envias correctamente',
+        ]);
+
+    }
+
+    public function complianceLetterMarkCorrectionsAsSolved()
+    {
+        $complianceLetter = ComplianceLetter::query()
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        if (!$complianceLetter->needsCorrections()) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La cedula de cumpliento no necesita correcciones',
+            ]);
+        }
+
+        $complianceLetter->status = DocumentStatus::STATUS_PROCESSING;
+
+        $complianceLetter->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Las correciones fueron verificadas',
+        ]);
+    }
+
+    public function complianceLetterMarkAsApproved(Student $student)
+    {
+        $complianceLetter = $student->inProcessComplianceLetter;
+
+        if (!$complianceLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La cedula de cumpliento debe estar en proceso para porder ser revisada',
+            ]);
+        }
+
+        $complianceLetter->status = DocumentStatus::STATUS_APPROVED;
+
+        $complianceLetter->save();
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'La cedula de cumpliento ha sido aprovada',
+        ]);
+    }
+
+    public function complianceLetterUploadSignedDoc(Request $request, Student $student)
+    {
+        $complianceLetter = $student->approvedComplianceLetter;
+
+        if (!$complianceLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La cedula de cumpliento  debe ser aprovada',
+            ]);
+        }
+
+        $data = $request->validate([
+            'signed_document' => 'required|file|mimes:pdf',
+        ]);
+
+        if ($complianceLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento ya ha sido cargado.',
+            ]);
+        }
+
+        $complianceLetter->update($data);
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'El documento se subió con exitosamente',
+        ]);
+    }
+
+    public function complianceLetterDownloadSignedDoc(Student $student)
+    {
+        $complianceLetter = $student->approvedComplianceLetter;
+
+        if (!$complianceLetter) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'La cedula de cumpliento debe ser aprovada',
+            ]);
+        }
+
+        if (!$complianceLetter->signed_document) {
+            return back()->with('alert', [
+                'type' => 'danger',
+                'message' => 'El documento no ha sido cargado aún',
+            ]);
+        }
+
+        return response()->file(storage_path("app/{$complianceLetter->signed_document}"));
     }
 }

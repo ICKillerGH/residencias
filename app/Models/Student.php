@@ -146,6 +146,16 @@ class Student extends Model
     {
         return $this->hasOne(ComplianceLetter::class, 'user_id')->withDefault();
     }
+    
+    public function inProcessComplianceLetter()
+    {
+        return $this->hasOne(ComplianceLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+
+    public function approvedComplianceLetter()
+    {
+        return $this->hasOne(ComplianceLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
 
     public function company()
     {

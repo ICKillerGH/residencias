@@ -124,6 +124,15 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/paper-structure/mark-as-approved', [PaperStructureController::class, 'paperStructureMarkAsApproved'])->name('paperStructureMarkAsApproved');
         //Compliance Letter
         Route::post('/residency-process/compliance-letter', [ComplianceLetterController::class, 'complianceLetter'])->name('complianceLetter');
+        Route::post('/{student}/compliancey-letter/corrections', [ComplianceLetterController::class, 'complianceLetterCorrections'])->name('complianceLetterCorrections');
+        Route::put('/residency-process/compliance-letter/corrections/mark-as-solved', [ComplianceLetterController::class, 'complianceLetterMarkCorrectionsAsSolved'])->name('complianceLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/compliance-letter/mark-as-approved', [ComplianceLetterController::class, 'complianceLetterMarkAsApproved'])->name('complianceLetterMarkAsApproved');
+        Route::put('/{student}/compliance-letter/signed-document', [ComplianceLetterController::class, 'complianceLetterUploadSignedDoc'])->name('complianceLetterUploadSignedDoc');
+        Route::get('/{student}/compliance-letter/signed-document', [ComplianceLetterController::class, 'complianceLetterDownloadSignedDoc'])->name('complianceLetterDownloadSignedDoc');
+
+
+
         Route::post('/{student}/comliance-letter/answer-questions', [ComplianceLetterController::class, 'answerQuestions'])->name('complianceLetterAnswerQuestions');
+   
     });
 });

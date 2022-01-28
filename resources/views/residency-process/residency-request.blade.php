@@ -72,7 +72,7 @@
 <body>
     @include('residency-process.partials.header', ['title' => 'SOLICITUD DE RESIDENCIAS PROFESIONALES'])
 
-    <p class="request-date"><b>Fecha de solicitud:</b> {{ $residencyRequest->request_date_formatted }}</p>
+    <p class="request-date"><b>Fecha de solicitud:</b> {{ $residencyRequest->request_date_formatted }}.</p>
 
     <p class="table-title">DATOS DEL ALUMNO</p>
 

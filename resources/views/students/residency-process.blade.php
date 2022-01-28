@@ -297,14 +297,14 @@
                     </div>
                     <div class="col-md-2">
                         <a
-                                @if ($student->complianceLetter->signed_document)
-                                href="{{ route('students.complianceLetterDownloadSignedDoc', $student) }}"
-                                 @endif
-                                class="btn btn-block btn-success @if (!$student->complianceLetter->signed_document) disabled @endif"
-                                target="_blank"
+                            @if ($student->complianceLetter->signed_document)
+                            href="{{ route('students.complianceLetterDownloadSignedDoc', $student) }}"
+                            @endif
+                            class="btn btn-block btn-success @if (!$student->complianceLetter->signed_document) disabled @endif"
+                            target="_blank"
                         >
                             Ver documento
-                         </a>
+                        </a>
                     </div>
                     <div class="col-md-2">
                         <button
@@ -315,14 +315,49 @@
                             Ver correcciones
                         </button>
                     </div>
-                  </div>
-               {{-- Cédula de cumplimiento RP end --}}
+                </div>
+                {{-- Cédula de cumplimiento RP end --}}
+                  
+                {{-- Acta de calificación --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.qualification-letter-btn')
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-info"
+                            data-target="#qualificationLetterUploadDocModal"
+                            data-toggle="modal"
+                        >
+                            Cargar documento
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a
+                            @if ($student->qualificationLetter->signed_document)
+                            href="{{ route('students.qualificationLetterDownloadSignedDoc', $student) }}"
+                            @endif
+                            class="btn btn-block btn-success @if (!$student->qualificationLetter->signed_document) disabled @endif"
+                            target="_blank"
+                        >
+                            Ver documento
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="btn btn-block btn-warning"
+                            data-toggle="modal"
+                            data-target="#qualificationLetterCorrectionsModal"
+                        >
+                            Ver correcciones
+                        </button>
+                    </div>
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                     Acta de calificacion
-                    </button>
-                </form>
+                </div>
+                
+
+                {{-- Acta de calificación end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Carta de termino
@@ -601,6 +636,35 @@
         </div>
     </div>
 
+    {{-- UPLOAD DOC QUALIFICATION LETTER MODAL --}}
+    <div class="modal" tabindex="-1" id="qualificationLetterUploadDocModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.qualificationLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cargar carta de calificación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="signed_document_qrl">Documento</label>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_qrl" accept="application/pdf" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     {{-- CORRECTIONS MODAL --}}
     @if ($student->presentationLetter->corrections->isNotEmpty())
         <div class="modal" tabindex="-1" id="presentationLetterCorrectionsModal">
@@ -809,6 +873,37 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button class="btn btn-primary" @if (!$student->complianceLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- CORRECTIONS MODAL --}}
+    @if ($student->qualificationLetter->corrections->isNotEmpty())
+        <div class="modal" tabindex="-1" id="qualificationLetterCorrectionsModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('students.qualificationLetterMarkCorrectionsAsSolved') }}" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enviar correcciones</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            @method('PUT')
+                            <ul>
+                                @foreach ($student->qualificationLetter->corrections as $correction)
+                                    <li>{{ $correction->content }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary" @if (!$student->qualificationLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
                         </div>
                     </form>
                 </div>

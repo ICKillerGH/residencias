@@ -157,6 +157,21 @@ class Student extends Model
         return $this->hasOne(ComplianceLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
 
+    public function qualificationLetter()
+    {
+        return $this->hasOne(QualificationLetter::class, 'user_id')->withDefault();
+    }
+
+    public function inProcessQualificationLetter()
+    {
+        return $this->hasOne(QualificationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+    
+    public function approvedQualificationLetter()
+    {
+        return $this->hasOne(QualificationLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'user_id');

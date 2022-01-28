@@ -10,6 +10,7 @@ use App\Http\Controllers\ExternalAdvisorsController;
 use App\Http\Controllers\PaperStructureController;
 use App\Http\Controllers\PreliminaryLetterController;
 use App\Http\Controllers\PresentationLetterController;
+use App\Http\Controllers\QualificationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\ResidencyRequestController;
 use App\Http\Controllers\StudentsController;
@@ -129,10 +130,15 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/compliance-letter/mark-as-approved', [ComplianceLetterController::class, 'complianceLetterMarkAsApproved'])->name('complianceLetterMarkAsApproved');
         Route::put('/{student}/compliance-letter/signed-document', [ComplianceLetterController::class, 'complianceLetterUploadSignedDoc'])->name('complianceLetterUploadSignedDoc');
         Route::get('/{student}/compliance-letter/signed-document', [ComplianceLetterController::class, 'complianceLetterDownloadSignedDoc'])->name('complianceLetterDownloadSignedDoc');
-
-
-
         Route::post('/{student}/comliance-letter/answer-questions', [ComplianceLetterController::class, 'answerQuestions'])->name('complianceLetterAnswerQuestions');
+        //Qualification Letter
+        Route::post('/residency-process/qualification-letter', [QualificationLetterController::class, 'qualificationLetter'])->name('qualificationLetter');
+        Route::post('/{student}/qualification-letter/corrections', [QualificationLetterController::class, 'qualificationLetterCorrections'])->name('qualificationLetterCorrections');
+        Route::put('/residency-process/qualification-letter/corrections/mark-as-solved', [QualificationLetterController::class, 'qualificationLetterMarkCorrectionsAsSolved'])->name('qualificationLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/qualification-letter/mark-as-approved', [QualificationLetterController::class, 'qualificationLetterMarkAsApproved'])->name('qualificationLetterMarkAsApproved');
+        Route::put('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterUploadSignedDoc'])->name('qualificationLetterUploadSignedDoc');
+        Route::get('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterDownloadSignedDoc'])->name('qualificationLetterDownloadSignedDoc');
+
    
     });
 });

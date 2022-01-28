@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enum\DocumentStatus;
-use App\Models\PreliminaryLetter;
+use App\Models\QualificationLetter;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -11,10 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-class PreliminaryLetterController extends Controller
+class QualificationLetterController extends Controller
 {
-
-    public function preliminaryLetter(Request $request)
+    public function qualificationLetter(Request $request)
     {
         $userId = $request->user()->isStudent() ? Auth::id() : $request->user_id;
 
@@ -23,47 +22,48 @@ class PreliminaryLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-        if (!$student->preliminaryLetter->exists && Auth::id() !== $student->user_id) {
+            
+        if (!$student->qualificationLetter->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'Solo el estudiante puede generar sus documento por primera vez',
             ]);
         }
 
-        if (!$student->approvedAssignmentletter){
+        if (!$student->approvedComplianceletter){
             return redirect()->route('students.residencyProcess')->with('alert', [
                 'type' => 'danger',
-                'message' => 'Debe estar aprobada la carta de asignación',
+                'message' => 'Debe estar aprobada la cédula de cumplimiento',
             ]);
         }
-     
-        $preliminaryLetter = $student->preliminaryLetter->exists
-            ? $student->preliminaryLetter
-            : $student->preliminaryLetter()->create([
+
+        $qualificationLetter = $student->qualificationLetter->exists
+            ? $student->qualificationLetter
+            : $student->qualificationLetter()->create([
                 'request_date' => now(),
                 'project_id' => $student->project->id,
                 'company_id' => $student->company->id,
             ]);
 
-        $pdf = PDF::loadView('residency-process.preliminary-letter',[
-            'student'=>$student,
-            'externalCompany' => $student->company,
-            'project' => $student->project,
-            'preliminaryLetter'=> $preliminaryLetter,
-        ]);
+        $pdf = PDF::loadView('residency-process.qualification-letter',[
+                'student'=>$student,
+                'externalCompany' => $student->company,
+                'project' => $student->project,
+                'qualificationLetter'=> $qualificationLetter,
+            
+             ]);
 
-        return $pdf->stream('preliminary-letter');
-        
+        return $pdf->stream('qualification-letter');
     }
 
-    public function preliminaryLetterCorrections(Request $request, Student $student)
+    public function qualificationLetterCorrections(Request $request, Student $student)
     {
-        $preliminaryLetter = $student->inProcessPreliminaryLetter;
+        $qualificationLetter = $student->inProcessQualificationLetter;
 
-        if (!$preliminaryLetter) {
+        if (!$qualificationLetter) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'La carta de anteproyecto debe estar en proceso para poder ser revisada',
+                'message' => 'La carta de calificación debe estar en proceso para poder ser revisada',
             ]);
         }
 
@@ -74,14 +74,16 @@ class PreliminaryLetterController extends Controller
         DB::beginTransaction();
 
         try {
-            $preliminaryLetter->update([
+            $qualificationLetter->update([
                 'status' => DocumentStatus::STATUS_NEEDS_CORRECTIONS,
             ]);
 
-            $preliminaryLetter->corrections()->create(['content' => $data['corrections']]);
+            $qualificationLetter->corrections()->create(['content' => $data['corrections']]);
 
             DB::commit();
+
         } catch(Throwable $t) {
+
             DB::rollBack();
 
             return back()->with('alert', [
@@ -96,22 +98,22 @@ class PreliminaryLetterController extends Controller
         ]);
     }
 
-    public function preliminaryLetterMarkCorrectionsAsSolved()
+    public function qualificationLetterMarkCorrectionsAsSolved()
     {
-        $preliminaryLetter = PreliminaryLetter::query()
+        $qualificationLetter = QualificationLetter::query()
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        if (!$preliminaryLetter->needsCorrections()) {
+        if (!$qualificationLetter->needsCorrections()) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'El anteproyecto no necesita correcciones',
+                'message' => 'La carta de calificación no necesita correcciones',
             ]);
         }
 
-        $preliminaryLetter->status = DocumentStatus::STATUS_PROCESSING;
+        $qualificationLetter->status = DocumentStatus::STATUS_PROCESSING;
 
-        $preliminaryLetter->save();
+        $qualificationLetter->save();
 
         return back()->with('alert', [
             'type' => 'success',
@@ -119,35 +121,35 @@ class PreliminaryLetterController extends Controller
         ]);
     }
 
-    public function preliminaryLetterMarkAsApproved(Student $student)
+    public function qualificationLetterMarkAsApproved(Student $student)
     {
-        $preliminaryLetter = $student->inProcessPreliminaryLetter;
+        $qualificationLetter = $student->inProcessQualificationLetter;
 
-        if (!$preliminaryLetter) {
+        if (!$qualificationLetter) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'La carta de anteproyecto debe estar en proceso para porder ser revisada',
+                'message' => 'La carta de calificación debe estar en proceso para porder ser revisada',
             ]);
         }
 
-        $preliminaryLetter->status = DocumentStatus::STATUS_APPROVED;
+        $qualificationLetter->status = DocumentStatus::STATUS_APPROVED;
 
-        $preliminaryLetter->save();
+        $qualificationLetter->save();
 
         return back()->with('alert', [
             'type' => 'success',
-            'message' => 'La carta de anteproyecto ha sido aprovada',
+            'message' => 'La carta de calificación ha sido aprovada',
         ]);
     }
 
-    public function preliminaryLetterUploadSignedDoc(Request $request, Student $student)
+    public function qualificationLetterUploadSignedDoc(Request $request, Student $student)
     {
-        $preliminaryLetter = $student->approvedPreliminaryLetter;
+        $qualificationLetter = $student->approvedQualificationLetter;
 
-        if (!$preliminaryLetter) {
+        if (!$qualificationLetter) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'La carta anteproyecto debe ser aprovada',
+                'message' => 'La carta de calificación  debe ser aprovada',
             ]);
         }
 
@@ -155,14 +157,14 @@ class PreliminaryLetterController extends Controller
             'signed_document' => 'required|file|mimes:pdf',
         ]);
 
-        if ($preliminaryLetter->signed_document) {
+        if ($qualificationLetter->signed_document) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'El documento ya ha sido cargado.',
             ]);
         }
 
-        $preliminaryLetter->update($data);
+        $qualificationLetter->update($data);
 
         return back()->with('alert', [
             'type' => 'success',
@@ -170,26 +172,24 @@ class PreliminaryLetterController extends Controller
         ]);
     }
 
-    public function preliminaryLetterDownloadSignedDoc(Student $student)
+    public function qualificationLetterDownloadSignedDoc(Student $student)
     {
-        $preliminaryLetter = $student->approvedPreliminaryLetter;
+        $qualificationLetter = $student->approvedQualificationLetter;
 
-        if (!$preliminaryLetter) {
+        if (!$qualificationLetter) {
             return back()->with('alert', [
                 'type' => 'danger',
-                'message' => 'La carta anteproyecto debe ser aprovada',
+                'message' => 'La carta de calificación debe ser aprovada',
             ]);
         }
 
-        if (!$preliminaryLetter->signed_document) {
+        if (!$qualificationLetter->signed_document) {
             return back()->with('alert', [
                 'type' => 'danger',
                 'message' => 'El documento no ha sido cargado aún',
             ]);
         }
 
-        return response()->file(storage_path("app/{$preliminaryLetter->signed_document}"));
+        return response()->file(storage_path("app/{$qualificationLetter->signed_document}"));
     }
-
-
 }

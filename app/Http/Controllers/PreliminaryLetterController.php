@@ -36,7 +36,14 @@ class PreliminaryLetterController extends Controller
                 'message' => 'Debe estar aprobada la carta de asignación',
             ]);
         }
-     
+
+        if (!$student->approvedAssignmentletter->signed_document){
+            return redirect()->route('students.residencyProcess')->with('alert', [
+                'type' => 'danger',
+                'message' => 'Aún no se ha cargado el documento final de la asignación de asesor interno',
+            ]);
+        }
+
         $preliminaryLetter = $student->preliminaryLetter->exists
             ? $student->preliminaryLetter
             : $student->preliminaryLetter()->create([
@@ -53,7 +60,7 @@ class PreliminaryLetterController extends Controller
         ]);
 
         return $pdf->stream('preliminary-letter');
-        
+
     }
 
     public function preliminaryLetterCorrections(Request $request, Student $student)

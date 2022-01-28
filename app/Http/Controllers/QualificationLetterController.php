@@ -37,6 +37,13 @@ class QualificationLetterController extends Controller
             ]);
         }
 
+        if (!$student->approvedComplianceletter->signed_document){
+            return redirect()->route('students.residencyProcess')->with('alert', [
+                'type' => 'danger',
+                'message' => 'Aún no se ha cargado el documento final de la cédula de cumplimiento',
+            ]);
+        }
+
         $qualificationLetter = $student->qualificationLetter->exists
             ? $student->qualificationLetter
             : $student->qualificationLetter()->create([

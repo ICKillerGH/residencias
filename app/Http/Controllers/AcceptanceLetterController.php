@@ -34,6 +34,13 @@ class AcceptanceLetterController extends Controller
             ]);
         }
 
+        if (!$student->approvedCommitmentletter->signed_document){
+            return redirect()->route('students.residencyProcess')->with('alert', [
+                'type' => 'danger',
+                'message' => 'Aún no se ha cargado el documento final de la carta de compromiso',
+            ]);
+        }
+
         $student->acceptanceLetter()->create($data);
 
         return back()->with('alert', [

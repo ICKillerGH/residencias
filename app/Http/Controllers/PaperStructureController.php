@@ -34,6 +34,13 @@ class PaperStructureController extends Controller
             ]);
         }
 
+        if (!$student->approvedPreliminaryletter->signed_document){
+            return redirect()->route('students.residencyProcess')->with('alert', [
+                'type' => 'danger',
+                'message' => 'Aún no se ha cargado el documento final del anteproyecto',
+            ]);
+        }
+
         $student->paperStructure()->create($data);
 
         return back()->with('alert', [

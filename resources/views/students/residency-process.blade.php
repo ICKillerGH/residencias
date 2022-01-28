@@ -216,10 +216,10 @@
                     </div>
                     <div class="col-md-2">
                         <button
-                        class="btn btn-block btn-info"
-                        data-target="#preliminaryLetterUploadDocModal"
-                        data-toggle="modal"
-                        @if ($student->preliminaryLetter->signed_document) disabled @endif
+                            class="btn btn-block btn-info"
+                            data-target="#preliminaryLetterUploadDocModal"
+                            data-toggle="modal"
+                            @if ($student->preliminaryLetter->signed_document) disabled @endif
                         >
                             Cargar documento
                         </button>
@@ -291,6 +291,7 @@
                             class="btn btn-block btn-info"
                             data-target="#complianceLetterUploadDocModal"
                             data-toggle="modal"
+                            @if ($student->complianceLetter->signed_document) disabled @endif
                         >
                             Cargar documento
                         </button>
@@ -317,7 +318,7 @@
                     </div>
                 </div>
                 {{-- Cédula de cumplimiento RP end --}}
-                  
+
                 {{-- Acta de calificación --}}
                 <div class="row">
                     <div class="col-md-6">
@@ -328,6 +329,7 @@
                             class="btn btn-block btn-info"
                             data-target="#qualificationLetterUploadDocModal"
                             data-toggle="modal"
+                            @if ($student->qualificationLetter->signed_document) disabled @endif
                         >
                             Cargar documento
                         </button>
@@ -354,7 +356,7 @@
                     </div>
 
                 </div>
-                
+
 
                 {{-- Acta de calificación end --}}
 

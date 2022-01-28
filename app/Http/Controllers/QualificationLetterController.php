@@ -22,7 +22,7 @@ class QualificationLetterController extends Controller
             ->where('user_id', $userId)
             ->firstOrFail();
 
-            
+
         if (!$student->qualificationLetter->exists && Auth::id() !== $student->user_id) {
             return back()->with('alert', [
                 'type' => 'danger',
@@ -46,12 +46,11 @@ class QualificationLetterController extends Controller
             ]);
 
         $pdf = PDF::loadView('residency-process.qualification-letter',[
-                'student'=>$student,
-                'externalCompany' => $student->company,
-                'project' => $student->project,
-                'qualificationLetter'=> $qualificationLetter,
-            
-             ]);
+            'student'=>$student,
+            'externalCompany' => $student->company,
+            'project' => $student->project,
+            'qualificationLetter'=> $qualificationLetter,
+        ]);
 
         return $pdf->stream('qualification-letter');
     }
@@ -121,8 +120,13 @@ class QualificationLetterController extends Controller
         ]);
     }
 
-    public function qualificationLetterMarkAsApproved(Student $student)
+    public function qualificationLetterMarkAsApproved(Request $request, Student $student)
     {
+        $data = $request->validate([
+            'qualification' => 'required|integer|min:0|max:100',
+            'qualification_text' => 'required|max:255',
+        ]);
+
         $qualificationLetter = $student->inProcessQualificationLetter;
 
         if (!$qualificationLetter) {
@@ -132,6 +136,7 @@ class QualificationLetterController extends Controller
             ]);
         }
 
+        $qualificationLetter->fill($data);
         $qualificationLetter->status = DocumentStatus::STATUS_APPROVED;
 
         $qualificationLetter->save();

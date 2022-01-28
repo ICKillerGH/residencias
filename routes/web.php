@@ -138,7 +138,5 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/qualification-letter/mark-as-approved', [QualificationLetterController::class, 'qualificationLetterMarkAsApproved'])->name('qualificationLetterMarkAsApproved');
         Route::put('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterUploadSignedDoc'])->name('qualificationLetterUploadSignedDoc');
         Route::get('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterDownloadSignedDoc'])->name('qualificationLetterDownloadSignedDoc');
-
-   
     });
 });

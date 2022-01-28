@@ -40,7 +40,7 @@
                 <td>No. de Cuenta: {{ $student->account_number }}</td>
             </tr>
             <tr>
-                <td colspan="3" height="4%">Nombre de la Empresa, Organismo o Dependencia:{{ $externalCompany->business_name }}</td>
+                <td colspan="3" height="4%">Nombre de la Empresa, Organismo o Dependencia: {{ $externalCompany->business_name }}</td>
             </tr>
             <tr>
                 <td colspan="3">Nombre del Proyecto:{{ $project->title }}</td>
@@ -70,8 +70,8 @@
                 <td align="center"><b>Letra</b></td>
             </tr>
             <tr>
-                <td align="center"><b></b></td>
-                <td align="center"><b></b></td>
+                <td align="center"><b>{{ $qualificationLetter->qualification }}</b></td>
+                <td align="center"><b>{{ $qualificationLetter->qualification_text }}</b></td>
             </tr>
         </table>
 

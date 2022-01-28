@@ -368,13 +368,14 @@
                         @include('residency-process.partials.qualification-letter-btn')
                     </div>
                     <div class="col-md-3">
-                        <form action="{{ route('students.qualificationLetterMarkAsApproved', $student) }}" method="POST">
-                            @method('PUT')
-                                @csrf
-                                <button class="btn btn-block btn-success" @if (!$student->inProcessQualificationLetter) disabled @endif>
-                                    Aprobar documento
-                            </button>
-                        </form>
+                        <button
+                            class="btn btn-block btn-success"
+                            @if (!$student->inProcessQualificationLetter) disabled @endif
+                            data-toggle="modal"
+                            data-target="#qualificationLetterApprovalModal"
+                        >
+                            Aprobar documento
+                        </button>
                     </div>
                     <div class="col-md-3">
                         <button
@@ -662,7 +663,7 @@
     <div class="modal" tabindex="-1" id="qualificationLetterApprovalModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#" method="POST">
+                <form action="{{ route('students.qualificationLetterMarkAsApproved', [$student]) }}" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title">Aprobar documento</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -671,13 +672,14 @@
                     </div>
                     <div class="modal-body">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="qualification">Calificacion</label>
                             <input type="number" class="form-control" min="0" max="100" id="qualification" name="qualification">
                         </div>
                         <div class="form-group">
                             <label for="qualification_text">Calificación en letras</label>
-                            <input type="number" class="form-control" min="0" max="100" id="qualification_text" name="qualification_text">
+                            <input type="text" class="form-control" maxlength="255" id="qualification_text" name="qualification_text">
                         </div>
                     </div>
                     <div class="modal-footer">

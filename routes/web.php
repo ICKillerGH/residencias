@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AssignmentLetterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentLetterController;
+use App\Http\Controllers\CompletionLetterController;
 use App\Http\Controllers\ComplianceLetterController;
 use App\Http\Controllers\ExternalAdvisorsController;
 use App\Http\Controllers\PaperStructureController;
@@ -138,5 +139,12 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/qualification-letter/mark-as-approved', [QualificationLetterController::class, 'qualificationLetterMarkAsApproved'])->name('qualificationLetterMarkAsApproved');
         Route::put('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterUploadSignedDoc'])->name('qualificationLetterUploadSignedDoc');
         Route::get('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterDownloadSignedDoc'])->name('qualificationLetterDownloadSignedDoc');
+        //Completion Letter
+        Route::post('/residency-process/completion-letter', [CompletionLetterController::class, 'completionLetter'])->name('completionLetter');
+
+
+        //Submission Letter
+
+    
     });
 });

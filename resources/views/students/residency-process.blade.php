@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content">
-        @if($alert = session('alert'))
+        @if ($alert = session('alert'))
             <div class="alert alert-{{ $alert['type'] }}" role="alert">
                 {{ $alert['message'] }}
             </div>
@@ -28,32 +28,24 @@
                         @include('residency-process.partials.residency-request-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#residencyRequestUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->residencyRequest->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#residencyRequestUploadDocModal"
+                            data-toggle="modal" @if ($student->residencyRequest->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
-                            @if ($student->residencyRequest->signed_document)
-                                href="{{ route('students.residencyRequestDownloadSignedDoc', $student) }}"
+                        <a @if ($student->residencyRequest->signed_document)
+                            href="{{ route('students.residencyRequestDownloadSignedDoc', $student) }}"
                             @endif
                             class="btn btn-block btn-success @if (!$student->residencyRequest->signed_document) disabled @endif"
                             target="_blank"
-                        >
+                            >
                             Ver documento
                         </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#residencyRequestCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#residencyRequestCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -66,32 +58,24 @@
                         @include('residency-process.partials.presentation-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#presentationLetterUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->presentationLetter->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#presentationLetterUploadDocModal"
+                            data-toggle="modal" @if ($student->presentationLetter->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                    <a
-                        @if ($student->presentationLetter->signed_document)
+                        <a @if ($student->presentationLetter->signed_document)
                             href="{{ route('students.presentationLetterDownloadSignedDoc', $student) }}"
-                        @endif
-                        class="btn btn-block btn-success @if (!$student->presentationLetter->signed_document) disabled @endif"
-                        target="_blank"
-                    >
-                        Ver documento
-                    </a>
+                            @endif
+                            class="btn btn-block btn-success @if (!$student->presentationLetter->signed_document) disabled @endif"
+                            target="_blank"
+                            >
+                            Ver documento
+                        </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#presentationLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#presentationLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -105,32 +89,24 @@
                         @include('residency-process.partials.commitment-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#commitmentLetterUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->commitmentLetter->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#commitmentLetterUploadDocModal"
+                            data-toggle="modal" @if ($student->commitmentLetter->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
-                            @if ($student->commitmentLetter->signed_document)
-                                href="{{ route('students.commitmentLetterDownloadSignedDoc', $student) }}"
+                        <a @if ($student->commitmentLetter->signed_document)
+                            href="{{ route('students.commitmentLetterDownloadSignedDoc', $student) }}"
                             @endif
                             class="btn btn-block btn-success @if (!$student->commitmentLetter->signed_document) disabled @endif"
                             target="_blank"
-                        >
+                            >
                             Ver documento
-                         </a>
+                        </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#commitmentLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#commitmentLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -141,30 +117,20 @@
                 <div class="row">
                     <div class="col-md-8">
                         @if (!$student->acceptanceLetter->exists)
-                            <button
-                                class="btn btn-block btn-info"
-                                data-target="#acceptanceLetterUploadDocModal"
-                                data-toggle="modal"
-                                @if (!$student->approvedCommitmentletter) disabled @endif
-                            >
+                            <button class="btn btn-block btn-info" data-target="#acceptanceLetterUploadDocModal"
+                                data-toggle="modal" @if (!$student->approvedCommitmentletter) disabled @endif>
                                 Cargar carta de aceptación
                             </button>
                         @else
-                            <a
-                                href="{{ route('students.acceptanceLetterDownloadSignedDoc', $student) }}"
-                                class="btn btn-block btn-{{ $student->acceptanceLetter->btn_color }}"
-                                target="_blank"
-                            >
+                            <a href="{{ route('students.acceptanceLetterDownloadSignedDoc', $student) }}"
+                                class="btn btn-block btn-{{ $student->acceptanceLetter->btn_color }}" target="_blank">
                                 Carta de aceptación
                             </a>
                         @endif
                     </div>
                     <div class="col-md-4">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#acceptanceLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#acceptanceLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -177,36 +143,28 @@
                         @include('residency-process.partials.assignment-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#assignmentLetterUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->assignmentLetter->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#assignmentLetterUploadDocModal"
+                            data-toggle="modal" @if ($student->assignmentLetter->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
-                            @if ($student->assignmentLetter->signed_document)
-                                href="{{ route('students.assignmentLetterDownloadSignedDoc', $student) }}"
+                        <a @if ($student->assignmentLetter->signed_document)
+                            href="{{ route('students.assignmentLetterDownloadSignedDoc', $student) }}"
                             @endif
                             class="btn btn-block btn-success @if (!$student->assignmentLetter->signed_document) disabled @endif"
                             target="_blank"
-                        >
+                            >
                             Ver documento
-                         </a>
+                        </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#assignmentLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#assignmentLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
-                  </div>
+                </div>
                 {{-- Carta de asignación end --}}
 
                 {{-- Anteproyecto --}}
@@ -215,66 +173,48 @@
                         @include('residency-process.partials.preliminary-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#preliminaryLetterUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->preliminaryLetter->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#preliminaryLetterUploadDocModal"
+                            data-toggle="modal" @if ($student->preliminaryLetter->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
-                            @if ($student->preliminaryLetter->signed_document)
-                                href="{{ route('students.preliminaryLetterDownloadSignedDoc', $student) }}"
+                        <a @if ($student->preliminaryLetter->signed_document)
+                            href="{{ route('students.preliminaryLetterDownloadSignedDoc', $student) }}"
                             @endif
                             class="btn btn-block btn-success @if (!$student->preliminaryLetter->signed_document) disabled @endif"
                             target="_blank"
-                        >
+                            >
                             Ver documento
-                         </a>
+                        </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#preliminaryLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#preliminaryLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
-                  </div>
-                 {{-- Anteproyecto end --}}
+                </div>
+                {{-- Anteproyecto end --}}
 
                 {{-- Estructura de informe --}}
                 <div class="row">
                     <div class="col-md-8">
                         @if (!$student->paperStructure->exists)
-                            <button
-                                class="btn btn-block btn-info"
-                                data-target="#paperStructureUploadDocModal"
-                                data-toggle="modal"
-                                @if (!$student->approvedPreliminaryletter) disabled @endif
-                            >
+                            <button class="btn btn-block btn-info" data-target="#paperStructureUploadDocModal"
+                                data-toggle="modal" @if (!$student->approvedPreliminaryletter) disabled @endif>
                                 Cargar Estructura del informe final
                             </button>
                         @else
-                            <a
-                                href="{{ route('students.paperStructureDownloadSignedDoc', $student) }}"
-                                class="btn btn-block btn-{{ $student->paperStructure->btn_color }}"
-                                target="_blank"
-                            >
+                            <a href="{{ route('students.paperStructureDownloadSignedDoc', $student) }}"
+                                class="btn btn-block btn-{{ $student->paperStructure->btn_color }}" target="_blank">
                                 Estructura del informe final
                             </a>
                         @endif
                     </div>
                     <div class="col-md-4">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#paperStructureCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#paperStructureCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -287,32 +227,24 @@
                         @include('residency-process.partials.compliance-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#complianceLetterUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->complianceLetter->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#complianceLetterUploadDocModal"
+                            data-toggle="modal" @if ($student->complianceLetter->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
-                            @if ($student->complianceLetter->signed_document)
+                        <a @if ($student->complianceLetter->signed_document)
                             href="{{ route('students.complianceLetterDownloadSignedDoc', $student) }}"
                             @endif
                             class="btn btn-block btn-success @if (!$student->complianceLetter->signed_document) disabled @endif"
                             target="_blank"
-                        >
+                            >
                             Ver documento
                         </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#complianceLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#complianceLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -325,32 +257,24 @@
                         @include('residency-process.partials.qualification-letter-btn')
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-info"
-                            data-target="#qualificationLetterUploadDocModal"
-                            data-toggle="modal"
-                            @if ($student->qualificationLetter->signed_document) disabled @endif
-                        >
+                        <button class="btn btn-block btn-info" data-target="#qualificationLetterUploadDocModal"
+                            data-toggle="modal" @if ($student->qualificationLetter->signed_document) disabled @endif>
                             Cargar documento
                         </button>
                     </div>
                     <div class="col-md-2">
-                        <a
-                            @if ($student->qualificationLetter->signed_document)
+                        <a @if ($student->qualificationLetter->signed_document)
                             href="{{ route('students.qualificationLetterDownloadSignedDoc', $student) }}"
                             @endif
                             class="btn btn-block btn-success @if (!$student->qualificationLetter->signed_document) disabled @endif"
                             target="_blank"
-                        >
+                            >
                             Ver documento
                         </a>
                     </div>
                     <div class="col-md-2">
-                        <button
-                            class="btn btn-block btn-warning"
-                            data-toggle="modal"
-                            data-target="#qualificationLetterCorrectionsModal"
-                        >
+                        <button class="btn btn-block btn-warning" data-toggle="modal"
+                            data-target="#qualificationLetterCorrectionsModal">
                             Ver correcciones
                         </button>
                     </div>
@@ -360,11 +284,41 @@
 
                 {{-- Acta de calificación end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Carta de termino
-                    </button>
-                </form>
+                {{-- Carta de Térmibo --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.completion-letter-btn')
+                    </div>
+
+                    <div class="col-md-2">
+                        <button 
+                            class="btn btn-block btn-info" 
+                            data-target="#"
+                            data-toggle="modal" >
+                            Cargar documento
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a 
+                            
+                          
+                            class="btn btn-block btn-success "
+                            target="_blank"
+                            >
+                            Ver documento
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <button 
+                        class="btn btn-block btn-warning" 
+                        data-toggle="modal"
+                        data-target="#">
+                            Ver correcciones
+                        </button>
+                    </div>
+                </div>
+                {{-- Carta de Térmibo end --}}
+
                 <form action="">
                     <button class="btn btn-block btn-warning" disabled>
                         Carta de entrega de proyecto
@@ -400,7 +354,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->residencyRequest->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->residencyRequest->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -412,7 +366,8 @@
     <div class="modal" tabindex="-1" id="residencyRequestUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.residencyRequestUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.residencyRequestUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar documento</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -425,7 +380,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_rr">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_rr" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_rr"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -441,7 +397,8 @@
     <div class="modal" tabindex="-1" id="presentationLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.presentationLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.presentationLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar documento</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -454,7 +411,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_pl">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_pl" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_pl"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -469,7 +427,8 @@
     <div class="modal" tabindex="-1" id="commitmentLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.commitmentLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.commitmentLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar documento</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -482,7 +441,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_cl">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_cl" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_cl"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -498,7 +458,8 @@
     <div class="modal" tabindex="-1" id="acceptanceLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.acceptanceLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.acceptanceLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar carta de aceptación</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -511,7 +472,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_al">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_al" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_al"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -526,7 +488,8 @@
     <div class="modal" tabindex="-1" id="paperStructureUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.paperStructureUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.paperStructureUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar estructura del informe final</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -539,7 +502,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_ps1">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_ps1" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_ps1"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -555,7 +519,8 @@
     <div class="modal" tabindex="-1" id="assignmentLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.assignmentLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.assignmentLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar asignación de asesor interno</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -568,7 +533,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_asl">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_asl" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_asl"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -584,7 +550,8 @@
     <div class="modal" tabindex="-1" id="preliminaryLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.preliminaryLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.preliminaryLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar anteproyecto</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -597,7 +564,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_prl">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_prl" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_prl"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -613,7 +581,8 @@
     <div class="modal" tabindex="-1" id="complianceLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.complianceLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.complianceLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar cedula de cumpliento</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -626,7 +595,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_crl">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_crl" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_crl"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -642,7 +612,8 @@
     <div class="modal" tabindex="-1" id="qualificationLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('students.qualificationLetterUploadSignedDoc', $student) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.qualificationLetterUploadSignedDoc', $student) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title">Cargar carta de calificación</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -655,7 +626,8 @@
 
                         <div class="form-group">
                             <label for="signed_document_qrl">Documento</label>
-                            <input type="file" class="form-control" name="signed_document" id="signed_document_qrl" accept="application/pdf" required>
+                            <input type="file" class="form-control" name="signed_document" id="signed_document_qrl"
+                                accept="application/pdf" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -672,7 +644,8 @@
         <div class="modal" tabindex="-1" id="presentationLetterCorrectionsModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('students.presentationLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                    <form action="{{ route('students.presentationLetterMarkCorrectionsAsSolved', $student) }}"
+                        method="POST">
                         <div class="modal-header">
                             <h5 class="modal-title">Enviar correcciones</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -690,7 +663,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->presentationLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->presentationLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -703,7 +676,8 @@
         <div class="modal" tabindex="-1" id="commitmentLetterCorrectionsModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('students.commitmentLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                    <form action="{{ route('students.commitmentLetterMarkCorrectionsAsSolved', $student) }}"
+                        method="POST">
                         <div class="modal-header">
                             <h5 class="modal-title">Enviar correcciones</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -721,7 +695,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->commitmentLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->commitmentLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -733,7 +707,8 @@
         <div class="modal" tabindex="-1" id="acceptanceLetterCorrectionsModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('students.acceptanceLetterMarkCorrectionsAsSolved', $student) }}" method="POST">
+                    <form action="{{ route('students.acceptanceLetterMarkCorrectionsAsSolved', $student) }}"
+                        method="POST">
                         <div class="modal-header">
                             <h5 class="modal-title">Enviar correcciones</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -751,7 +726,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->acceptanceLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->acceptanceLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -781,7 +756,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->paperStructure->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->paperStructure->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -812,7 +787,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->assignmentLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->assignmentLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -843,7 +818,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->preliminaryLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->preliminaryLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -874,7 +849,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->complianceLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->complianceLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>
@@ -905,7 +880,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" @if (!$student->qualificationLetter->needsCorrections()) disabled @endif >Marcar como corregida</button>
+                            <button class="btn btn-primary" @if (!$student->qualificationLetter->needsCorrections()) disabled @endif>Marcar como corregida</button>
                         </div>
                     </form>
                 </div>

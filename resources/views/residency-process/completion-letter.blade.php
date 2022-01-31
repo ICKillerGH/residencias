@@ -21,6 +21,13 @@
             font-size: 0.7rem;
         }
 
+        .e {
+            text-align: left;
+            margin-top: 0px;
+            padding: 0 5.5rem;
+            font-size: 0.7rem;
+        }
+
         .person {
             text-align: left;
             padding: 1 1rem;
@@ -61,10 +68,13 @@
         <br>
 
         <p class="note">
-            Hago de su conocimiento que la alumna {{ $student->full_name }} con número de cuenta
-            {{ $student->account_number }} quien cursa la carrera de la {{ $student->career->name }}, terminó el proyecto
-            denominado: {{ $student->project->title }}. Cubrió un total de 640 hrs. en un horario
-            de {{ $student->project->schedule }}, el cual inició el día {{ $student->project->start_date_formatted }}  y concluyó el día {{ $student->project->end_date_formatted }}.
+            Hago de su conocimiento que la alumna <b>{{ $student->full_name }} </b> con número de cuenta
+            <b>{{ $student->account_number }}</b> quien cursa la carrera de la <b>{{ $student->career->name }}</b> ,
+            terminó el proyecto
+            denominado: <b>{{ $student->project->title }}</b> . Cubrió un total de 640 hrs. en un horario
+            de <b>{{ $student->project->schedule }}</b> , el cual inició el día
+            <b>{{ $student->project->start_date_formatted }} </b> y concluyó el día
+            <b>{{ $student->project->end_date_formatted }}</b> .
         </p>
 
         <p class="note">
@@ -95,8 +105,7 @@
         <br>
         <br>
         <div class="c"> C.c.p. Residente</div>
-        <div class="c"> Expediente</b> </div>
-
+        <div class="e"> Expediente</b> </div>
 
 </body>
 

@@ -141,9 +141,15 @@ Route::middleware('auth')->group(function() {
         Route::get('/{student}/qualification-letter/signed-document', [QualificationLetterController::class, 'qualificationLetterDownloadSignedDoc'])->name('qualificationLetterDownloadSignedDoc');
         //Completion Letter
         Route::post('/residency-process/completion-letter', [CompletionLetterController::class, 'completionLetter'])->name('completionLetter');
+        Route::post('/{student}/completion-letter/corrections', [CompletionLetterController::class, 'completionLetterCorrections'])->name('completionLetterCorrections');
+        Route::put('/residency-process/completion-letter/corrections/mark-as-solved', [CompletionLetterController::class, 'completionLetterMarkCorrectionsAsSolved'])->name('completionLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/completion-letter/mark-as-approved', [CompletionLetterController::class, 'completionLetterMarkAsApproved'])->name('completionLetterMarkAsApproved');
+        Route::put('/{student}/completion-letter/signed-document', [CompletionLetterController::class, 'completionLetterUploadSignedDoc'])->name('completionLetterUploadSignedDoc');
+        Route::get('/{student}/completion-letter/signed-document', [CompletionLetterController::class, 'completionLetterDownloadSignedDoc'])->name('completionLetterDownloadSignedDoc');
 
 
         //Submission Letter
+        
 
     
     });

@@ -187,6 +187,20 @@ class Student extends Model
         return $this->hasOne(CompletionLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
     }
 
+    public function submissionLetter()
+    {
+        return $this->hasOne(SubmissionLetter::class, 'user_id')->withDefault();
+    }
+
+    public function inProcessSubmissionLetter()
+    {
+        return $this->hasOne(SubmissionLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_PROCESSING);
+    }
+    
+    public function approvedSubmissionLetter()
+    {
+        return $this->hasOne(SubmissionLetter::class, 'user_id')->where('status', DocumentStatus::STATUS_APPROVED);
+    }
 
     public function company()
     {

@@ -15,6 +15,7 @@ use App\Http\Controllers\QualificationLetterController;
 use App\Http\Controllers\ResidencyProcessController;
 use App\Http\Controllers\ResidencyRequestController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubmissionLetterController;
 use App\Http\Controllers\TeachersController;
 use App\Models\Admin;
 use App\Models\ExternalAdvisor;
@@ -146,9 +147,14 @@ Route::middleware('auth')->group(function() {
         Route::put('/{student}/completion-letter/mark-as-approved', [CompletionLetterController::class, 'completionLetterMarkAsApproved'])->name('completionLetterMarkAsApproved');
         Route::put('/{student}/completion-letter/signed-document', [CompletionLetterController::class, 'completionLetterUploadSignedDoc'])->name('completionLetterUploadSignedDoc');
         Route::get('/{student}/completion-letter/signed-document', [CompletionLetterController::class, 'completionLetterDownloadSignedDoc'])->name('completionLetterDownloadSignedDoc');
-
-
         //Submission Letter
+        Route::post('/residency-process/submission-letter', [SubmissionLetterController::class, 'submissionLetter'])->name('submissionLetter');
+        Route::post('/{student}/submission-letter/corrections', [SubmissionLetterController::class, 'submissionLetterCorrections'])->name('submissionLetterCorrections');
+        Route::put('/residency-process/submission-letter/corrections/mark-as-solved', [SubmissionLetterController::class, 'submissionLetterMarkCorrectionsAsSolved'])->name('submissionLetterMarkCorrectionsAsSolved');
+        Route::put('/{student}/submission-letter/mark-as-approved', [SubmissionLetterController::class, 'submissionLetterMarkAsApproved'])->name('submissionLetterMarkAsApproved');
+        Route::put('/{student}/submission-letter/signed-document', [SubmissionLetterController::class, 'submissionLetterUploadSignedDoc'])->name('submissionLetterUploadSignedDoc');
+        Route::get('/{student}/submission-letter/signed-document', [SubmissionLetterController::class, 'submissionLetterDownloadSignedDoc'])->name('submissionLetterDownloadSignedDoc');
+
         
 
     

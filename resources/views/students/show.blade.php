@@ -418,11 +418,32 @@
                 </div>
                 {{-- Carta de Término end --}}
 
-                <form action="">
-                    <button class="btn btn-block btn-warning" disabled>
-                        Carta de entrega de proyecto
-                    </button>
-                </form>
+            {{--  Carta de Entrega de Proyecto --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        @include('residency-process.partials.submission-letter-btn')
+                    </div>
+                    <div class="col-md-3">
+                        <form action="{{ route('students.submissionLetterMarkAsApproved', $student) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button class="btn btn-block btn-success" @if (!$student->inProcessSubmissionLetter) disabled @endif>
+                                Aprobar documento
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <button
+                            class="btn btn-block btn-danger"
+                            data-toggle="modal"
+                            data-target="#submissionLetterCorrectionsModal"
+                            @if (!$student->inProcessSubmissionLetter) disabled @endif
+                        >
+                            Enviar correcciones
+                        </button>
+                    </div>
+                </div>
+                {{-- Carta de Entrega de Proyecto end --}}
             </div>
         </div>
     </div>
@@ -708,7 +729,35 @@
             </div>
         </div>
     </div>
-    {{-- QUALIFICATION  LETTER CORRECTIONS MODAL END --}}
+    {{-- COMPLETION LETTER CORRECTIONS MODAL END --}}
+
+    {{-- SUBMISSION LETTER CORRECTIONS MODAL --}}
+    <div class="modal" tabindex="-1" id="submissionLetterCorrectionsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('students.submissionLetterCorrections', $student) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enviar correcciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="corrections">Correciones</label>
+                            <textarea name="corrections" id="corrections" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- SUBMISSION LETTER CORRECTIONS MODAL END --}}
 
     {{-- QUALIFICATION LETTER APPROVAL MODAL --}}
     <div class="modal" tabindex="-1" id="qualificationLetterApprovalModal">

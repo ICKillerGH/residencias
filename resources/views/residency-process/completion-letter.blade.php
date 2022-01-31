@@ -57,7 +57,7 @@
 
     <div class="document-name">CARTA DE TERMINACIÓN</div>
     <br>
-    <div class="request-date"><b>(Número de oficio de la empresa)</b> </p>
+    <div class="request-date"><b>(Número de oficio de la empresa)</b> </div>
         <p class="request-date"><b>(Fecha)</b></p>
         <br>
 

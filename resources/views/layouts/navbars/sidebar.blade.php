@@ -1,19 +1,20 @@
-<div class="sidebar" data-color="orange" data-background-color="white" data-image="{{ asset('material') }}/img/sidebar-1.jpg">
+<div class="sidebar" data-color="orange" data-background-color="" data-image="{{ asset('material') }}/img/sidebar-1.jpg">
     <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
-    <div class="logo">
-        <a href="" class="simple-text logo-normal">
-            {{ __('Residencia Profesional') }}
-        </a>
+    <div class="logo" align="center">
+        <img src="{{ asset('img/logo2.png') }}" alt="umb" height="95" width="180">
+        <br><br>
+        <h4><div><b>Residencias Profesionales</b></div></h4>
+  
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('home') }}">
-                <i class="material-icons">dashboard</i>
+                <i class="material-icons"> dashboard</i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
@@ -90,7 +91,7 @@
             <li class="nav-item{{ $activePage == 'admins' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('admins.index') }}">
                 <i class="material-icons">manage_accounts</i>
-                    <p>Administradores</p>
+                    <p> <b>Administradores</b> </p>
                 </a>
             </li>
             @endcan
@@ -99,15 +100,15 @@
             <li class="nav-item{{ $activePage == 'students' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('students.index') }}">
                 <i class="material-icons">people</i>
-                    <p>Estudiantes</p>
+                    <p><b>Estudiantes</b> </p>
                 </a>
             </li>
             @endcan
             @can('index', App\Models\Teacher::class)
-            <li class="nav-item{{ $activePage == 'techers' ? ' active' : '' }}">
+            <li class="nav-item{{ $activePage == 'teachers' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('teachers.index') }}">
                 <i class="material-icons">people</i>
-                    <p>Profesores</p>
+                    <p><b>Profesores</b> </p>
                 </a>
             </li>
             @endcan
@@ -115,7 +116,7 @@
             <li class="nav-item{{ $activePage == 'external-advisor' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('externalAdvisor.index') }}">
                 <i class="material-icons">people</i>
-                    <p>Asesores Externos</p>
+                    <p><b>Asesores Externos</b> </p>
                 </a>
             </li>
             @endcan

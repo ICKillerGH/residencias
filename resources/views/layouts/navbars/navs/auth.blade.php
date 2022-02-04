@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+<nav class="navbar navbar-expand-lg bg-warning text-dark navbar-transparent navbar-absolute fixed-top">
   <div class="container-fluid">
     <div class="navbar-wrapper">
       <a class="navbar-brand" href="#">{{ $titlePage }}</a>
@@ -20,7 +20,7 @@
         </button>
         </div>
       </form>
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('home') }}">
             <i class="material-icons">dashboard</i>

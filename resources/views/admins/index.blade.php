@@ -9,34 +9,34 @@
         @endif
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Administradores</h4>
-                <p class="card-category">Lista de administradores</p>
+            <div class="card-header card-header-success ">
+                <h4 class="card-title text-white"> <b>Administradores</b> </h4>
+                <p class="card-category text-white"><b>Lista de Administradores</b> </p>
             </div>
             <div class="card-body">
-                <div class="text-right">
-                    <a href="{{ route('admins.create') }}" class="btn btn-success btn-sm">Añadir administrador</a>
+                <div class="text-right ">
+                    <a href="{{ route('admins.create') }}" class="btn btn-warning btn-sm"> <i class="material-icons">person_add</i>  Añadir administrador</a>
                 </div>
 
                 <div class="table-responsive">
                     <table class="table">
-                        <thead class="text-primary">
-                            <tr>
-                                <th>Id</th>
-                                <th>Correo</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th></th>
+                        <thead class="thead">
+                            <tr class="">
+                                <th class="text-center  table-  text-dark"><b>#</b> </th>
+                                <th class="text-center  table- text-dark"><b>E-mail</b> </th>
+                                <th class="text-center  table- text-dark"><b>Nombre(s)</b> </th>
+                                <th class="text-center  table-  text-dark"><b>Apellidos</b> </th>
+                                <th class="text-right   table-  text-dark"><b>Acciones</b> </th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($admins as $admin)
                                 <tr>
-                                    <td>{{ $admin->id }}</td>
-                                    <td>{{ $admin->email }}</td>
-                                    <td>{{ $admin->admin->first_name }}</td>
-                                    <td>{{ $admin->admin->last_name }}</td>
-                                    <td class="text-nowrap text-right">
+                                    <td class=" text-center"><b> {{ $admin->id }}</b></td>
+                                    <td class=" text-center"><b>{{ $admin->email }}</b> </td>
+                                    <td class=" text-center"><b>{{ $admin->admin->first_name }}</b> </td>
+                                    <td class="  text-center"><b>{{ $admin->admin->last_name }}</b> </td>
+                                    <td class="text-nowrap text-right ">
                                         <a href="" class="btn btn-sm btn-info" title="Ver detalles">
                                             <i class="material-icons">details</i>
                                         </a>

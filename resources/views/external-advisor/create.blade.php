@@ -3,8 +3,8 @@
 @section('content')
     <div class="content">
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Añadir asesor externo</h4>
+            <div class="card-header card-header-success">
+                <h4 class="card-title text-white">Añadir Asesor Externo</h4>
             </div>
 
             <div class="card-body">
@@ -14,50 +14,50 @@
                     {{-- EMAIL --}}
                     <x-inputs.text-field-row
                         name="email"
-                        label="Correo electrónico"
-                        placeholder="Ingrese el correo electrónico"
+                        label="Correo electrónico:"
+                        placeholder="Ingresé el Correo Electrónico"
                         autofocus
                     />
 
                     {{-- FIRST NAME --}}
                     <x-inputs.text-field-row
                         name="first_name"
-                        label="Nombres"
-                        placeholder="Ingrese el nombre"
+                        label="Nombre(s):"
+                        placeholder="Ingresé el Nombre"
                     />
 
                     {{-- FATHER'S LAST NAME --}}
                     <x-inputs.text-field-row
                         name="fathers_last_name"
-                        label="Apellido paterno"
-                        placeholder="Ingrese el apellido paterno"
+                        label="Apellido Paterno:"
+                        placeholder="Ingresé el Apellido Paterno"
                     />
 
                     {{-- MOTHERS'S LAST NAME --}}
                     <x-inputs.text-field-row
                         name="mothers_last_name"
-                        label="Apellido materno"
-                        placeholder="Ingrese el apellido materno"
+                        label="Apellido Materno:"
+                        placeholder="Ingresé el Apellido Materno"
                     />
 
                     {{-- CHARGE --}}
                     <x-inputs.text-field-row
                         name="charge"
-                        label="Cargo"
-                        placeholder="Ingrese el cargo"
+                        label="Cargo:"
+                        placeholder="Ingresé el Cargo"
                     />
 
                     {{-- CAREER --}}
                     <x-inputs.text-field-row
                         name="career"
-                        label="Carrera"
-                        placeholder="Ingrese la carrera"
+                        label="Carrera:"
+                        placeholder="Ingresé la Carrera"
                     />
 
                     {{-- SEX --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="sex" class="d-block">Sexo</label>
+                            <label for="sex" class="d-block">Sexo:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -66,7 +66,7 @@
                                     name="sex"
                                     id="sex"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     <option value="m" @if (old('sex') == 'm') selected @endif>Masculino</option>
                                     <option value="f" @if (old('sex') == 'f') selected @endif>Femenino</option>
                                 </select>
@@ -80,21 +80,21 @@
                     {{-- CURP --}}
                     <x-inputs.text-field-row
                         name="curp"
-                        label="CURP"
-                        placeholder="Ingrese el curp"
+                        label="CURP:"
+                        placeholder="Ingresé el Curp"
                     />
 
                     {{-- PHONE NUMBER --}}
                     <x-inputs.text-field-row
                         name="phone_number"
                         label="Teléfono"
-                        placeholder="Ingrese número de teléfono"
+                        placeholder="Ingresé Número de Teléfono"
                     />
 
                     {{-- State --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="state_id" class="d-block">Estado</label>
+                            <label for="state_id" class="d-block">Estado:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -103,7 +103,7 @@
                                     name="state_id"
                                     id="state_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}" @if ($state->id == old('state_id')) selected @endif>{{ $state->name }}</option>
                                     @endforeach
@@ -118,7 +118,7 @@
                     {{-- MUNCIPALITY --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="municipality_id" class="d-block">Municipio</label>
+                            <label for="municipality_id" class="d-block">Municipio:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -127,7 +127,7 @@
                                     name="municipality_id"
                                     id="municipality_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                 </select>
                             </div>
                             @error('municipality_id')
@@ -139,7 +139,7 @@
                     {{-- LOCALITY --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="locality_id" class="d-block">Localidad</label>
+                            <label for="locality_id" class="d-block">Localidad:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -148,7 +148,7 @@
                                     name="locality_id"
                                     id="locality_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                 </select>
                             </div>
                             @error('locality_id')
@@ -160,8 +160,8 @@
                     {{-- PASSWORD --}}
                     <x-inputs.text-field-row
                         name="password"
-                        label="Contraseña"
-                        placeholder="Ingrese la contraseña"
+                        label="Contraseña:"
+                        placeholder="Ingresé la Contraseña"
                         type="password"
                     />
 
@@ -169,13 +169,15 @@
                     {{-- PASSWORD CONFIRMATION --}}
                     <x-inputs.text-field-row
                         name="password_confirmation"
-                        label="Confirmar contraseña"
-                        placeholder="Ingrese la contraseña"
+                        label="Confirmar Contraseña:"
+                        placeholder="Confirmación de Contraseña"
                         type="password"
                     />
 
                     <div class="text-right">
-                        <button class="btn btn-primary">Guardar</button>
+                        <a href="{{ route('externalAdvisor.index') }}" class="btn  btn-warning mr-3">
+                            <i class="material-icons">cancel</i><b> Cancelar</b> </a>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
 
                 </form>

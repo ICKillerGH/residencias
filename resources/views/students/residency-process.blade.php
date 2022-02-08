@@ -17,8 +17,8 @@
         @endif
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Proceso de Residencia Profesional</h4>
+            <div class="card-header card-header-warning">
+                <h4 class="card-title text-white"><b>Proceso de Residencia Profesional</b></h4>
             </div>
 
             <div class="card-body">
@@ -667,7 +667,7 @@
         </div>
     </div>
     {{-- UPLOAD DOC COMPLETION LETTER MODAL --}}
-    <div class="modal" tabindex="-1" id="completionLetterUploadDocModal">
+    <div class="modal fade" tabindex="-1" id="completionLetterUploadDocModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('students.completionLetterUploadSignedDoc', $student) }}" method="POST"

@@ -3,8 +3,8 @@
 @section('content')
     <div class="content">
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Editar profesor</h4>
+            <div class="card-header card-header-success">
+                <h4 class="card-title text-white"><b>Editar Profesor</b> </h4>
             </div>
 
             <div class="card-body">
@@ -14,8 +14,8 @@
                     {{-- EMAIL --}}
                     <x-inputs.text-field-row
                         name="email"
-                        label="Correo electrónico"
-                        placeholder="Ingrese el correo electrónico"
+                        label="Correo Electrónico:"
+                        placeholder="Ingresé el Correo Electrónico"
                         autofocus
                         :default-value="$teacher->user->email"
                     />
@@ -23,31 +23,31 @@
                     {{-- FIRST NAME --}}
                     <x-inputs.text-field-row
                         name="first_name"
-                        label="Nombres"
-                        placeholder="Ingrese el nombre"
+                        label="Nombre(s):"
+                        placeholder="Ingresé el Nombre"
                         :default-value="$teacher->first_name"
                     />
 
                     {{-- FATHER'S LAST NAME --}}
                     <x-inputs.text-field-row
                         name="fathers_last_name"
-                        label="Apellido paterno"
-                        placeholder="Ingrese el apellido paterno"
+                        label="Apellido Paterno:"
+                        placeholder="Ingresé el Apellido Paterno"
                         :default-value="$teacher->fathers_last_name"
                     />
 
                     {{-- MOTHERS'S LAST NAME --}}
                     <x-inputs.text-field-row
                         name="mothers_last_name"
-                        label="Apellido materno"
-                        placeholder="Ingrese el apellido materno"
+                        label="Apellido Materno:"
+                        placeholder="Ingresé el Apellido Materno"
                         :default-value="$teacher->mothers_last_name"
                     />
 
                     {{-- SEX --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="sex" class="d-block">Sexo</label>
+                            <label for="sex" class="d-block">Sexo:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -56,7 +56,7 @@
                                     name="sex"
                                     id="sex"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     <option value="m" @if (old('sex', $teacher->sex) == 'm') selected @endif>Masculino</option>
                                     <option value="f" @if (old('sex', $teacher->sex) == 'f') selected @endif>Femenino</option>
                                 </select>
@@ -70,23 +70,23 @@
                     {{-- CURP --}}
                     <x-inputs.text-field-row
                         name="curp"
-                        label="CURP"
-                        placeholder="Ingrese el curp"
+                        label="CURP:"
+                        placeholder="Ingresé el Curp"
                         :default-value="$teacher->curp"
                     />
 
                     {{-- PHONE NUMBER --}}
                     <x-inputs.text-field-row
                         name="phone_number"
-                        label="Teléfono"
-                        placeholder="Ingrese número de teléfono"
+                        label="Teléfono:"
+                        placeholder="Ingresé Número de Teléfono"
                         :default-value="$teacher->phone_number"
                     />
 
                     {{-- State --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="state_id" class="d-block">Estado</label>
+                            <label for="state_id" class="d-block">Estado:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -95,7 +95,7 @@
                                     name="state_id"
                                     id="state_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}" @if ($state->id == old('state_id', $teacher->state_id)) selected @endif>{{ $state->name }}</option>
                                     @endforeach
@@ -110,7 +110,7 @@
                     {{-- MUNCIPALITY --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="municipality_id" class="d-block">Municipio</label>
+                            <label for="municipality_id" class="d-block">Municipio:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -119,7 +119,7 @@
                                     name="municipality_id"
                                     id="municipality_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                 </select>
                             </div>
                             @error('municipality_id')
@@ -131,7 +131,7 @@
                     {{-- LOCALITY --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="locality_id" class="d-block">Localidad</label>
+                            <label for="locality_id" class="d-block">Localidad:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -140,7 +140,7 @@
                                     name="locality_id"
                                     id="locality_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                 </select>
                             </div>
                             @error('locality_id')
@@ -149,15 +149,17 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-primary">Guardar</button>
+                        <a href="{{ route('admins.index') }}" class="btn  btn-warning mr-3">
+                            <i class="material-icons">cancel</i><b> Cancelar</b> </a>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
 
                 </form>
             </div>
 
             <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Cambiar contraseña</h4>
+                <div class="card-header card-header-success">
+                    <h4 class="card-title text-white"><b>Cambiar Contraseña</b></h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('teachers.updatePassword', $teacher) }}" method="POST">
@@ -166,19 +168,21 @@
                         {{-- PASSWORD --}}
                         <x-inputs.text-field-row
                             name="password"
-                            label="contraseña nueva"
-                            placeholder="Ingrese la contraseña nueva"
+                            label="Contraseña Nueva:"
+                            placeholder="Ingresé la Contraseña Nueva"
                             type="password"
                         />
                         {{-- CONFIRM PASSWORD --}}
                         <x-inputs.text-field-row
                             name="password_confirmation"
-                            label="confirmar contraseña"
-                            placeholder="confirme la contraseña nueva"
+                            label="Confirmar Contraseña:"
+                            placeholder="Confirme la Contraseña Nueva"
                             type="password"
                         />
                         <div class="text-right">
-                                <button class="btn btn-primary">Guardar</button>
+                            <a href="{{ route('admins.index') }}" class="btn  btn-warning mr-3">
+                                <i class="material-icons">cancel</i><b> Cancelar</b> </a>
+                            <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                         </div>
                     </form>
                 </div>

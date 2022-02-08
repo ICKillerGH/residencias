@@ -3,7 +3,7 @@
         <label for="{{ $name }}" class="d-block">{{ $label }}</label>
     </div>
     <div class="col-md-9">
-        <div class="input-group input-group-dynamic">
+        <div class="input-group input-group-dynamic label-floating has-warning">
             <input
                 type="{{ $type }}"
                 class="form-control"

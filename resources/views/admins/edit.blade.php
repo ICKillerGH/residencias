@@ -9,8 +9,8 @@
         @endif
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Editar administrador</h4>
+            <div class="card-header card-header-success">
+                <h4 class="card-title text-white"><b>Editar Administrador</b></h4>
             </div>
 
             <div class="card-body">
@@ -20,37 +20,39 @@
                     {{-- EMAIL --}}
                     <x-inputs.text-field-row
                         name="email"
-                        label="Correo electrónico"
-                        placeholder="Ingrese el correo electrónico"
+                        label="Correo Electrónico:"
+                        placeholder="Ingresé el Correo Electrónico"
                         :default-value="$admin->user->email"
                     />
 
                     {{-- FIRST NAME --}}
                     <x-inputs.text-field-row
                         name="first_name"
-                        label="Nombres"
-                        placeholder="Ingrese los nombres"
+                        label="Nombre(s):"
+                        placeholder="Ingresé los Nombres"
                         :default-value="$admin->first_name"
                     />
 
                     {{-- LAST NAME --}}
                     <x-inputs.text-field-row
                         name="last_name"
-                        label="Apellidos"
-                        placeholder="Ingrese los apellidos"
+                        label="Apellidos:"
+                        placeholder="Ingresé los Apellidos"
                         :default-value="$admin->last_name"
                     />
 
                     <div class="text-right">
-                        <button class="btn btn-primary">Guardar</button>
+                        <a href="{{ route('admins.index') }}" class="btn  btn-warning mr-3">
+                            <i class="material-icons">cancel</i><b> Cancelar</b> </a>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
                 </form>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Cambiar contraseña</h4>
+            <div class="card-header card-header-success">
+                <h4 class="card-title text-white"><b> Cambiar Contraseña</b></h4>
             </div>
             <div class="card-body">
                 <form action="{{ route('admins.updatePassword', $admin) }}" method="POST">
@@ -59,19 +61,21 @@
                     {{-- PASSWORD --}}
                     <x-inputs.text-field-row
                         name="password"
-                        label="contraseña nueva"
-                        placeholder="Ingrese la contraseña nueva"
+                        label="Contraseña Nueva:"
+                        placeholder="Ingresé la Contraseña Nueva"
                         type="password"
                     />
                     {{-- CONFIRM PASSWORD --}}
                     <x-inputs.text-field-row
                         name="password_confirmation"
-                        label="confirmar contraseña"
-                        placeholder="confirme la contraseña nueva"
+                        label="Confirmar Contraseña:"
+                        placeholder="Confirme la Contraseña Nueva"
                         type="password"
                     />
                     <div class="text-right">
-                            <button class="btn btn-primary">Guardar</button>
+                        <a href="{{ route('admins.index') }}" class="btn  btn-warning mr-3">
+                            <i class="material-icons">cancel</i><b> Cancelar</b> </a>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
                 </form>
             </div>

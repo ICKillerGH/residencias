@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'students', 'title' => __(''), 'titlePage' => 'Detalles de estudiante'])
+@extends('layouts.main', ['activePage' => 'students', 'title' => __(''), 'titlePage' => 'Detalles de Estudiante'])
 
 @section('content')
     <div class="content">
@@ -18,8 +18,8 @@
 
         {{-- STUDENT DETAILS CARD --}}
         <div class="card mb-5">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Datos de {{ $student->full_name }}</h4>
+            <div class="card-header card-header-warning">
+                <h4 class="card-title text-white"><b>Datos de {{ $student->full_name }}</b> </h4>
             </div>
 
             <div class="card-body">
@@ -115,8 +115,8 @@
         {{-- STUDENT DETAILS CARD END --}}
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Proceso de residencia profesional</h4>
+            <div class="card-header card-header-warning">
+                <h4 class="card-title text-white"><b>Proceso de Residencia Profesional</b> </h4>
             </div>
 
             <div class="card-body">
@@ -793,8 +793,8 @@
     {{-- QUALIFICATION LETTER APPROVAL MODAL END --}}
 
     {{-- COMPLIANCE LETTER QUESTIONS MODAL --}}
-    <div class="modal" tabindex="-1" id="complianceLetterQuestionsModal">
-        <div class="modal-dialog">
+    <div class="modal fade" tabindex="-1" id="complianceLetterQuestionsModal">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form action="{{ route('students.complianceLetterAnswerQuestions', $student) }}" method="POST">
                     <div class="modal-header">

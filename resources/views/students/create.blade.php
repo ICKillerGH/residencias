@@ -9,8 +9,8 @@
         @endif
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Añadir estudiante</h4>
+            <div class="card-header card-header-success">
+                <h4 class="card-title text-white"><b> Añadir Estudiante</b></h4>
             </div>
 
             <div class="card-body">
@@ -20,36 +20,36 @@
                     {{-- EMAIL --}}
                     <x-inputs.text-field-row
                         name="email"
-                        label="Correo electrónico"
-                        placeholder="Ingrese el correo electrónico"
+                        label="Correo Electrónico:"
+                        placeholder="Ingresé el Correo Electrónico"
                         autofocus
                     />
 
                     {{-- FIRST NAME --}}
                     <x-inputs.text-field-row
                         name="first_name"
-                        label="Nombres"
-                        placeholder="Ingrese el nombre"
+                        label="Nombre(s):"
+                        placeholder="Ingresé el Nombre"
                     />
 
                     {{-- FATHER'S LAST NAME --}}
                     <x-inputs.text-field-row
                         name="fathers_last_name"
-                        label="Apellido paterno"
-                        placeholder="Ingrese el apellido paterno"
+                        label="Apellido Paterno:"
+                        placeholder="Ingresé el Apellido Paterno"
                     />
 
                     {{-- MOTHERS'S LAST NAME --}}
                     <x-inputs.text-field-row
                         name="mothers_last_name"
-                        label="Apellido materno"
-                        placeholder="Ingrese el apellido materno"
+                        label="Apellido Materno:"
+                        placeholder="Ingresé el Apellido Materno"
                     />
 
                     {{-- CARREER --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="career_id" class="d-block">Carrera</label>
+                            <label for="career_id" class="d-block">Carrera:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -58,7 +58,7 @@
                                     name="career_id"
                                     id="career_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     @foreach ($careers as $career)
                                         <option
                                             value="{{ $career->id }}"
@@ -76,7 +76,7 @@
                     {{-- TEACHER --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="teacher_id" class="d-block">Asesor interno</label>
+                            <label for="teacher_id" class="d-block">Asesor Interno:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -85,7 +85,7 @@
                                     name="teacher_id"
                                     id="teacher_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     @foreach ($teachers as $teacher)
                                         <option
                                             value="{{ $teacher->user_id }}"
@@ -103,7 +103,7 @@
                     {{-- EXTERNAL ADVISOR --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="external_advisor_id" class="d-block">Asesor externo</label>
+                            <label for="external_advisor_id" class="d-block">Asesor Externo:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -112,7 +112,7 @@
                                     name="external_advisor_id"
                                     id="external_advisor_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     @foreach ($externalAdvisors as $externalAdvisor)
                                         <option
                                             value="{{ $externalAdvisor->user_id }}"
@@ -130,14 +130,14 @@
                     {{-- ACCOUNT NUMBER --}}
                     <x-inputs.text-field-row
                         name="account_number"
-                        label="Número de cuenta"
-                        placeholder="Ingrese número de cuenta"
+                        label="Número de Cuenta:"
+                        placeholder="Ingresé Número de Cuenta"
                     />
 
                     {{-- SEX --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="sex" class="d-block">Sexo</label>
+                            <label for="sex" class="d-block">Sexo:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -146,7 +146,7 @@
                                     name="sex"
                                     id="sex"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     <option value="m" @if (old('sex') == 'm') selected @endif>Masculino</option>
                                     <option value="f" @if (old('sex') == 'f') selected @endif>Femenino</option>
                                 </select>
@@ -160,15 +160,15 @@
                     {{-- CURP --}}
                     <x-inputs.text-field-row
                         name="curp"
-                        label="CURP"
-                        placeholder="Ingrese el curp"
+                        label="CURP:"
+                        placeholder="Ingresé el Curp"
                     />
 
                     {{-- CAREER PERCENTAGE --}}
                     <x-inputs.text-field-row
                         name="career_percentage"
-                        label="Porcentaje de la carrera"
-                        placeholder="Ingrese porcentaje"
+                        label="Porcentaje de la Carrera:"
+                        placeholder="Ingresé Porcentaje"
                         min="1"
                         max="100"
                         step="0.1"
@@ -177,7 +177,7 @@
                     {{-- ENROLLED --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="is_enrolled" class="d-block">Inscrito</label>
+                            <label for="is_enrolled" class="d-block">Inscrito:</label>
                         </div>
                         <div class="col-md-9">
                             <input
@@ -192,7 +192,7 @@
                     {{-- SOCIAL SERVICE CONCLUDED --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="is_social_service_concluded" class="d-block">Servicio social concluido</label>
+                            <label for="is_social_service_concluded" class="d-block">Servicio Social Concluido:</label>
                         </div>
                         <div class="col-md-9">
                             <input
@@ -207,14 +207,14 @@
                     {{-- PHONE NUMBER --}}
                     <x-inputs.text-field-row
                         name="phone_number"
-                        label="Teléfono"
-                        placeholder="Ingrese número de teléfono"
+                        label="Teléfono:"
+                        placeholder="Ingresé Número de Teléfono"
                     />
 
                     {{-- State --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="state_id" class="d-block">Estado</label>
+                            <label for="state_id" class="d-block">Estado:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -223,7 +223,7 @@
                                     name="state_id"
                                     id="state_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}" @if ($state->id == old('state_id')) selected @endif>{{ $state->name }}</option>
                                     @endforeach
@@ -238,7 +238,7 @@
                     {{-- MUNCIPALITY --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="municipality_id" class="d-block">Municipio</label>
+                            <label for="municipality_id" class="d-block">Municipio:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -259,7 +259,7 @@
                     {{-- LOCALITY --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="locality_id" class="d-block">Localidad</label>
+                            <label for="locality_id" class="d-block">Localidad:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="input-group input-group-dynamic">
@@ -268,7 +268,7 @@
                                     name="locality_id"
                                     id="locality_id"
                                 >
-                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="" selected disabled>Seleccione una Opción</option>
                                 </select>
                             </div>
                             @error('locality_id')
@@ -280,8 +280,8 @@
                     {{-- PASSWORD --}}
                     <x-inputs.text-field-row
                         name="password"
-                        label="Contraseña"
-                        placeholder="Ingrese la contraseña"
+                        label="Contraseña:"
+                        placeholder="Ingresé la Contraseña"
                         type="password"
                     />
 
@@ -289,13 +289,15 @@
                     {{-- PASSWORD CONFIRMATION --}}
                     <x-inputs.text-field-row
                         name="password_confirmation"
-                        label="Confirmar contraseña"
-                        placeholder="Ingrese la contraseña"
+                        label="Confirmar contraseña:"
+                        placeholder="Confirmación de Contraseña"
                         type="password"
                     />
 
                     <div class="text-right">
-                        <button class="btn btn-primary">Guardar</button>
+                        <a href="{{ route('students.index') }}" class="btn  btn-warning mr-3">
+                            <i class="material-icons">cancel</i><b> Cancelar</b> </a>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
                 </form>
             </div>

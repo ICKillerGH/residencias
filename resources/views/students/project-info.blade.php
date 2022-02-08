@@ -1,59 +1,66 @@
-@extends('layouts.main', ['activePage' => 'project-info', 'title' => __(''), 'titlePage' => 'Informacion del proyecto'])
+@extends('layouts.main', ['activePage' => 'project-info', 'title' => __(''), 'titlePage' => 'Información del Proyecto'])
 
 @section('content')
     <div class="content">
-        @if($alert = session('alert'))
+        @if ($alert = session('alert'))
             <div class="alert alert-{{ $alert['type'] }}" role="alert">
                 {{ $alert['message'] }}
             </div>
         @endif
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h3 class="card-title">Información del proyecto</h3>
+            <div class="card-header card-header-success">
+                <h3 class="card-title text-white"><b>Información del Proyecto</b> </h3>
             </div>
             <div class="card-body">
 
-                <form action="{{ route('students.updateProjectInfo')}}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('students.updateProjectInfo') }}" method="post" enctype="multipart/form-data">
                     @method('put')
                     @csrf
                     {{-- TITLE --}}
-                    <x-inputs.text-field-row name="title" label="Titulo del proyecto"
-                        placeholder="Ingresa el titulo del proyecto" :default-value="$project->title" />
+                    <x-inputs.text-field-row name="title" label="Título del Proyecto:" class="bmd-label-floating"
+                        placeholder="Ingresé el Título del Proyecto" :default-value="$project->title" />
 
                     {{-- START DATE --}}
-                    <x-inputs.text-field-row name="start_date" label="Fecha de inicio"
-                        placeholder="Ingresa la fecha de inicio" type="date" :default-value="$project->start_date" />
+                    <x-inputs.text-field-row name="start_date" label="Fecha de Inicio:"
+                        placeholder="Ingresé la Fecha de Inicio" type="date" :default-value="$project->start_date" />
 
                     {{-- END DATE --}}
-                    <x-inputs.text-field-row name="end_date" label="Fecha de termino"
-                        placeholder="Ingresa la fecha de termino" type="date" :default-value="$project->end_date" />
+                    <x-inputs.text-field-row name="end_date" label="Fecha de Término:"
+                        placeholder="Ingresé la Fecha de Término" type="date" :default-value="$project->end_date" />
 
                     {{-- SCHEDULE --}}
-                    <x-inputs.text-field-row name="schedule" label="Horario requerdido" placeholder="Ingresa el horario"
-                        :default-value="$project->schedule" />
+                    <x-inputs.text-field-row name="schedule" label="Horario Requerdido:" class="bg-dark"
+                        placeholder="Ingresé el Horario" :default-value="$project->schedule" />
 
                     {{-- GENERAL OBJECTIVE --}}
-                    <x-inputs.text-field-row name="general_objective" label="Objetivo general"
-                        placeholder="Ingresa el objetivo general" :default-value="$project->general_objective" />
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="general_objective" class="d-block">Objetivo General:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group input-group-dynamic has-warning">
+                                <textarea class="form-control text-justify" name="general_objective" id="general_objective"
+                                    rows="4">{{ old('general_objective', $project->general_objective) }}</textarea>
+                            </div>
+                            @error('general_objective')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
 
                     {{-- SPECIFIC OBJECTIVES --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="">Objetivos Especificos</label>
+                            <label for="">Objetivos Específicos:</label>
                         </div>
                         <div class="col-md-9" id="specific-obj-container">
                             @if ($project->specificObjectives->isNotEmpty())
                                 @foreach ($project->specificObjectives as $obj)
                                     <div class="d-flex">
-                                        <div class="input-group input-group-dynamic">
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                name="specific_objectives[]"
-                                                placeholder="Ingrese el objetivo"
-                                                value="{{ $obj->name }}"
-                                            >
+                                        <div class="input-group input-group-dynamic has-warning">
+                                            <input type="text" class="form-control" name="specific_objectives[]"
+                                                placeholder="Ingresé el Objetivo" value="{{ $obj->name }}">
                                         </div>
                                         <button type="button" class="btn btn-danger btn-sm btn-remove-obj">
                                             <i class="fa fa-trash"></i>
@@ -62,13 +69,9 @@
                                 @endforeach
                             @else
                                 <div class="d-flex">
-                                    <div class="input-group input-group-dynamic">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            name="specific_objectives[]"
-                                            placeholder="Ingrese el objetivo"
-                                        >
+                                    <div class="input-group input-group-dynamic has-warning">
+                                        <input type="text" class="form-control" name="specific_objectives[]"
+                                            placeholder="Ingresé el Objetivo">
                                     </div>
                                     <button type="button" class="btn btn-danger btn-sm btn-remove-obj">
                                         <i class="fa fa-trash"></i>
@@ -78,7 +81,7 @@
 
                             <button type="button" class="btn btn-success btn-sm" id="btn-add-specific-obj">
                                 <i class="fa fa-plus"></i>
-                                <span class="d-inline-block ml-2">Agregar Objetivo especifico</span>
+                                <span class="d-inline-block ml-2">Agregar Objetivo Específico</span>
                             </button>
                             <div>
                                 @error('specific_objectives')
@@ -94,12 +97,12 @@
                     {{-- JUSTIFICATION --}}
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <label for="justification" class="d-block">Justificación</label>
+                            <label for="justification" class="d-block">Justificación:</label>
                         </div>
                         <div class="col-md-9">
-                            <div class="input-group input-group-dynamic">
-                                <textarea class="form-control" name="justification" id="justification"
-                                    rows="5">{{ old('justification',$project->justification) }}</textarea>
+                            <div class="input-group input-group-dynamic has-warning">
+                                <textarea class="form-control text-justify" name="justification" id="justification"
+                                    rows="5">{{ old('justification', $project->justification) }}</textarea>
                             </div>
                             @error('justification')
                                 <small class="text-danger">{{ $message }}</small>
@@ -108,18 +111,19 @@
                     </div>
 
                     {{-- ACTIVITY SCHEDULE IMAGE --}}
-                    <x-inputs.text-field-row name="activity_schedule_image" label="Imagen del cronograma de actividades"
-                        placeholder="Ingresa la imagen" type="file" accept="image/*"  />
+                    <x-inputs.text-field-row name="activity_schedule_image" label="Imagen del Cronograma de Actividades:"
+                        placeholder="Ingresé la imagen" type="file" accept="image/*" />
 
                     @if ($project->activity_schedule_image)
-                    <div class="row">
-                        <div class="col-md-12">
-                            <img src="{{ $project->activity_schedule_image_url }}" alt="" class="image-responsive" style="max-height: 400px">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <img src="{{ $project->activity_schedule_image_url }}" alt="" class="image-responsive"
+                                    style="max-height: 400px">
+                            </div>
                         </div>
-                    </div>
                     @endif
                     <div class="text-right">
-                        <button class="btn btn-success btn-sm"> Guardar</button>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
                 </form>
             </div>
@@ -134,12 +138,12 @@
         $('#btn-add-specific-obj').on('click', function() {
             $(this).before(`
                 <div class="d-flex">
-                    <div class="input-group input-group-dynamic">
+                    <div class="input-group input-group-dynamic has-warning">
                         <input
                             type="text"
                             class="form-control"
                             name="specific_objectives[]"
-                            placeholder="Ingrese el objetivo"
+                            placeholder="Ingresé el Objetivo"
                         >
                     </div>
                     <button type="button" class="btn btn-danger btn-sm btn-remove-obj">

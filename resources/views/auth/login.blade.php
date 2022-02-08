@@ -3,40 +3,25 @@
 @section('content')
 <div class="container" style="height: auto;">
     <div class="row align-items-center">
-        <div class="col-md-9 ml-auto mr-auto text-center">
-            <h4>{{ __('INICIAR SESIÓN') }}</h4>
-        </div>
+        
         <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <form class="form" method="POST" action="{{ route('login') }}">
                 @csrf
-
+<b>
                 <div class="card card-login card-hidden mb-3">
-                    <div class="card-header card-header-success text-center">
+                    <div class="card-header card-header-success text-center text-white">
+                        <h4><b> {{ __('B I E N V E N I D O') }}</h4>
                        {{--  <h4 class="card-title"><strong>{{ __('Login') }}</strong></h4>--}}
-
-                        <div class="social-line">
-                            <a href="#" class="btn btn-just-icon btn-link btn-white">
-                                <i class="fa fa-facebook-square"></i>
-                            </a>
-
-                            <a href="#" class="btn btn-just-icon btn-link btn-white">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#" class="btn btn-just-icon btn-link btn-white">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                        </div>
-
                     </div>
                     <div class="card-body">
-                        <div class="col-md-9 ml-auto mr-auto mb-2 text-center">
-                            <img src="{{ asset('img/Logo70.png') }}" alt="">
+                        <div class="col-md-9 ml-auto mr-auto mb-2 text-center" align="center">
+                            <img src="{{ asset('img/logo2.png') }}" alt="umb" height="95" width="180">
                         </div>
                         <b>
-                        <p class="card-description text-center">{{ __('Ingrese sus credenciales ') }}</p></b>
+                        <p class="card-description text-center text-danger"><b> {{ __('Ingresé sus credenciales ') }}</p></b>
                         {{-- Email --}}
                         <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                            <div class="input-group">
+                            <div class="input-group has-warning">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="material-icons">face</i>
@@ -52,7 +37,7 @@
                             @endif
                         </div>
                         <div class="bmd-form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
-                            <div class="input-group">
+                            <div class="input-group has-warning">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="material-icons">lock_outline</i>
@@ -78,8 +63,8 @@
                             </label>
                         </div>
                     </div>
-                    <div class="card-footer justify-content-center">
-                        <button type="submit" class="btn btn-primary btn-link btn-lg">{{ __('Enviar') }}</button>
+                    <div class=" text-right">
+                        <button type="submit" class="btn btn-danger animation-on-hover btn-round">{{ __('Iniciar Sesión') }} <i class="material-icons">login</i></button>
                     </div>
                 </div>
             </form>

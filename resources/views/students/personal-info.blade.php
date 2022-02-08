@@ -2,17 +2,16 @@
 
 @section('content')
     <div class="content">
-        @if($alert = session('alert'))
+        @if ($alert = session('alert'))
             <div class="alert alert-{{ $alert['type'] }}" role="alert">
                 {{ $alert['message'] }}
             </div>
         @endif
 
         <div class="card">
-            <div class="card-header card-header-primary">
-                <h3 class="card-title">Información personal</h3>
+            <div class="card-header card-header-success">
+                <h3 class="card-title text-white"><b> Información Personal</b></h3>
             </div>
-
             <div class="card-body">
                 <form action="{{ route('students.updatePersonalInfo') }}" method="POST">
                     @csrf
@@ -33,12 +32,12 @@
                         </div>
                         {{-- FATHER'S LAST NAME --}}
                         <div class="col-md-4">
-                            <p class="mb-0"><b>Apellido paterno:</b></p>
+                            <p class="mb-0"><b>Apellido Paterno:</b></p>
                             {{ $user->student->fathers_last_name }}
                         </div>
                         {{-- MOTHERS'S LAST NAME --}}
                         <div class="col-md-4">
-                            <p class="mb-0"><b>Nombre(s):</b></p>
+                            <p class="mb-0"><b>Apellido Materno:</b></p>
                             {{ $user->student->mothers_last_name }}
                         </div>
                     </div>
@@ -56,7 +55,7 @@
                         </div>
                         {{-- ACCOUNT NUMBER --}}
                         <div class="col-md-4">
-                            <p class="mb-0"><b>Número de cuenta:</b></p>
+                            <p class="mb-0"><b>Número de Cuenta:</b></p>
                             {{ $user->student->account_number }}
                         </div>
                     </div>
@@ -65,16 +64,16 @@
                         {{-- IS ENROLLED --}}
                         <div class="col-md-4">
                             <p class="mb-0"><b>Inscrito:</b></p>
-                            {{ $user->student->is_enrolled  ? 'Si' : 'No' }}
+                            {{ $user->student->is_enrolled ? 'Si' : 'No' }}
                         </div>
                         {{-- IS SOCIAL SERVICE CONCLUDED --}}
                         <div class="col-md-4">
-                            <p class="mb-0"><b>Servicio social concluido:</b></p>
-                            {{ $user->student->is_social_service_concluded  ? 'Si' : 'No' }}
+                            <p class="mb-0"><b>Servicio Social Concluido:</b></p>
+                            {{ $user->student->is_social_service_concluded ? 'Si' : 'No' }}
                         </div>
                         {{-- CAREER PERCENTAGE --}}
                         <div class="col-md-4">
-                            <p class="mb-0"><b>Porcentaje de la carrera:</b></p>
+                            <p class="mb-0"><b>Porcentaje de la Carrera:</b></p>
                             {{ $user->student->career_percentage }}%
                         </div>
                     </div>
@@ -83,14 +82,11 @@
                         {{-- STATE --}}
                         <div class="col-md-4">
                             <p class="mb-0"><b>Estado:</b></p>
-                            <select
-                                class="form-control"
-                                name="state_id"
-                                id="state_id"
-                            >
-                                <option value="" selected disabled>Seleccione una opción</option>
+                            <select class="form-control" name="state_id" id="state_id">
+                                <option value="" selected disabled>Seleccione una Opción</option>
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->id }}" @if ($state->id == old('state_id', $user->student->state->id)) selected @endif>{{ $state->name }}</option>
+                                    <option value="{{ $state->id }}" @if ($state->id == old('state_id', $user->student->state->id)) selected @endif>{{ $state->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('state_id')
@@ -100,12 +96,8 @@
                         {{-- MUNICIPALITY --}}
                         <div class="col-md-4">
                             <p class="mb-0"><b>Municipio:</b></p>
-                            <select
-                                class="form-control"
-                                name="municipality_id"
-                                id="municipality_id"
-                            >
-                                <option value="" selected disabled>Seleccione una opción</option>
+                            <select class="form-control" name="municipality_id" id="municipality_id">
+                                <option value="" selected disabled>Seleccione una Opción</option>
                             </select>
                             @error('municipality_id')
                                 <small class="text-danger">{{ $message }}</small>
@@ -114,28 +106,23 @@
                         {{-- LOCALITY --}}
                         <div class="col-md-4">
                             <p class="mb-0"><b>Localidad:</b></p>
-                            <select
-                                class="form-control"
-                                name="locality_id"
-                                id="locality_id"
-                            >
-                                <option value="" selected disabled>Seleccione una opción</option>
+                            <select class="form-control" name="locality_id" id="locality_id">
+                                <option value="" selected disabled>Seleccione una Opción</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         {{-- PHONE NUMBER --}}
-                        <div class="col-md-4">
+                        <div class="col-md-4 has-warning">
                             <p class="mb-0"><b>Teléfono:</b></p>
-                            <input type="text" class="form-control" name="phone_number" value="{{ $user->student->phone_number }}">
+                            <input type="text" class="form-control" name="phone_number"
+                                value="{{ $user->student->phone_number }}">
                         </div>
                     </div>
 
                     <div class="text-right">
-                        <button class="btn btn-sm btn-success">
-                            Guardar
-                        </button>
+                        <button class="btn  btn-success"><i class="material-icons">save</i><b> Guardar</b></button>
                     </div>
                 </form>
             </div>
@@ -156,7 +143,9 @@
 
                 const municipalities = state
                     .locations
-                    .map((municipality) => `<option value="${municipality.id}" ${municipality.id == @json(old('municipality_id', $user->student->municipality->id)) ? 'selected' : ''}>${municipality.name}</option>`)
+                    .map((municipality) =>
+                        `<option value="${municipality.id}" ${municipality.id == @json(old('municipality_id', $user->student->municipality->id)) ? 'selected' : ''}>${municipality.name}</option>`
+                        )
                     .join('');
 
                 $('#municipality_id').html(`
@@ -172,13 +161,16 @@
 
                 if (!state) return;
 
-                const municipality = state.locations.find((municipality) => municipality.id === municipalityId);
+                const municipality = state.locations.find((municipality) => municipality.id ===
+                    municipalityId);
 
                 if (!municipality) return;
 
                 const localities = municipality
                     .locations
-                    .map((locality) => `<option value="${locality.id}" ${locality.id == @json(old('locality_id', $user->student->locality->id)) ? 'selected' : ''}>${locality.name}</option>`)
+                    .map((locality) =>
+                        `<option value="${locality.id}" ${locality.id == @json(old('locality_id', $user->student->locality->id)) ? 'selected' : ''}>${locality.name}</option>`
+                        )
                     .join('');
 
                 $('#locality_id').html(`

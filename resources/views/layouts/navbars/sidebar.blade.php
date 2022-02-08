@@ -7,7 +7,7 @@
     <div class="logo" align="center">
         <img src="{{ asset('img/logo2.png') }}" alt="umb" height="95" width="180">
         <br><br>
-        <h4><div><b>Residencias Profesionales</b></div></h4>
+        <h4><div class="text-warning"><b>Residencias Profesionales</b></div></h4>
   
     </div>
     <div class="sidebar-wrapper">

@@ -285,11 +285,6 @@
             autoStart: true,
             loop: true,
         });
-        new Typewriter('#ues', {
-            strings: ['Villa Victoria'],
-            autoStart: true,
-            loop: true,
-        });
     </script>
 </body>
 

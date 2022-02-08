@@ -7,18 +7,16 @@
         <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <form class="form" method="POST" action="{{ route('login') }}">
                 @csrf
-<b>
                 <div class="card card-login card-hidden mb-3">
                     <div class="card-header card-header-success text-center text-white">
-                        <h4><b> {{ __('B I E N V E N I D O') }}</h4>
+                        <h4>{{ __('B I E N V E N I D O') }}</h4>
                        {{--  <h4 class="card-title"><strong>{{ __('Login') }}</strong></h4>--}}
                     </div>
                     <div class="card-body">
                         <div class="col-md-9 ml-auto mr-auto mb-2 text-center" align="center">
                             <img src="{{ asset('img/logo2.png') }}" alt="umb" height="95" width="180">
                         </div>
-                        <b>
-                        <p class="card-description text-center text-danger"><b> {{ __('Ingresé sus credenciales ') }}</p></b>
+                        <p class="card-description text-center text-danger"><b> {{ __('Ingresé sus credenciales ') }}</b></p>
                         {{-- Email --}}
                         <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                             <div class="input-group has-warning">
@@ -63,7 +61,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class=" text-right">
+                    <div class="card-footer justify-content-center">
                         <button type="submit" class="btn btn-danger animation-on-hover btn-round">{{ __('Iniciar Sesión') }} <i class="material-icons">login</i></button>
                     </div>
                 </div>
